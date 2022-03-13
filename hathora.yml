@@ -1,0 +1,57 @@
+# hathora.yml
+
+types:
+  Cards: Card[]
+  Color:
+    - RED
+    - BLUE
+    - GRAY
+  Card:
+    word: string
+    guessed: boolean
+    hints: string[]
+    guesses: string[]
+  Team:
+    color: Color
+    points: int
+    bid: int
+  PlayerInfo:
+    id: UserId
+    team: Color
+    isGivingClues: boolean
+  GameStatus:
+    - NOT_STARTED
+    - AUCTION
+    - GUESSING
+    - ROUND_ENDED
+  RoundInfo:
+    cards: int
+    hints: int
+    timeMax: int
+    timeLeft: int
+    board: Cards?
+  PlayerState:
+    players: PlayerInfo[]
+    gameStatus: GameStatus
+    roundInfo: RoundInfo?
+
+methods:
+  joinGame:
+  startGame:
+  joinTeam:
+    team: Team
+  joinAsLeader:
+  bid:
+    hints: int
+  giveClue:
+    word: int
+    hint: string
+  guessWord:
+    word: int
+    guess: string
+
+auth:
+  anonymous: {}
+
+userState: PlayerState
+error: string
