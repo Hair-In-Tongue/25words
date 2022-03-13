@@ -57,3 +57,5 @@ auth:
 
 userState: PlayerState
 error: string
+
+tick: 1000
