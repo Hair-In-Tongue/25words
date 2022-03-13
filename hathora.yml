@@ -14,7 +14,7 @@ types:
   Team:
     color: Color
     points: int
-    bid: int
+    bid: int?
   PlayerInfo:
     id: UserId
     team: Color
@@ -34,12 +34,13 @@ types:
     players: PlayerInfo[]
     gameStatus: GameStatus
     roundInfo: RoundInfo?
+    teams: Team[]?
 
 methods:
   joinGame:
   startGame:
   joinTeam:
-    team: Team
+    team: Color
   joinAsLeader:
   bid:
     hints: int

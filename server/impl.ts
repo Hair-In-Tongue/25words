@@ -26,16 +26,21 @@ type InternalState = {
   cards: Card[];
   roundInfo?: RoundInfo;
   gameStatus: GameStatus;
+  teams: Team[];
 };
 
 export class Impl implements Methods<InternalState> {
   initialize(userId: UserId, ctx: Context): InternalState {
+    let teams = [];
+    teams.push({color:Color.RED , points:0, bid:0});
+    teams.push({color:Color.BLUE , points:0, bid:0});
     return {
       players: [],
       currentTurn: Color.GRAY,
       cards: [],
       roundInfo: undefined,
       gameStatus: GameStatus.NOT_STARTED,
+      teams: teams,
     };
   }
 
@@ -78,7 +83,15 @@ export class Impl implements Methods<InternalState> {
   }
 
   joinTeam(state: InternalState, userId: UserId, ctx: Context, request: IJoinTeamRequest): Response {
-    return Response.error("Not implemented");
+    if (state.gameStatus == GameStatus.AUCTION || state.gameStatus == GameStatus.GUESSING) {
+      return Response.error("Game already started");
+    }
+
+    let player = state.players.find((p) => p.id === userId);
+
+    player!.team = request.team;
+
+    return Response.ok();
   }
 
   joinAsLeader(state: InternalState, userId: UserId, ctx: Context, request: IJoinAsLeaderRequest): Response {
