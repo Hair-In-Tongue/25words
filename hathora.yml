@@ -50,6 +50,7 @@ methods:
   guessWord:
     word: int
     guess: string
+  timeEnd:
 
 auth:
   anonymous: {}
