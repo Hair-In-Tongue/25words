@@ -9,7 +9,7 @@ function App() {
             <Router>
                 <Switch>
                     <Route exact path="/" component={() => <JoinGame />} />
-                    <Route exact path="/room" component={() => <Room />} />
+                    <Route path="/room" component={() => <Room />} />
                 </Switch>
             </Router>
         </div>
