@@ -17,6 +17,7 @@ types:
     bid: int?
   PlayerInfo:
     id: UserId
+    name: string
     team: Color
     isGivingClues: boolean
   GameStatus:
@@ -29,7 +30,9 @@ types:
     hints: int
     timeMax: int
     timeLeft: int
+    bidTimeLeft: int
     board: Cards?
+    currentTurn: Color
   PlayerState:
     players: PlayerInfo[]
     gameStatus: GameStatus
@@ -38,10 +41,14 @@ types:
 
 methods:
   joinGame:
+    name: string
+  changeName:
+    name: string
   startGame:
   joinTeam:
     team: Color
   joinAsLeader:
+    team: Color
   bid:
     hints: int
   giveClue:
