@@ -12,3 +12,7 @@ export interface ILobbyProps {
     playerState: PlayerState
     client: HathoraConnection
 }
+
+export interface Props {
+    color: string
+}
