@@ -69,34 +69,6 @@ const Lobby = (props: ILobbyProps) => {
                             </JoinTeamBtn>
                         </TeamCard>
                     </Container>
-
-                    <button
-                        onClick={async () =>
-                            await props.client.joinTeam({ team: Color.BLUE })
-                        }
-                    >
-                        JOIN BLUE TEAM
-                    </button>
-                    <button
-                        onClick={async () =>
-                            await props.client.joinTeam({ team: Color.GRAY })
-                        }
-                    >
-                        JOIN GRAY TEAM
-                    </button>
-
-                    <div>
-                        <h1>BLUE TEAM</h1>
-                        {blueTeam.map((player) => (
-                            <div key={player.id}>{player.id}</div>
-                        ))}
-                    </div>
-                    <div>
-                        <h1>NO TEAM</h1>
-                        {noTeam.map((player) => (
-                            <div key={player.id}>{player.id}</div>
-                        ))}
-                    </div>
                 </>
             ) : (
                 <button onClick={async () => await props.client.joinGame({})}>
