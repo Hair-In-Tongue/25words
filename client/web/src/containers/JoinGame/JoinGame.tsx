@@ -11,6 +11,7 @@ import {
     Input,
 } from './JoinGame.styled'
 import { useHistory } from 'react-router-dom'
+import { rootCertificates } from 'tls'
 
 function Title() {
     const [nickname, setNickname] = useState<string>('')
@@ -18,9 +19,8 @@ function Title() {
     const history = useHistory()
 
     const createGame = () => {
-        return history.push('/room', {
-            nickname,
-        })
+        localStorage.setItem('nickname', nickname)
+        history.push('/room')
     }
 
     return (
@@ -37,6 +37,7 @@ function Title() {
                         <Spacing>
                             <Input
                                 type="text"
+                                maxLength={10}
                                 placeholder="Your nickname"
                                 onChange={handleSetNickname}
                             />

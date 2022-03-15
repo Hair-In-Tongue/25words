@@ -3,7 +3,14 @@ import { Props } from '../../interfaces/Interface'
 
 export const Container = styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+`
+
+export const Teams = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100%;
     height: 100%;
 `
 
@@ -14,6 +21,7 @@ export const Score = styled.h2`
 export const TeamCard = styled.div`
     display: grid;
     grid-template-rows: 15% 75% 10%;
+    margin: 0 10px;
     border-radius: 10px;
     overflow: hidden;
     background-color: ${(props: Props) => props.color || 'white'};
