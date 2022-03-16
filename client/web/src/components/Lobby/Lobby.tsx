@@ -1,22 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Color } from '../../../../../api/types'
-import { ILobbyProps } from '../../interfaces/Interface'
-import {
-    TeamCard,
-    Container,
-    PlayersList,
-    JoinTeamBtn,
-    Score,
-    PlayerItem,
-} from './Lobby.styled'
+import { ILobbyProps, ITeam } from '../../interfaces/Interface'
+import { Container, Teams } from './Lobby.styled'
+import Team from './Team'
 
 const Lobby = (props: ILobbyProps) => {
     const players = props.playerState.players
-    const noTeam = players.filter((player) => player.team === Color.GRAY)
-    const redTeam = players.filter((player) => player.team === Color.RED)
-    const blueTeam = players.filter((player) => player.team === Color.BLUE)
-    const redScore = props.playerState.teams[0].points
-    const blueScore = props.playerState.teams[1].points
+    const [newNickname, setNewNickname] = useState<string>(
+        localStorage.getItem('nickname') || ''
+    )
+    const teams: Array<ITeam> = [
+        {
+            name: 'Red Team',
+            backgroundColor: '#FFAEC9',
+            players: players.filter((player) => player.team === Color.RED),
+            teamColor: Color.RED,
+        },
+        {
+            name: 'Spectators',
+            backgroundColor: 'lightgray',
+            players: players.filter((player) => player.team === Color.GRAY),
+            teamColor: Color.GRAY,
+        },
+        {
+            name: 'Blue Team',
+            backgroundColor: '#99D9EA',
+            players: players.filter((player) => player.team === Color.BLUE),
+            teamColor: Color.BLUE,
+        },
+    ]
+
+    const changeNickname = async () => {
+        props.client.changeName({
+            name: newNickname,
+        })
+    }
+
+    const joinGame = async () => {
+        await props.client.joinGame({
+            name: newNickname,
+        })
+    }
 
     return (
         <>
@@ -25,55 +49,56 @@ const Lobby = (props: ILobbyProps) => {
             ) ? (
                 <>
                     <Container>
-                        <TeamCard color="#FFAEC9">
-                            <Score>{redScore}</Score>
-                            <PlayersList>
-                                {redTeam.map((player) => (
-                                    <PlayerItem key={player.id}>
-                                        {player.id}
-                                    </PlayerItem>
-                                ))}
-                            </PlayersList>
-
-                            <JoinTeamBtn
-                                color="pink"
-                                onClick={async () =>
-                                    await props.client.joinTeam({
-                                        team: Color.RED,
-                                    })
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="New nickname"
+                                maxLength={10}
+                                onChange={(e) => setNewNickname(e.target.value)}
+                            />
+                            <button
+                                disabled={
+                                    newNickname.length === 0 ||
+                                    newNickname.length < 3
                                 }
+                                onClick={changeNickname}
                             >
-                                JOIN RED TEAM
-                            </JoinTeamBtn>
-                        </TeamCard>
+                                Change
+                            </button>
+                        </div>
 
-                        <TeamCard color="#99D9EA">
-                            <Score>{blueScore}</Score>
-                            <PlayersList>
-                                {blueTeam.map((player) => (
-                                    <PlayerItem key={player.id}>
-                                        {player.id}
-                                    </PlayerItem>
-                                ))}
-                            </PlayersList>
-
-                            <JoinTeamBtn
-                                color="lightblue"
-                                onClick={async () =>
-                                    await props.client.joinTeam({
-                                        team: Color.BLUE,
-                                    })
-                                }
-                            >
-                                JOIN BLUE TEAM
-                            </JoinTeamBtn>
-                        </TeamCard>
+                        <Teams>
+                            {teams.map((team, i) => (
+                                <Team
+                                    key={i}
+                                    team={team}
+                                    client={props.client}
+                                ></Team>
+                            ))}
+                        </Teams>
                     </Container>
                 </>
             ) : (
-                <button onClick={async () => await props.client.joinGame({})}>
-                    JOIN GAME
-                </button>
+                <>
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Your nickname"
+                            value={newNickname}
+                            maxLength={10}
+                            onChange={(e) => setNewNickname(e.target.value)}
+                        />
+                        <button
+                            disabled={
+                                newNickname.length === 0 ||
+                                newNickname.length < 3
+                            }
+                            onClick={joinGame}
+                        >
+                            JOIN GAME
+                        </button>
+                    </div>
+                </>
             )}
         </>
     )

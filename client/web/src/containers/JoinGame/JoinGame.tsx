@@ -14,13 +14,13 @@ import { useHistory } from 'react-router-dom'
 
 function Title() {
     const [nickname, setNickname] = useState<string>('')
-    const handleSetNickname = (e) => setNickname(e.target.value)
+    const handleSetNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
+        setNickname(e.target.value)
     const history = useHistory()
 
     const createGame = () => {
-        return history.push('/room', {
-            nickname,
-        })
+        localStorage.setItem('nickname', nickname)
+        return history.push('/room')
     }
 
     return (
@@ -37,6 +37,7 @@ function Title() {
                         <Spacing>
                             <Input
                                 type="text"
+                                maxLength={10}
                                 placeholder="Your nickname"
                                 onChange={handleSetNickname}
                             />
