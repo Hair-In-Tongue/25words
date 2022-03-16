@@ -1,4 +1,4 @@
-import { PlayerState } from '../../../../api/types'
+import { PlayerState, Color, PlayerInfo } from '../../../../api/types'
 import { HathoraConnection } from '../../../.hathora/client'
 
 export interface IUserData {
@@ -15,4 +15,16 @@ export interface ILobbyProps {
 
 export interface Props {
     color: string
+}
+
+export interface ITeamProps {
+    team: ITeam
+    client: HathoraConnection
+}
+
+export interface ITeam {
+    name: string
+    backgroundColor: string
+    players: Array<PlayerInfo>
+    teamColor: Color
 }

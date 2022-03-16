@@ -11,16 +11,16 @@ import {
     Input,
 } from './JoinGame.styled'
 import { useHistory } from 'react-router-dom'
-import { rootCertificates } from 'tls'
 
 function Title() {
     const [nickname, setNickname] = useState<string>('')
-    const handleSetNickname = (e) => setNickname(e.target.value)
+    const handleSetNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
+        setNickname(e.target.value)
     const history = useHistory()
 
     const createGame = () => {
         localStorage.setItem('nickname', nickname)
-        history.push('/room')
+        return history.push('/room')
     }
 
     return (
