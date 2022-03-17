@@ -13,12 +13,16 @@ import {
   IJoinGameRequest,
   IChangeNameRequest,
   IStartGameRequest,
+  IResetScoreRequest,
+  IKickPlayerRequest,
+  IShuffleTeamsRequest,
   IJoinTeamRequest,
   IJoinAsLeaderRequest,
   IBidRequest,
   IGiveClueRequest,
   IGuessWordRequest,
   ITimeEndRequest,
+  ISendHeartBeatResponseRequest,
 } from "../api/types";
 
 import { wordList } from "./wordList";
@@ -47,15 +51,17 @@ export class Impl implements Methods<InternalState> {
     };
   }
 
-
   joinGame(state: InternalState, userId: UserId, ctx: Context, request: IJoinGameRequest): Response {
     if (state.players.find((player) => player.id === userId)) {
       return Response.error("Already joined");
     }
-    state.players.push(createPlayer(userId, request.name));
+    let admin = state.players.length == 0 ? true : false;
+
+    state.players.push(createPlayer(userId, request.name, admin));
 
     return Response.ok();
   }
+
   changeName(state: InternalState, userId: UserId, ctx: Context, request: IChangeNameRequest): Response {
     let player = state.players.find((p) => p.id === userId);
 
@@ -67,6 +73,7 @@ export class Impl implements Methods<InternalState> {
 
     return Response.ok();
   }
+
   startGame(state: InternalState, userId: UserId, ctx: Context, request: IStartGameRequest): Response {
     let player = state.players.find((p) => p.id === userId);
     if (!player) {
@@ -77,6 +84,10 @@ export class Impl implements Methods<InternalState> {
       return Response.error("Game already started");
     }
 
+    if (!player.isAdmin) {
+      return Response.error("Player is not an admin");
+    }
+    
     state.roundInfo = {
       ...state.roundInfo!,
       cards: 5,
@@ -87,18 +98,6 @@ export class Impl implements Methods<InternalState> {
       bidTimeLeft: 15,
     };
     state.hintsGiven = 0;
-    //  if(state.players.length < 4) return Response.error("Not enough players");
-
-    // state.players = ctx.chance.shuffle(state.players);
-    // for (let i = 0; i < state.players.length; i++) {
-
-    //   state.players[i].team = i * 2 < state.players.length ? Color.RED : Color.BLUE;
-    //   state.players[i].isGivingClues = false;
-    // }
-
-    // state.players[0].isGivingClues = true;
-    // state.players[state.players.length - 1].isGivingClues = true;
-
 
     const shuffledList = ctx.chance.shuffle(wordList);
     state.cards = [];
@@ -106,8 +105,6 @@ export class Impl implements Methods<InternalState> {
     state.cards = ctx.chance.shuffle(state.cards);
 
     state.roundInfo!.board = state.cards;
-
-
 
     //losu team 
     state.roundInfo!.currentTurn = Math.floor(Math.random() * 2) ? Color.RED : Color.BLUE;
@@ -122,6 +119,72 @@ export class Impl implements Methods<InternalState> {
     return Response.ok();
   }
 
+  resetScore(state: InternalState, userId: UserId, ctx: Context, request: IResetScoreRequest): Response {
+    let player = state.players.find((p) => p.id === userId);
+
+    if (!player) {
+      return Response.error("Player is undefined");
+    }
+
+    if (!player.isAdmin) {
+      return Response.error("Player is not an admin");
+    }
+
+    state.teams.forEach(element => {
+      element.points = 0;
+    });
+    return Response.ok();
+  }
+  kickPlayer(state: InternalState, userId: UserId, ctx: Context, request: IKickPlayerRequest): Response {
+    let player = state.players.find((p) => p.id === userId);
+
+    if (!player) {
+      return Response.error("Player is undefined");
+    }
+
+    if (!player.isAdmin) {
+      return Response.error("Player is not an admin");
+    }
+
+    let kicked = state.players.find((p) => p.id === request.player);
+    if (!kicked) {
+      return Response.error("Player is undefined");
+    } else {
+      const index = state.players.indexOf(kicked, 0);
+      if (index > -1) {
+        state.players.splice(index, 1);
+      }
+    }
+    return Response.ok();
+  }
+  shuffleTeams(state: InternalState, userId: UserId, ctx: Context, request: IShuffleTeamsRequest): Response {
+    let player = state.players.find((p) => p.id === userId);
+    if (!player) {
+      return Response.error("Player is undefined");
+    }
+
+    if (state.gameStatus == GameStatus.AUCTION || state.gameStatus == GameStatus.GUESSING) {
+      return Response.error("Game already started");
+    }
+
+    if (!player.isAdmin) {
+      return Response.error("Player is not an admin");
+    }
+
+    //if(state.players.length < 4) return Response.error("Not enough players");
+
+    state.players = ctx.chance.shuffle(state.players);
+    for (let i = 0; i < state.players.length; i++) {
+
+      state.players[i].team = i * 2 < state.players.length ? Color.RED : Color.BLUE;
+      state.players[i].isGivingClues = false;
+    }
+
+    //state.players[0].isGivingClues = true;
+    //state.players[state.players.length - 1].isGivingClues = true;
+
+    return Response.ok();
+  }
   joinTeam(state: InternalState, userId: UserId, ctx: Context, request: IJoinTeamRequest): Response {
     let player = state.players.find((p) => p.id === userId);
     if (!player) {
@@ -311,10 +374,25 @@ export class Impl implements Methods<InternalState> {
 
     return Response.ok();
   }
+  sendHeartBeatResponse(state: InternalState, userId: UserId, ctx: Context, request: ISendHeartBeatResponseRequest): Response {
+    let player = state.players.find((p) => p.id === userId);
+    if (!player) {
+      return Response.error("Player is undefined");
+    }
+    player.lastHeartbeat = 0;
+    return Response.ok();
+  }
+
   getUserState(state: InternalState, userId: UserId): PlayerState {
     return state;
   }
   onTick(state: InternalState, ctx: Context, timeDelta: number): void {
+    //healtcheck
+
+    sendHeartbeat(state);
+    removeOfflineUsers(state);
+    
+    //HintsTimer
     if (state.gameStatus === GameStatus.GUESSING && state.hintsGiven > 0) {
       state.roundInfo!.timeLeft--;
       if (state.roundInfo!.timeLeft <= 0) {
@@ -324,6 +402,8 @@ export class Impl implements Methods<InternalState> {
         state.gameStatus = GameStatus.ROUND_ENDED;
       }
     }
+
+    //BidTimer
     if (state.gameStatus === GameStatus.AUCTION) {
 
       let playerGivingCluesA = state.players.find((p) => {
@@ -357,10 +437,12 @@ export class Impl implements Methods<InternalState> {
   }
 }
 
-function createPlayer(id: UserId, name: string): PlayerInfo {
+function createPlayer(id: UserId, name: string, admin: boolean): PlayerInfo {
   return {
     id,
     name,
+    isAdmin: admin,
+    lastHeartbeat: 0,
     team: Color.GRAY,
     isGivingClues: false,
   };
@@ -389,4 +471,32 @@ function levenstein(a: string, b: string) {
   }
 
   return m[b.length][a.length];
+}
+
+function sendHeartbeat(state: InternalState) {
+  state.players.forEach(element => {
+    element.lastHeartbeat++;
+  });
+}
+
+function removeOfflineUsers(state: InternalState) {
+  state.players.forEach(element => {
+    if (element.lastHeartbeat > 60) {
+      const index = state.players.indexOf(element, 0);
+      if (index > -1) {
+        state.players.splice(index, 1);
+      }
+      if(element.isAdmin){
+        checkForAdmin(state);
+      }
+    }
+  });
+  
+}
+
+function checkForAdmin(state: InternalState) {
+  let player = state.players.find((p) => p.isAdmin === true);
+  if(!player && state.players.length > 0){
+    state.players[0].isAdmin = true;
+  }
 }
