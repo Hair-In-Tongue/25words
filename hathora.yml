@@ -18,6 +18,8 @@ types:
   PlayerInfo:
     id: UserId
     name: string
+    lastHeartbeat: int
+    isAdmin: boolean
     team: Color
     isGivingClues: boolean
   GameStatus:
@@ -45,6 +47,10 @@ methods:
   changeName:
     name: string
   startGame:
+  resetScore:
+  kickPlayer:
+    player: UserId
+  shuffleTeams:
   joinTeam:
     team: Color
   joinAsLeader:
@@ -58,6 +64,7 @@ methods:
     word: int
     guess: string
   timeEnd:
+  sendHeartBeatResponse:
 
 auth:
   anonymous: {}
