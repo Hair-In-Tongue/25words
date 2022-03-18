@@ -20,6 +20,8 @@ export interface Props {
 export interface ITeamProps {
     team: ITeam
     client: HathoraConnection
+    userData: IUserData
+    playerState: PlayerState
 }
 
 export interface ITeam {

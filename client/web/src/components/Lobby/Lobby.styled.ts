@@ -1,10 +1,31 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Props } from '../../interfaces/Interface'
 
+const progress = keyframes`
+    0% {
+        width: 5%;
+    }
+
+    50% {
+        width: 30%;
+    }
+`
+
+export const Center = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+`
+
 export const Container = styled.div`
+    align-items: center;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    padding: 1.5rem 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 10px 10px 20px 2px black;
 `
 
 export const Teams = styled.div`
@@ -14,34 +35,48 @@ export const Teams = styled.div`
     height: 100%;
 `
 
-export const Score = styled.h2`
-    text-align: center;
-`
-
 export const TeamCard = styled.div`
     display: grid;
+    justify-items: center;
+    align-items: center;
     grid-template-rows: 15% 75% 10%;
-    margin: 0 10px;
+    margin: 1.5rem 5px;
     border-radius: 10px;
     overflow: hidden;
     background-color: ${(props: Props) => props.color || 'white'};
-    width: 15%;
+    width: 15vw;
     height: 300px;
 `
 
-export const PlayersList = styled.ul`
-    list-style-type: none;
-    list-style: none;
-    padding: 0;
+export const Score = styled.h2`
+    margin: 0px;
     text-align: center;
 `
 
-export const PlayerItem = styled.li`
-    padding: 0 5px;
-    background-color: rgba(0, 0, 0, 0.1);
-    &:not(:last-child) {
-        margin-bottom: 2px;
+export const PlayersList = styled.ul`
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    list-style-type: none;
+    list-style: none;
+    padding: 10px 0px;
+    text-align: center;
+
+    li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 5px;
+        background-color: rgba(0, 0, 0, 0.1);
+        &:not(:last-child) {
+            margin-bottom: 2px;
+        }
     }
+`
+
+export const CrownIcon = styled.img`
+    margin: 0px 10px;
+    height: 1.2rem;
 `
 
 export const JoinTeamBtn = styled.button`
@@ -55,4 +90,12 @@ export const JoinTeamBtn = styled.button`
         box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
         cursor: pointer;
     }
+`
+
+export const ProgressBar = styled.div`
+    width: 5%;
+    height: 20px;
+    background-color: red;
+    margin-top: 20px;
+    animation: ${progress} 0.7s ease-in-out infinite;
 `
