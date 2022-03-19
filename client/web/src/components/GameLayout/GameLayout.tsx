@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './Header/Header'
 import { LayoutBody, LayoutContainer } from './GameLayout.styled'
 
-const GameLayout = ({ children }: React.ReactNode) => {
+const GameLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <LayoutContainer>
             <Header />

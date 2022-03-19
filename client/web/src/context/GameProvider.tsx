@@ -1,7 +1,21 @@
 import React, { createContext, useContext } from 'react'
 import { IGameProps } from '../interfaces/GlobalInterface'
+import { GameStatus } from '../../../../api/types'
 
-const GameContext = createContext<IGameProps | null>(null)
+const GameContext = createContext<IGameProps>({
+    userData: {
+        token: '',
+        id: '',
+        name: '',
+    },
+    playerState: {
+        players: [],
+        gameStatus: GameStatus.NOT_STARTED,
+        roundInfo: undefined,
+        teams: undefined,
+    },
+    client: undefined,
+})
 
 interface IGameProvider {
     children: React.ReactNode

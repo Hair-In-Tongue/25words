@@ -4,8 +4,8 @@ import { History } from 'history'
 import { PlayerState } from '../../../../../api/types'
 import { HathoraClient, HathoraConnection } from '../../../../.hathora/client'
 import Game from '../Game/Game'
-import { IUserData } from '../../interfaces/TeamInterface'
-const client = new HathoraClient(import.meta.env.VITE_APP_ID as string)
+import { IUserData } from '../../interfaces/GlobalInterface'
+const client = new HathoraClient()
 
 function Room() {
     const [playerState, setPlayerState] = useState<PlayerState | undefined>(
@@ -17,7 +17,11 @@ function Room() {
     const [is404, setIs404] = useState<boolean>(false)
     const path = useLocation().pathname
     const history = useHistory()
-    const [userData, setUserData] = useState<IUserData | undefined>({})
+    const [userData, setUserData] = useState<IUserData>({
+        token: '',
+        id: '',
+        name: '',
+    })
 
     useEffect(() => {
         if (hathora === undefined) {
@@ -94,17 +98,19 @@ async function initRtag(
         history.replace(`/room/${connection.stateId}`)
     } else {
         const stateId = path.split('/').pop()
-        const connection = client.connectExisting(
-            token,
-            stateId,
-            ({ state }) => onStateChange(state),
-            console.error
-        )
-        setHathora(connection)
+        if (stateId) {
+            const connection = client.connectExisting(
+                token,
+                stateId,
+                ({ state }) => onStateChange(state),
+                console.error
+            )
+            setHathora(connection)
+        }
     }
 }
 
-function parseJwt(token) {
+function parseJwt(token: string) {
     const base64Url = token.split('.')[1]
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
     const jsonPayload = decodeURIComponent(
