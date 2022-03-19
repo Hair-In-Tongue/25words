@@ -9,13 +9,7 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
     return (
         <GameProvider gameProps={{ userData, playerState, client }}>
             <GameLayout>
-                {playerState.gameStatus === GameStatus.NOT_STARTED && (
-                    <Lobby
-                        userData={userData}
-                        playerState={playerState}
-                        client={client}
-                    />
-                )}
+                {playerState.gameStatus === GameStatus.NOT_STARTED && <Lobby />}
             </GameLayout>
         </GameProvider>
     )

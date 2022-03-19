@@ -27,7 +27,10 @@ const Lobby = () => {
 
         if (indexOfLeader >= 0) {
             for (let i = 0; i < indexOfLeader; i++) {
-                players.push(players.shift())
+                const player = players.shift()
+                if (player) {
+                    players.push(player)
+                }
             }
         }
         return players
@@ -63,13 +66,13 @@ const Lobby = () => {
     ]
 
     const changeNickname = async () => {
-        client.changeName({
+        client?.changeName({
             name: newNickname,
         })
     }
 
     const joinGame = async () => {
-        await client.joinGame({
+        await client?.joinGame({
             name: newNickname,
         })
     }

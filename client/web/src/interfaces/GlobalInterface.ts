@@ -10,5 +10,5 @@ export interface IUserData {
 export interface IGameProps {
     userData: IUserData
     playerState: PlayerState
-    client: HathoraConnection
+    client?: HathoraConnection
 }

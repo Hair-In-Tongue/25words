@@ -8,7 +8,7 @@ export const TeamCard = styled.div`
     margin: 1.5rem 5px;
     border-radius: 10px;
     overflow: hidden;
-    background-color: ${({ color }: string) => color || 'white'};
+    background-color: ${({ color }) => color || 'white'};
     width: 15vw;
     height: 300px;
 `
