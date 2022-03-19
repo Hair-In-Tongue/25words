@@ -1,19 +1,30 @@
 import React from 'react'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-import JoinGame from './JoinGame/JoinGame'
+import CreateGame from './CreateGame/CreateGame'
 import Room from './Room/Room'
 import { ThemeProvider } from 'styled-components'
+import { store, persistor } from '../store/store'
+import { Provider } from 'react-redux'
 import theme from '../theme'
+import { PersistGate } from 'redux-persist/integration/react'
 
 function App() {
     return (
         <ThemeProvider theme={theme}>
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={() => <JoinGame />} />
-                    <Route path="/room" component={() => <Room />} />
-                </Switch>
-            </Router>
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <Router>
+                        <Switch>
+                            <Route
+                                exact
+                                path="/"
+                                component={() => <CreateGame />}
+                            />
+                            <Route path="/room" component={() => <Room />} />
+                        </Switch>
+                    </Router>
+                </PersistGate>
+            </Provider>
         </ThemeProvider>
     )
 }
