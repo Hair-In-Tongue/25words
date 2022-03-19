@@ -27,8 +27,13 @@ types:
     - AUCTION
     - GUESSING
     - ROUND_ENDED
+  Difficulty:
+    - EASY
+    - NORMAL
+    - HARD
   RoundInfo:
     cards: int
+    difficulty: Difficulty
     hints: int
     timeMax: int
     timeLeft: int
@@ -47,6 +52,8 @@ methods:
   changeName:
     name: string
   startGame:
+  setDifficulty:
+    name: Difficulty
   resetScore:
   kickPlayer:
     player: UserId

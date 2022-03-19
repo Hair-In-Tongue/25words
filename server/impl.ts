@@ -7,12 +7,14 @@ import {
   Team,
   PlayerInfo,
   GameStatus,
+  Difficulty,
   RoundInfo,
   PlayerState,
   UserId,
   IJoinGameRequest,
   IChangeNameRequest,
   IStartGameRequest,
+  ISetDifficultyRequest,
   IResetScoreRequest,
   IKickPlayerRequest,
   IShuffleTeamsRequest,
@@ -26,6 +28,9 @@ import {
 } from "../api/types";
 
 import { wordList } from "./wordList";
+import { wordListEasy } from "./wordListEasy";
+import { wordListNormal } from "./wordListNormal";
+import { wordListHard } from "./wordListHard";
 
 type InternalState = {
   players: PlayerInfo[];
@@ -44,7 +49,7 @@ export class Impl implements Methods<InternalState> {
     return {
       players: [],
       cards: [],
-      roundInfo: { cards: 5, hints: 0, timeMax: 90, timeLeft: 90, bidTimeLeft: 0, currentTurn: Color.GRAY, board: undefined },
+      roundInfo: { cards: 5, hints: 0, timeMax: 90, timeLeft: 90, bidTimeLeft: 0, currentTurn: Color.GRAY, board: undefined, difficulty: Difficulty.EASY },
       gameStatus: GameStatus.NOT_STARTED,
       teams: teams,
       hintsGiven: 0
@@ -80,14 +85,14 @@ export class Impl implements Methods<InternalState> {
       return Response.error("Player is undefined");
     }
 
-    if (state.gameStatus == GameStatus.AUCTION || state.gameStatus == GameStatus.GUESSING) {
-      return Response.error("Game already started");
-    }
+    // if (state.gameStatus == GameStatus.AUCTION || state.gameStatus == GameStatus.GUESSING) {
+    //   return Response.error("Game already started");
+    // }
 
     if (!player.isAdmin) {
       return Response.error("Player is not an admin");
     }
-    
+
     state.roundInfo = {
       ...state.roundInfo!,
       cards: 5,
@@ -99,11 +104,7 @@ export class Impl implements Methods<InternalState> {
     };
     state.hintsGiven = 0;
 
-    const shuffledList = ctx.chance.shuffle(wordList);
-    state.cards = [];
-    state.cards.push(...chooseCards(shuffledList, state.roundInfo!.cards));
-    state.cards = ctx.chance.shuffle(state.cards);
-
+    state.cards = getCardsForRound(state, ctx, state.roundInfo.cards, state.roundInfo.difficulty);
     state.roundInfo!.board = state.cards;
 
     //losu team 
@@ -118,7 +119,21 @@ export class Impl implements Methods<InternalState> {
     state.gameStatus = GameStatus.AUCTION;
     return Response.ok();
   }
+  setDifficulty(state: InternalState, userId: UserId, ctx: Context, request: ISetDifficultyRequest): Response {
+    let player = state.players.find((p) => p.id === userId);
 
+    if (!player) {
+      return Response.error("Player is undefined");
+    }
+
+    if (!player.isAdmin) {
+      return Response.error("Player is not an admin");
+    }
+
+    state.roundInfo!.difficulty = request.name;
+
+    return Response.ok();
+  }
   resetScore(state: InternalState, userId: UserId, ctx: Context, request: IResetScoreRequest): Response {
     let player = state.players.find((p) => p.id === userId);
 
@@ -343,7 +358,7 @@ export class Impl implements Methods<InternalState> {
       return Response.error("You are not guessing");
     }
     var length = state.cards[request.word].word.length / 3 > 3 ? 3 : state.cards[request.word].word.length / 3
-    if (state.cards[request.word].word === request.guess || levenstein(state.cards[request.word].word, request.guess) < length) {
+    if (state.cards[request.word].word.toLowerCase( ) === request.guess.toLowerCase( ) || levenstein(state.cards[request.word].word.toLowerCase( ), request.guess.toLowerCase( )) < length) {
       state.cards[request.word].guessed = true;
 
       state.roundInfo!.timeLeft += 10;
@@ -391,7 +406,7 @@ export class Impl implements Methods<InternalState> {
 
     sendHeartbeat(state);
     removeOfflineUsers(state);
-    
+
     //HintsTimer
     if (state.gameStatus === GameStatus.GUESSING && state.hintsGiven > 0) {
       state.roundInfo!.timeLeft--;
@@ -486,17 +501,52 @@ function removeOfflineUsers(state: InternalState) {
       if (index > -1) {
         state.players.splice(index, 1);
       }
-      if(element.isAdmin){
+      if (element.isAdmin) {
         checkForAdmin(state);
       }
     }
   });
-  
+
 }
 
 function checkForAdmin(state: InternalState) {
   let player = state.players.find((p) => p.isAdmin === true);
-  if(!player && state.players.length > 0){
+  if (!player && state.players.length > 0) {
     state.players[0].isAdmin = true;
   }
+}
+
+function getCardsForRound(state: InternalState, ctx: Context, cards: Object, difficulty: Difficulty) {
+
+  let shuffledEasyWordList = ctx.chance.shuffle(wordListEasy);
+  let shuffledNormalWordList = ctx.chance.shuffle(wordListNormal);
+  let shuffledHardWordList = ctx.chance.shuffle(wordListHard);
+  state.cards = [];
+
+  switch (difficulty) {
+    case Difficulty.EASY:
+      state.cards.push(...chooseCards(shuffledEasyWordList, state.roundInfo!.cards));
+      state.cards = ctx.chance.shuffle(state.cards);
+      break;
+
+    case Difficulty.NORMAL:
+      let normalWordList = ctx.chance.shuffle(shuffledNormalWordList.concat(shuffledEasyWordList.slice(0, 100)));
+      state.cards.push(...chooseCards(normalWordList, state.roundInfo!.cards));
+      state.cards = ctx.chance.shuffle(state.cards);
+      break;
+
+    case Difficulty.HARD:
+      let hardWordList = ctx.chance.shuffle(shuffledHardWordList.concat(shuffledNormalWordList.slice(0, 100).concat(shuffledEasyWordList.slice(0, 50))));
+      state.cards.push(...chooseCards(hardWordList, state.roundInfo!.cards));
+      state.cards = ctx.chance.shuffle(state.cards);
+      break;
+
+    default:
+      let shuffledList = ctx.chance.shuffle(wordList);
+      state.cards = [];
+      state.cards.push(...chooseCards(shuffledList, state.roundInfo!.cards));
+      state.cards = ctx.chance.shuffle(state.cards);
+      break;
+  }
+  return state.cards;
 }
