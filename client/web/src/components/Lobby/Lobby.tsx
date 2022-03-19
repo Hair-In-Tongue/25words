@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import { Color, PlayerInfo } from '../../../../../api/types'
-import { ILobbyProps, ITeam } from '../../interfaces/Interface'
-import { Container, Teams, Center, ProgressBar } from './Lobby.styled'
+import { ITeam } from '../../interfaces/TeamInterface'
+import { Container, Teams, Center } from './Lobby.styled'
 import theme from '../../theme'
 import Team from '../Team/Team'
+import { useGameContext } from '../../context/GameProvider'
+import { IGameProps } from '../../interfaces/GlobalInterface'
 
-const Lobby = (props: ILobbyProps) => {
-    const players = props.playerState.players
+const Lobby = () => {
+    const { client, playerState, userData }: IGameProps = useGameContext()
+
+    const players = playerState.players
     const [newNickname, setNewNickname] = useState<string>(
         localStorage.getItem('nickname') || ''
     )
-    const isJoined = props.playerState.players.find(
-        (player) => player.id === props.userData.id
+    const isJoined = playerState.players.find(
+        (player) => player.id === userData.id
     )
 
     const sortTeam = (players: Array<PlayerInfo>) => {
@@ -59,25 +63,23 @@ const Lobby = (props: ILobbyProps) => {
     ]
 
     const changeNickname = async () => {
-        props.client.changeName({
+        client.changeName({
             name: newNickname,
         })
     }
 
     const joinGame = async () => {
-        await props.client.joinGame({
+        await client.joinGame({
             name: newNickname,
         })
     }
 
-    if (props.playerState.players.length === 0 && newNickname) joinGame()
+    if (playerState.players.length === 0 && newNickname) joinGame()
 
     return (
         <>
             {newNickname && isJoined ? (
                 <>
-                    {console.log(props.userData)}
-                    {console.log(props.playerState)}
                     <Center>
                         <Container>
                             <div>
@@ -102,13 +104,7 @@ const Lobby = (props: ILobbyProps) => {
 
                             <Teams>
                                 {teams.map((team, i) => (
-                                    <Team
-                                        key={i}
-                                        team={team}
-                                        playerState={props.playerState}
-                                        userData={props.userData}
-                                        client={props.client}
-                                    ></Team>
+                                    <Team key={i} team={team}></Team>
                                 ))}
                             </Teams>
                             <button>Start Game</button>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { History } from 'history'
-import { GameStatus, PlayerState } from '../../../../../api/types'
+import { PlayerState } from '../../../../../api/types'
 import { HathoraClient, HathoraConnection } from '../../../../.hathora/client'
-import Lobby from '../../components/Lobby/Lobby'
-import { IUserData } from '../../interfaces/Interface'
+import Game from '../Game/Game'
+import { IUserData } from '../../interfaces/TeamInterface'
 const client = new HathoraClient(import.meta.env.VITE_APP_ID as string)
 
 function Room() {
@@ -36,15 +36,11 @@ function Room() {
 
     if (playerState && hathora && !is404 && path !== '/room') {
         return (
-            <>
-                {playerState.gameStatus === GameStatus.NOT_STARTED && (
-                    <Lobby
-                        userData={userData}
-                        playerState={playerState}
-                        client={hathora}
-                    ></Lobby>
-                )}
-            </>
+            <Game
+                userData={userData}
+                playerState={playerState}
+                client={hathora}
+            />
         )
     } else if (is404) {
         return (

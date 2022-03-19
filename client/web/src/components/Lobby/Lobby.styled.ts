@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components'
-import { Props } from '../../interfaces/Interface'
 
 const progress = keyframes`
     0% {
@@ -34,7 +33,6 @@ export const Teams = styled.div`
     width: 100%;
     height: 100%;
 `
-
 
 export const ProgressBar = styled.div`
     width: 5%;

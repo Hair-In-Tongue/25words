@@ -1,5 +1,5 @@
 export default {
-    background: '#f0e8d8',
+    background: '#edf1f5',
     button: '#f5a836',
     buttonClick: '#cf8a25',
     text: '#212121',

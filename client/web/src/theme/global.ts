@@ -11,7 +11,7 @@ export default createGlobalStyle`${css`
     body,
     html {
         height: 100%;
-        background-color: ${theme.colors.background};
+        margin: 0;
     }
 `}
 `

@@ -1,12 +1,12 @@
 {
-  "compilerOptions": {
-    "jsx": "react",
-    "esModuleInterop": true,
-    "module": "esnext",
-    "strict": true,
-    "target": "esnext",
-    "moduleResolution": "node",
-    "isolatedModules": true
-  },
-  "include": ["src/assets", "src/custom.d.ts"]
+    "compilerOptions": {
+        "jsx": "react",
+        "esModuleInterop": true,
+        "module": "esnext",
+        "strict": true,
+        "target": "esnext",
+        "moduleResolution": "node",
+        "isolatedModules": true,
+    },
+    "include": ["src/**/*", "src/custom.d.ts"]
 }
