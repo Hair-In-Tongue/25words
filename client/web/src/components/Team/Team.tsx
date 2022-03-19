@@ -11,6 +11,7 @@ import { iconList } from '../../assets/index'
 import { useGameContext } from '../../context/GameProvider'
 import { ITeamProps } from '../../interfaces/TeamInterface'
 import { IGameProps } from '../../interfaces/GlobalInterface'
+import Bid from '../../containers/Bid/Bid'
 
 const Team = ({ team }: ITeamProps) => {
     const { client, playerState, userData }: IGameProps = useGameContext()
@@ -31,7 +32,10 @@ const Team = ({ team }: ITeamProps) => {
         await client?.joinAsLeader({ team: team.teamColor })
     }
 
+    const getTeamBid = playerState.teams?.find((t) => t.color === team.teamColor)?.bid
+
     return (
+        <>
         <TeamCard color={team.backgroundColor}>
             <Score>{team.name}</Score>
             <PlayersList>
@@ -57,6 +61,12 @@ const Team = ({ team }: ITeamProps) => {
                 <JoinTeamBtn onClick={joinAsLeader}>PLAY AS LEADER</JoinTeamBtn>
             )}
         </TeamCard>
+        
+        {team.teamColor !== Color.GRAY && (
+            <Bid
+                bid={getTeamBid}
+            />
+        )}</>
     )
 }
 
