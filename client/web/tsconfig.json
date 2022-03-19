@@ -7,5 +7,6 @@
     "target": "esnext",
     "moduleResolution": "node",
     "isolatedModules": true
-  }
+  },
+  "include": ["src/assets", "src/custom.d.ts"]
 }

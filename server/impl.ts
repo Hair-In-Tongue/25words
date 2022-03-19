@@ -405,7 +405,7 @@ export class Impl implements Methods<InternalState> {
     //healtcheck
 
     sendHeartbeat(state);
-    removeOfflineUsers(state);
+    //removeOfflineUsers(state);
 
     //HintsTimer
     if (state.gameStatus === GameStatus.GUESSING && state.hintsGiven > 0) {

@@ -3,7 +3,7 @@ import { Color, PlayerInfo } from '../../../../../api/types'
 import { ILobbyProps, ITeam } from '../../interfaces/Interface'
 import { Container, Teams, Center, ProgressBar } from './Lobby.styled'
 import theme from '../../theme'
-import Team from './Team'
+import Team from '../Team/Team'
 
 const Lobby = (props: ILobbyProps) => {
     const players = props.playerState.players

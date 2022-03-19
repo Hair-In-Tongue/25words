@@ -7,8 +7,8 @@ import {
     JoinTeamBtn,
     Score,
     CrownIcon,
-} from './Lobby.styled'
-import crownIcon from '/crown-icon.svg'
+} from './Team.styled'
+import { iconList } from '../../assets/index'
 
 const Team = (props: ITeamProps) => {
     const playerDetails = props.playerState.players.find((p) => {
@@ -34,9 +34,9 @@ const Team = (props: ITeamProps) => {
                 {props.team.players.map((player: PlayerInfo) =>
                     player.isGivingClues && player.team !== Color.GRAY ? (
                         <li key={player.id}>
-                            <CrownIcon src={crownIcon}></CrownIcon>
+                            <CrownIcon src={iconList.crownIcon}></CrownIcon>
                             {player.name}
-                            <CrownIcon src={crownIcon}></CrownIcon>
+                            <CrownIcon src={iconList.crownIcon}></CrownIcon>
                         </li>
                     ) : (
                         <li key={player.id}>{player.name}</li>
@@ -44,8 +44,8 @@ const Team = (props: ITeamProps) => {
                 )}
             </PlayersList>
             {playerDetails?.team !== props.team.teamColor ||
-            playerDetails?.team === Color.GRAY ||
-            playerDetails?.isGivingClues ? (
+                playerDetails?.team === Color.GRAY ||
+                playerDetails?.isGivingClues ? (
                 <JoinTeamBtn
                     color={props.team.backgroundColor}
                     onClick={joinTeam}
