@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Color, PlayerInfo } from '../../../../../api/types'
 import { ITeam } from '../../interfaces/TeamInterface'
 import { Container, Teams, Center } from './Lobby.styled'
@@ -6,42 +6,43 @@ import theme from '../../theme'
 import Team from '../Team/Team'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { setNickname } from '../../store/reducers/playerSlice'
+import JoinGame from '../JoinGame/JoinGame'
 
 const Lobby = () => {
     const { client, playerState, userData }: IGameProps = useGameContext()
+    const dispatch = useAppDispatch()
+    const { nickname, isCreator } = useAppSelector((state) => state.player)
 
-    const players = playerState.players
-    const [newNickname, setNewNickname] = useState<string>(
-        localStorage.getItem('nickname') || ''
-    )
     const isJoined = playerState.players.find(
         (player) => player.id === userData.id
     )
 
+    useEffect(() => {
+        if (playerState.players.length === 0 && nickname) joinGame(nickname)
+    }, [])
+
     const sortTeam = (players: Array<PlayerInfo>) => {
         const indexOfLeader: number = players.findIndex(
-            (object: PlayerInfo) => {
-                return object.isGivingClues === true
-            }
+            (object: PlayerInfo) => object.isGivingClues === true
         )
 
-        if (indexOfLeader >= 0) {
-            for (let i = 0; i < indexOfLeader; i++) {
-                const player = players.shift()
-                if (player) {
-                    players.push(player)
-                }
-            }
+        const leader = players[indexOfLeader]
+        if (leader) {
+            players.splice(indexOfLeader, 1)
+            players.unshift(leader)
         }
+
         return players
     }
 
     const redTeam = sortTeam(
-        players.filter((player) => player.team === Color.RED)
+        playerState.players.filter((player) => player.team === Color.RED)
     )
 
     const blueTeam = sortTeam(
-        players.filter((player) => player.team === Color.BLUE)
+        playerState.players.filter((player) => player.team === Color.BLUE)
     )
 
     const teams: Array<ITeam> = [
@@ -54,7 +55,9 @@ const Lobby = () => {
         {
             name: 'Spectators',
             backgroundColor: theme.colors.grayTeam,
-            players: players.filter((player) => player.team === Color.GRAY),
+            players: playerState.players.filter(
+                (player) => player.team === Color.GRAY
+            ),
             teamColor: Color.GRAY,
         },
         {
@@ -67,21 +70,26 @@ const Lobby = () => {
 
     const changeNickname = async () => {
         client?.changeName({
-            name: newNickname,
+            name: nickname,
         })
     }
 
-    const joinGame = async () => {
+    const joinGame = async (n: string) => {
         await client?.joinGame({
-            name: newNickname,
+            name: n,
         })
     }
 
-    if (playerState.players.length === 0 && newNickname) joinGame()
+    const setNewNickname = (n: string) => dispatch(setNickname(n))
+
+    const newPlayer = async (n: string) => {
+        dispatch(setNickname(n))
+        await joinGame(n)
+    }
 
     return (
         <>
-            {newNickname && isJoined ? (
+            {nickname && isJoined ? (
                 <>
                     <Center>
                         <Container>
@@ -96,8 +104,8 @@ const Lobby = () => {
                                 />
                                 <button
                                     disabled={
-                                        newNickname.length === 0 ||
-                                        newNickname.length < 3
+                                        nickname.length === 0 ||
+                                        nickname.length < 3
                                     }
                                     onClick={changeNickname}
                                 >
@@ -115,26 +123,7 @@ const Lobby = () => {
                     </Center>
                 </>
             ) : (
-                <>
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Your nickname"
-                            value={newNickname}
-                            maxLength={10}
-                            onChange={(e) => setNewNickname(e.target.value)}
-                        />
-                        <button
-                            disabled={
-                                newNickname.length === 0 ||
-                                newNickname.length < 3
-                            }
-                            onClick={joinGame}
-                        >
-                            JOIN GAME
-                        </button>
-                    </div>
-                </>
+                <>{!isCreator && <JoinGame handleJoin={newPlayer} />}</>
             )}
         </>
     )

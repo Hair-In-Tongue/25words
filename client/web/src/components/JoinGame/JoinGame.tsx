@@ -10,18 +10,15 @@ import {
     Text,
     Input,
 } from './JoinGame.styled'
-import { useHistory } from 'react-router-dom'
 
-function Title() {
+interface IJoinProps {
+    handleJoin: (nickname: string) => void
+}
+
+const JoinGame = ({ handleJoin }: IJoinProps) => {
     const [nickname, setNickname] = useState<string>('')
     const handleSetNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
         setNickname(e.target.value)
-    const history = useHistory()
-
-    const createGame = () => {
-        localStorage.setItem('nickname', nickname)
-        return history.push('/room')
-    }
 
     return (
         <>
@@ -43,7 +40,10 @@ function Title() {
                             />
                         </Spacing>
                         <Spacing>
-                            <JoinButton type="button" onClick={createGame}>
+                            <JoinButton
+                                type="button"
+                                onClick={() => handleJoin(nickname)}
+                            >
                                 Create room
                             </JoinButton>
                         </Spacing>
@@ -54,4 +54,4 @@ function Title() {
     )
 }
 
-export default Title
+export default JoinGame
