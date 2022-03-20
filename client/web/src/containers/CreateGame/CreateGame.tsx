@@ -17,7 +17,7 @@ const CreateGame = () => {
 
     return (
         <CreateGameContainer>
-            <JoinGame handleJoin={createGame} />
+            <JoinGame handleJoin={createGame} buttonName="Create room" />
         </CreateGameContainer>
     )
 }

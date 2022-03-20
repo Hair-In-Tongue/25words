@@ -6,8 +6,7 @@ export const TeamCard = styled.div`
     justify-items: center;
     align-items: center;
     grid-template-rows: 15% 75% 10%;
-    margin: 1.5rem 5px;
-    border-radius: 10px;
+    border-radius: 1rem;
     overflow: hidden;
     background-color: ${({ color }) => color || 'white'};
     width: 15vw;
