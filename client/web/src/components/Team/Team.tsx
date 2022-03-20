@@ -33,7 +33,7 @@ const Team = ({ name, backgroundColor, teamColor }: ITeamProps) => {
     const joinAsLeader = async () => {
         await client?.joinAsLeader({ team: teamColor })
     }
-
+    
     const sortTeam = (players: Array<PlayerInfo>) => {
         const indexOfLeader: number = players.findIndex(
             (object: PlayerInfo) => object.isGivingClues === true
@@ -49,7 +49,6 @@ const Team = ({ name, backgroundColor, teamColor }: ITeamProps) => {
     }
 
     return (
-        <>
             <TeamCard color={backgroundColor}>
                 <Score>
                     {name} {team?.points}
@@ -58,15 +57,29 @@ const Team = ({ name, backgroundColor, teamColor }: ITeamProps) => {
                     {sortTeam(teamPlayers).map((player: PlayerInfo) =>
                         player.isGivingClues && player.team !== Color.GRAY ? (
                             <li key={player.id}>
-                                <CrownIcon src={iconList.crownIcon}></CrownIcon>
+                                <CrownIcon
+                                    wrapper="svg"
+                                    src={iconList.crownIcon}
+                                />
                                 {player.name}
-                                <CrownIcon src={iconList.crownIcon}></CrownIcon>
+                                <CrownIcon
+                                    wrapper="svg"
+                                    src={iconList.crownIcon}
+                                />
                             </li>
                         ) : (
                             <li key={player.id}>{player.name}</li>
                         )
                     )}
                 </PlayersList>
+                {playerDetails?.team !== team.teamColor ||
+                playerDetails?.team === Color.GRAY ||
+                playerDetails?.isGivingClues ? (
+                    <JoinTeamBtn
+                        color={team.backgroundColor}
+                        onClick={joinTeam}
+                    >
+                        JOIN {team.name.toUpperCase()}
                 {playerDetails?.team !== teamColor ||
                 playerDetails?.team === Color.GRAY ||
                 playerDetails?.isGivingClues ? (
@@ -79,7 +92,6 @@ const Team = ({ name, backgroundColor, teamColor }: ITeamProps) => {
                     </JoinTeamBtn>
                 )}
             </TeamCard>
-        </>
     )
 }
 

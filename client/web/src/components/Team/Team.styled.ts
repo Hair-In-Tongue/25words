@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { ReactSVG } from 'react-svg'
 
 export const TeamCard = styled.div`
     display: grid;
@@ -38,9 +39,10 @@ export const PlayersList = styled.ul`
     }
 `
 
-export const CrownIcon = styled.img`
+export const CrownIcon = styled(ReactSVG)`
     margin: 0px 10px;
     height: 1.2rem;
+    width: 1.2rem;
 `
 
 export const JoinTeamBtn = styled.button`
