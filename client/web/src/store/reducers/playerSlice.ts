@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface PlayerState {
+    nickname: string
+    isCreator: boolean
+}
+
+const initialState: PlayerState = {
     nickname: '',
     isCreator: false,
 };
@@ -10,10 +15,10 @@ export const playerSlice = createSlice({
     name: "player",
     initialState,
     reducers: {
-        setNickname(state, action) {
+        setNickname(state, action: PayloadAction<string>) {
             state.nickname = action.payload
         },
-        setIsCreator(state, action) {
+        setIsCreator(state, action: PayloadAction<boolean>) {
             state.isCreator = action.payload
         }
     }

@@ -6,5 +6,5 @@ export const LayoutContainer = styled.div`
 `
 
 export const LayoutBody = styled.div`
-    margin: 50px 0;
+    margin: 1rem 0;
 `

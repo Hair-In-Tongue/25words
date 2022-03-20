@@ -7,7 +7,7 @@ export const LayoutHeader = styled.nav`
     flex-wrap: wrap;
     padding: 1.5rem;
     min-width: 100%;
-    background-color: #383838;
+    background-color: ${({ theme }) => theme.colors.header};
 `
 
 export const LayoutFlex = styled.div`

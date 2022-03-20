@@ -13,9 +13,10 @@ import {
 
 interface IJoinProps {
     handleJoin: (nickname: string) => void
+    buttonName: string
 }
 
-const JoinGame = ({ handleJoin }: IJoinProps) => {
+const JoinGame = ({ handleJoin, buttonName }: IJoinProps) => {
     const [nickname, setNickname] = useState<string>('')
     const handleSetNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
         setNickname(e.target.value)
@@ -44,7 +45,7 @@ const JoinGame = ({ handleJoin }: IJoinProps) => {
                                 type="button"
                                 onClick={() => handleJoin(nickname)}
                             >
-                                Create room
+                                {buttonName}
                             </JoinButton>
                         </Spacing>
                     </FlexCol>
