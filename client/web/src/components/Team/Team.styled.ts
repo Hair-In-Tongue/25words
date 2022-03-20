@@ -52,7 +52,7 @@ export const JoinTeamBtn = styled.button`
     box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
     width: 100%;
     background-color: rgba(0, 0, 0, 0.2);
-    &:hover {
+    &:hover:enabled {
         box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
         cursor: pointer;
     }
