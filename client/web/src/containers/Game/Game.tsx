@@ -10,10 +10,13 @@ import JoinGame from '../../components/JoinGame/JoinGame'
 import theme from '../../theme'
 import { setNickname } from '../../store/reducers/playerSlice'
 import Lobby from '../../components/Lobby/Lobby'
+import Loading from '../../components/Loading/Loading'
+import { setLoading } from '../../store/reducers/loadingSlice'
 
 const Game = ({ userData, playerState, client }: IGameProps) => {
     const dispatch = useAppDispatch()
-    const { nickname, isCreator } = useAppSelector((state) => state.player)
+    const { nickname } = useAppSelector((state) => state.player)
+    const { loading } = useAppSelector((state) => state.loading)
     const isJoined = playerState.players.find(
         (player) => player.id === userData.id
     )
@@ -28,9 +31,11 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
     }
 
     const joinGame = async (n: string) => {
+        dispatch(setLoading(true))
         await client?.joinGame({
             name: n,
         })
+        dispatch(setLoading(false))
     }
 
     return (
@@ -60,14 +65,14 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                             />
                         </GridUnit>
                     </GridLayout>
+                ) : loading ? (
+                    <Loading />
                 ) : (
                     <>
-                        {!isCreator && (
-                            <JoinGame
-                                handleJoin={newPlayer}
-                                buttonName="Join game"
-                            />
-                        )}
+                        <JoinGame
+                            handleJoin={newPlayer}
+                            buttonName="Join game"
+                        />
                     </>
                 )}
             </GameLayout>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Color, PlayerInfo, GameStatus } from '../../../../../api/types'
+import { Color, PlayerInfo } from '../../../../../api/types'
 import {
     TeamCard,
     PlayersList,
@@ -69,24 +69,11 @@ const Team = ({ name, backgroundColor, teamColor }: ITeamProps) => {
             {playerDetails?.team !== team?.color ||
             playerDetails?.team === Color.GRAY ||
             playerDetails?.isGivingClues ? (
-                <JoinTeamBtn
-                    color={backgroundColor}
-                    onClick={joinTeam}
-                    disabled={
-                        !(playerState.gameStatus === GameStatus.NOT_STARTED)
-                    }
-                >
+                <JoinTeamBtn color={backgroundColor} onClick={joinTeam}>
                     JOIN {name.toUpperCase()}
                 </JoinTeamBtn>
             ) : (
-                <JoinTeamBtn
-                    onClick={joinAsLeader}
-                    disabled={
-                        !(playerState.gameStatus === GameStatus.NOT_STARTED)
-                    }
-                >
-                    PLAY AS LEADER
-                </JoinTeamBtn>
+                <JoinTeamBtn onClick={joinAsLeader}>PLAY AS LEADER</JoinTeamBtn>
             )}
         </TeamCard>
     )
