@@ -33,7 +33,7 @@ const Team = ({ name, backgroundColor, teamColor }: ITeamProps) => {
     const joinAsLeader = async () => {
         await client?.joinAsLeader({ team: teamColor })
     }
-    
+
     const sortTeam = (players: Array<PlayerInfo>) => {
         const indexOfLeader: number = players.findIndex(
             (object: PlayerInfo) => object.isGivingClues === true
@@ -49,49 +49,33 @@ const Team = ({ name, backgroundColor, teamColor }: ITeamProps) => {
     }
 
     return (
-            <TeamCard color={backgroundColor}>
-                <Score>
-                    {name} {team?.points}
-                </Score>
-                <PlayersList>
-                    {sortTeam(teamPlayers).map((player: PlayerInfo) =>
-                        player.isGivingClues && player.team !== Color.GRAY ? (
-                            <li key={player.id}>
-                                <CrownIcon
-                                    wrapper="svg"
-                                    src={iconList.crownIcon}
-                                />
-                                {player.name}
-                                <CrownIcon
-                                    wrapper="svg"
-                                    src={iconList.crownIcon}
-                                />
-                            </li>
-                        ) : (
-                            <li key={player.id}>{player.name}</li>
-                        )
-                    )}
-                </PlayersList>
-                {playerDetails?.team !== team.teamColor ||
-                playerDetails?.team === Color.GRAY ||
-                playerDetails?.isGivingClues ? (
-                    <JoinTeamBtn
-                        color={team.backgroundColor}
-                        onClick={joinTeam}
-                    >
-                        JOIN {team.name.toUpperCase()}
-                {playerDetails?.team !== teamColor ||
-                playerDetails?.team === Color.GRAY ||
-                playerDetails?.isGivingClues ? (
-                    <JoinTeamBtn color={backgroundColor} onClick={joinTeam}>
-                        JOIN {name.toUpperCase()}
-                    </JoinTeamBtn>
-                ) : (
-                    <JoinTeamBtn onClick={joinAsLeader}>
-                        PLAY AS LEADER
-                    </JoinTeamBtn>
+        <TeamCard color={backgroundColor}>
+            <Score>
+                {name} {team?.points}
+            </Score>
+            <PlayersList>
+                {sortTeam(teamPlayers).map((player: PlayerInfo) =>
+                    player.isGivingClues && player.team !== Color.GRAY ? (
+                        <li key={player.id}>
+                            <CrownIcon wrapper="svg" src={iconList.crownIcon} />
+                            {player.name}
+                            <CrownIcon wrapper="svg" src={iconList.crownIcon} />
+                        </li>
+                    ) : (
+                        <li key={player.id}>{player.name}</li>
+                    )
                 )}
-            </TeamCard>
+            </PlayersList>
+            {playerDetails?.team !== team?.color ||
+            playerDetails?.team === Color.GRAY ||
+            playerDetails?.isGivingClues ? (
+                <JoinTeamBtn color={backgroundColor} onClick={joinTeam}>
+                    JOIN {name.toUpperCase()}
+                </JoinTeamBtn>
+            ) : (
+                <JoinTeamBtn onClick={joinAsLeader}>PLAY AS LEADER</JoinTeamBtn>
+            )}
+        </TeamCard>
     )
 }
 
