@@ -108,7 +108,7 @@ export class Impl implements Methods<InternalState> {
     state.roundInfo!.board = state.cards;
 
     //losu team 
-    state.roundInfo!.currentTurn = Math.floor(Math.random() * 2) ? Color.RED : Color.BLUE;
+    state.roundInfo!.currentTurn = ctx.chance.pickone([Color.RED, Color.BLUE])
 
     let teamA = state.teams.find((p) => p.color === state.roundInfo!.currentTurn);
     let teamB = state.teams.find((p) => p.color != state.roundInfo!.currentTurn);
@@ -228,22 +228,27 @@ export class Impl implements Methods<InternalState> {
       return Response.error("Player is undefined");
     }
 
-    if (state.gameStatus == GameStatus.GUESSING) {
+    let playerGivingClues = state.players.find((p) => {
+      if (p.team === request.team && p.isGivingClues === true) {
+        return true;
+      }
+      return false;
+    });
+
+    if (state.gameStatus == GameStatus.GUESSING && playerGivingClues) {
+      return Response.error("This team already has one leader");
+    }    
+    
+    if (state.gameStatus == GameStatus.GUESSING && playerGivingClues) {
       return Response.error("Game already started");
     }
 
-    if (state.gameStatus == GameStatus.AUCTION && player.isGivingClues && request.team != Color.GRAY) {
+    if (state.gameStatus == GameStatus.AUCTION && player.isGivingClues && playerGivingClues && request.team != Color.GRAY) {
       return Response.error("You cant switch teams while bidding");
     }
 
     if (request.team != Color.GRAY) {
-      let playerGivingClues = state.players.find((p) => {
-        if (p.team === request.team && p.isGivingClues === true) {
-          return true;
-        }
-        return false;
-      });
-
+     
       if (!playerGivingClues) {
         player.team = request.team;
         player!.isGivingClues = true;
@@ -281,9 +286,9 @@ export class Impl implements Methods<InternalState> {
     let teamB = state.teams.find((p) => p.color != player!.team);
 
     if (request.hints === 0) {
-      if (teamA!.bid! > teamB!.bid!) {
+      if (teamA!.bid! >= teamB!.bid!) {
         state.roundInfo!.currentTurn = teamB!.color;
-        state.roundInfo!.hints = 0;
+        state.roundInfo!.hints = teamB!.bid!;
         state.hintsGiven = 0;
         state.gameStatus = GameStatus.GUESSING;
         state.roundInfo!.bidTimeLeft = 0;
@@ -298,7 +303,7 @@ export class Impl implements Methods<InternalState> {
       return Response.error("Your offer must be lower");
     }
     else {
-      teamA!.bid = request.hints;
+      teamB!.bid = request.hints;
       state.roundInfo!.currentTurn = teamB!.color;
       state.roundInfo!.bidTimeLeft = 15;
     }
