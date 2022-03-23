@@ -8,4 +8,6 @@ export default {
     redTeam: '#FFAEC9',
     blueTeam: '#99D9EA',
     grayTeam: '#D3D3D3',
+    cardBackground: '#cfa97d',
+    guessedCardBackground: '#b5cf7d',
 }
