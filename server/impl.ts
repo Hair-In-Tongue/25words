@@ -303,9 +303,18 @@ export class Impl implements Methods<InternalState> {
       return Response.error("Your offer must be lower");
     }
     else {
-      teamB!.bid = request.hints;
-      state.roundInfo!.currentTurn = teamB!.color;
-      state.roundInfo!.bidTimeLeft = 15;
+      if( request.hints === state.roundInfo.cards){
+        teamA!.bid = request.hints;
+        state.roundInfo!.currentTurn = teamA!.color;
+        state.hintsGiven = 0;
+        state.gameStatus = GameStatus.GUESSING;
+        state.roundInfo!.bidTimeLeft = 0;
+        return Response.ok();
+      } else {      
+        teamA!.bid = request.hints;
+        state.roundInfo!.currentTurn = teamB!.color;
+        state.roundInfo!.bidTimeLeft = 15;}
+
     }
     return Response.ok();
   }
