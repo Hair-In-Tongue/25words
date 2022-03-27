@@ -4,7 +4,7 @@ import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { GameStatus } from '../../../../../api/types'
 
-const Board = () => {
+const Cards = () => {
     const { playerState, userData }: IGameProps = useGameContext()
 
     const playerDetails = playerState.players.find((p) => {
@@ -40,4 +40,4 @@ const Board = () => {
     )
 }
 
-export default Board
+export default Cards

@@ -1,9 +1,4 @@
 import styled from 'styled-components'
-import colors from '../../theme/colors'
-
-interface IPlayingCardProps {
-    guessed: boolean
-}
 
 export const CardsColumn = styled.div`
     display: grid;
@@ -12,7 +7,7 @@ export const CardsColumn = styled.div`
     padding: 1rem 1rem;
 `
 
-export const PlayingCard = styled.div`
+export const PlayingCard = styled.div<{ guessed: boolean }>`
     display: grid;
     justify-items: center;
     grid-template-rows: auto auto 6rem;
@@ -20,8 +15,8 @@ export const PlayingCard = styled.div`
     width: 8rem;
     border-radius: 5px;
     padding: 1rem 1rem;
-    background-color: ${(props: IPlayingCardProps) =>
-        props.guessed ? colors.guessedCardBackground : colors.cardBackground};
+    background-color: ${({ guessed, theme }) =>
+        guessed ? theme.colors.guessedCardBackground : theme.colors.cardBackground};
 `
 
 export const Line = styled.div`

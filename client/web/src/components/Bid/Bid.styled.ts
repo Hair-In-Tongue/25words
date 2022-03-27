@@ -1,19 +1,15 @@
 import styled from 'styled-components'
 
-interface IBidContainer {
-    left: boolean
-}
-
-export const BidContainer = styled.div`
+export const BidContainer = styled.div<{ left: boolean }>`
     display: grid;
-    grid-template-columns: ${(props) =>
-        props.left ? `96px 32px;` : `32px 96px;`};
+    grid-template-columns: ${({ left }) =>
+        left ? `96px 32px;` : `32px 96px;`};
     grid-template-rows: 48px 32px;
     gap: 4px 0px;
     height: auto;
     grid-template-areas:
-        ${(props: IBidContainer) =>
-            props.left ? `'i2 i1' 'i4 .';` : `'i1 i2' '. i4';`}
+        ${({ left }) =>
+        left ? `'i2 i1' 'i4 .';` : `'i1 i2' '. i4';`}
         'i2 i1'
         'i4 .';
 `
@@ -24,26 +20,28 @@ export const ArrowContainer = styled.div`
 `
 
 export const ArrowUp = styled.button`
+    border: none;
+    background-color: unset;
+
     &:after {
         content: '🔼';
         display: inline-block;
         font-size: 16px;
     }
-    border: none;
-    background-color: unset;
     &:hover:enabled {
         cursor: pointer;
     }
 `
 
 export const ArrowDown = styled.button`
+    border: none;
+    background-color: unset;
+
     &:after {
         content: '🔽';
         display: inline-block;
         font-size: 16px;
     }
-    border: none;
-    background-color: unset;
     &:hover:enabled {
         cursor: pointer;
     }
@@ -70,15 +68,6 @@ export const ActionContainer = styled.div`
 `
 
 export const ActionAccept = styled.button`
-    &:after {
-        content: '✅';
-        display: inline-block;
-        font-size: 20px;
-    }
-    &:hover:enabled {
-        background-color: darkblue;
-        cursor: pointer;
-    }
     place-self: center;
     height: 100%;
     width: 100%;
@@ -91,11 +80,9 @@ export const ActionAccept = styled.button`
     background-color: none;
     border-right: 1px solid gray;
     background-color: lightblue;
-`
 
-export const ActionRefuse = styled.button`
     &:after {
-        content: '🏳️';
+        content: '✅';
         display: inline-block;
         font-size: 20px;
     }
@@ -103,6 +90,9 @@ export const ActionRefuse = styled.button`
         background-color: darkblue;
         cursor: pointer;
     }
+`
+
+export const ActionRefuse = styled.button`
     background-color: lightblue;
     place-self: center;
     height: 100%;
@@ -116,4 +106,14 @@ export const ActionRefuse = styled.button`
     background-color: none;
     border-left: 1px solid gray;
     background-color: lightblue;
+
+    &:after {
+        content: '🏳️';
+        display: inline-block;
+        font-size: 20px;
+    }
+    &:hover:enabled {
+        background-color: darkblue;
+        cursor: pointer;
+    }
 `
