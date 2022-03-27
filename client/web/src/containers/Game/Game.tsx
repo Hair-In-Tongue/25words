@@ -11,6 +11,7 @@ import theme from '../../theme'
 import { setNickname } from '../../store/reducers/playerSlice'
 import Lobby from '../../components/Lobby/Lobby'
 import Loading from '../../components/Loading/Loading'
+import Board from '../../components/Board/Board'
 import { setLoading } from '../../store/reducers/loadingSlice'
 
 const Game = ({ userData, playerState, client }: IGameProps) => {
@@ -54,7 +55,7 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                             {playerState.gameStatus ===
                                 GameStatus.NOT_STARTED && <Lobby />}
                             {playerState.gameStatus === GameStatus.AUCTION && (
-                                <div>Bidding</div>
+                                <Board />
                             )}
                         </GridUnit>
                         <GridUnit>
