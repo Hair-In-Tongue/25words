@@ -291,7 +291,7 @@ export class Impl implements Methods<InternalState> {
         state.roundInfo!.hints = teamB!.bid!;
         state.hintsGiven = 0;
         state.gameStatus = GameStatus.GUESSING;
-        state.roundInfo!.bidTimeLeft = 0;
+        //state.roundInfo!.bidTimeLeft = 0;
         return Response.ok();
       }
       else { return Response.error("You cant accept opponent bid if your is lower"); }
@@ -308,13 +308,13 @@ export class Impl implements Methods<InternalState> {
         state.roundInfo!.currentTurn = teamA!.color;
         state.hintsGiven = 0;
         state.gameStatus = GameStatus.GUESSING;
-        state.roundInfo!.bidTimeLeft = 0;
+        //state.roundInfo!.bidTimeLeft = 0;
         return Response.ok();
       } else {      
         teamA!.bid = request.hints;
         state.roundInfo!.currentTurn = teamB!.color;
-        state.roundInfo!.bidTimeLeft = 15;}
-
+        //state.roundInfo!.bidTimeLeft = 15;
+      }
     }
     return Response.ok();
   }
@@ -449,19 +449,19 @@ export class Impl implements Methods<InternalState> {
         return false;
       });
       if (playerGivingCluesA && playerGivingCluesB) {
-        state.roundInfo!.bidTimeLeft--;
+        //state.roundInfo!.bidTimeLeft--;
       }
 
-      if (state.roundInfo!.bidTimeLeft <= 0) {
-        if (state.roundInfo!.currentTurn == Color.RED) {
-          state.roundInfo!.currentTurn = Color.BLUE;
-          state.roundInfo!.hints = state.teams[1].bid!;
-        } else {
-          state.roundInfo!.currentTurn = Color.RED;
-          state.roundInfo!.hints = state.teams[0].bid!;
-        }
-        state.gameStatus = GameStatus.GUESSING;
-      }
+      // if (state.roundInfo!.bidTimeLeft <= 0) {
+      //   if (state.roundInfo!.currentTurn == Color.RED) {
+      //     state.roundInfo!.currentTurn = Color.BLUE;
+      //     state.roundInfo!.hints = state.teams[1].bid!;
+      //   } else {
+      //     state.roundInfo!.currentTurn = Color.RED;
+      //     state.roundInfo!.hints = state.teams[0].bid!;
+      //   }
+      //   state.gameStatus = GameStatus.GUESSING;
+      // }
     }
   }
 }
