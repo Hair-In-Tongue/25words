@@ -14,17 +14,19 @@ import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { Color } from '../../../../../api/types'
 
-const Bid = ({ bid, teamColor }: IBid) => {
+const Bid = ({ teamColor }: IBid) => {
     const { client, playerState, userData }: IGameProps = useGameContext()
     const playerDetails = playerState.players.find((p) => {
         if (p.id === userData.id) {
             return p
         }
     })
+
+    const team = playerState.teams?.find((t) => t.color === teamColor)
     const left = teamColor === Color.RED
     const disableButtons = playerState.roundInfo?.currentTurn === teamColor
 
-    const [bidValue, setBidValue] = useState<number | undefined>(bid)
+    const [bidValue, setBidValue] = useState<number | undefined>(team?.bid)
 
     const sendBid = async (number: number) => {
         const dupa = await client?.bid({
@@ -66,11 +68,11 @@ const Bid = ({ bid, teamColor }: IBid) => {
                             <ArrowContainer>
                                 <ArrowUp
                                     onClick={upBid}
-                                    disabled={disableButtons}
+                                    disabled={!disableButtons}
                                 />
                                 <ArrowDown
                                     onClick={downBid}
-                                    disabled={disableButtons}
+                                    disabled={!disableButtons}
                                 />
                             </ArrowContainer>
                             <ActionContainer>
@@ -80,11 +82,11 @@ const Bid = ({ bid, teamColor }: IBid) => {
                                             ? sendBid(bidValue)
                                             : null
                                     }
-                                    disabled={disableButtons}
+                                    disabled={!disableButtons}
                                 />
                                 <ActionRefuse
                                     onClick={() => sendBid(0)}
-                                    disabled={disableButtons}
+                                    disabled={!disableButtons}
                                 />
                             </ActionContainer>
                         </>
