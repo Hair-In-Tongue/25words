@@ -5,7 +5,7 @@ export const LayoutHeader = styled.nav`
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 1.5rem;
+    padding: 0.75rem;
     min-width: 100%;
     background-color: ${({ theme }) => theme.colors.header};
 `

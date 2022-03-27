@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     BidContainer,
     BidValue,
@@ -27,6 +27,10 @@ const Bid = ({ teamColor }: IBid) => {
     const disableButtons = playerState.roundInfo?.currentTurn === teamColor
 
     const [bidValue, setBidValue] = useState<number | undefined>(team?.bid)
+
+    useEffect(() => {
+        setBidValue(team?.bid)
+    }, [team?.bid])
 
     const sendBid = async (number: number) => {
         const dupa = await client?.bid({

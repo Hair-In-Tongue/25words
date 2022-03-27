@@ -8,6 +8,9 @@ export default {
     redTeam: '#FFAEC9',
     blueTeam: '#99D9EA',
     grayTeam: '#D3D3D3',
+    redTurnBackground: '#ffdee9',
+    blueTurnBackground: '#d6eff6',
     cardBackground: '#cfa97d',
     guessedCardBackground: '#b5cf7d',
+    selectedCard: 'green'
 }

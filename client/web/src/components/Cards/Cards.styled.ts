@@ -7,14 +7,18 @@ export const CardsColumn = styled.div`
     padding: 1rem 1rem;
 `
 
-export const PlayingCard = styled.div<{ guessed: boolean }>`
+export const PlayingCard = styled.div<{ guessed: boolean, isSelected: boolean }>`
     display: grid;
     justify-items: center;
     grid-template-rows: auto auto 6rem;
     row-gap: 1px;
-    width: 8rem;
     border-radius: 5px;
-    padding: 1rem 1rem;
+    box-shadow: ${({ isSelected, theme }) => isSelected
+        ? ('5px 5px 10px -1px ' + theme.colors.selectedCard)
+        : 'none'};
+    padding: 1rem;
+    margin: 0.25rem;
+    min-width: 10rem;
     background-color: ${({ guessed, theme }) =>
         guessed ? theme.colors.guessedCardBackground : theme.colors.cardBackground};
 `
@@ -34,6 +38,12 @@ export const Word = styled.div`
 `
 
 export const Clues = styled.ul`
+    margin: 0;
+    list-style: none;
+    padding: 0;
+`
+
+export const Guesses = styled.ul`
     margin: 0;
     list-style: none;
     padding: 0;

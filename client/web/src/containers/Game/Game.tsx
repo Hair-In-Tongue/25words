@@ -53,10 +53,15 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                         </GridUnit>
                         <GridUnit>
                             {playerState.gameStatus ===
-                                GameStatus.NOT_STARTED && <Lobby />}
-                            {playerState.gameStatus === GameStatus.AUCTION && (
+                                GameStatus.NOT_STARTED ||
+                            playerState.gameStatus ===
+                                GameStatus.ROUND_ENDED ? (
+                                <Lobby />
+                            ) : null}
+                            {playerState.gameStatus === GameStatus.AUCTION ||
+                            playerState.gameStatus === GameStatus.GUESSING ? (
                                 <Board />
-                            )}
+                            ) : null}
                         </GridUnit>
                         <GridUnit>
                             <Team
