@@ -46,12 +46,15 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                     <GridLayout>
                         <GridUnit>
                             <Team
+                                name="Blue team"
+                                backgroundColor={theme.colors.blueTeam}
+                                teamColor={Color.BLUE}
+                            />
+                            <Team
                                 name="Red team"
                                 backgroundColor={theme.colors.redTeam}
                                 teamColor={Color.RED}
                             />
-                        </GridUnit>
-                        <GridUnit>
                             {playerState.gameStatus ===
                                 GameStatus.NOT_STARTED ||
                             playerState.gameStatus ===
@@ -62,13 +65,6 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                             playerState.gameStatus === GameStatus.GUESSING ? (
                                 <Board />
                             ) : null}
-                        </GridUnit>
-                        <GridUnit>
-                            <Team
-                                name="Blue team"
-                                backgroundColor={theme.colors.blueTeam}
-                                teamColor={Color.BLUE}
-                            />
                         </GridUnit>
                     </GridLayout>
                 ) : loading ? (

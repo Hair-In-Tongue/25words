@@ -1,10 +1,20 @@
 import React from 'react'
-import { LayoutFlex, LayoutHeader } from './Header.styled'
+import { GameStatus } from '../../../../../../api/types'
+import { useGameContext } from '../../../context/GameProvider'
+import { LayoutFlex, LayoutHeader, HeaderButton, Timer } from './Header.styled'
+import { IGameProps } from '../../../interfaces/GlobalInterface'
 
 const Header = () => {
+    const { playerState }: IGameProps = useGameContext()
     return (
         <LayoutHeader>
-            <LayoutFlex>Header</LayoutFlex>
+            <LayoutFlex>
+                <HeaderButton>i</HeaderButton>
+                {playerState.gameStatus === GameStatus.GUESSING && (
+                    <Timer>{playerState.roundInfo?.timeLeft}</Timer>
+                )}
+                <HeaderButton>M</HeaderButton>
+            </LayoutFlex>
         </LayoutHeader>
     )
 }
