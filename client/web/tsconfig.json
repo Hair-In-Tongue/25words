@@ -8,5 +8,5 @@
         "moduleResolution": "node",
         "isolatedModules": true,
     },
-    "include": ["src/**/*", "src/custom.d.ts"]
+    "include": ["src/**/*", "src/custom.d.ts", "styled-components.d.ts"]
 }
