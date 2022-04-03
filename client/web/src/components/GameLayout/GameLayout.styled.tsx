@@ -1,9 +1,24 @@
 import styled from 'styled-components'
 import { Color } from '../../../../../api/types'
 
-export const LayoutContainer = styled.div<{ currentTurn: Color | undefined }>`
+export const LayoutContainer = styled.div`
     min-height: 100vh;
-    background-color: ${({ currentTurn, theme }) => {
+`
+
+export const LayoutBody = styled.div`
+    margin: 0;
+`
+
+const Absolute = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+`
+
+export const Gradient = styled(Absolute)<{ currentTurn: Color | undefined }>`
+    background: ${({ currentTurn, theme }) => {
         if (currentTurn === Color.BLUE) {
             return theme.colors.blueTurnBackground
         } else if (currentTurn === Color.RED) {
@@ -12,8 +27,15 @@ export const LayoutContainer = styled.div<{ currentTurn: Color | undefined }>`
             return theme.colors.background
         }
     }};
+    z-index: -1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.5s;
 `
 
-export const LayoutBody = styled.div`
-    margin: 0;
+export const BackgroundImage = styled(Absolute)`
+    z-index: -1;
+    mix-blend-mode: overlay;
+    background: url('/src/assets/images/background.png');
+    background-size: cover;
 `

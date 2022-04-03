@@ -1,5 +1,5 @@
 export default {
-    background: '#E5E5E5',
+    background: '#fbe3a3',
     elementBackground: '#C5B4A1',
     header: '#97a2ad',
     button: '#f5a836',
@@ -9,8 +9,8 @@ export default {
     redTeam: '#D13967',
     blueTeam: '#04B692',
     grayTeam: '#D3D3D3',
-    redTurnBackground: '#ffdee9',
-    blueTurnBackground: '#d6eff6',
+    redTurnBackground: 'linear-gradient(270deg, rgba(247, 236, 206, 0.8) 0%, rgba(209, 57, 103, 0.8) 100%), #F7ECCE',
+    blueTurnBackground: 'linear-gradient(90deg, #F7ECCE 0%, #04B692 100%), linear-gradient(270deg, rgba(247, 236, 206, 0.8) 0%, rgba(209, 57, 103, 0.8) 100%), #F7ECCE',
     cardBackground: '#cfa97d',
     guessedCardBackground: '#b5cf7d',
     selectedCard: 'green',

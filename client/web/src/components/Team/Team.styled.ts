@@ -66,8 +66,7 @@ export const TeamCard = styled.div<{ left: boolean }>`
     height: 256px;
     
     ${Details} {
-        border-radius: ${({ left }) =>
-        left ? '0px 0px 16px 0px' : '0px 0px 0px 16px'};
+        border-radius: ${({ left }) => left ? '0px 0px 16px 0px' : '0px 0px 0px 16px'};
     }
     
     ${Leader} {
@@ -77,8 +76,8 @@ export const TeamCard = styled.div<{ left: boolean }>`
     }
     
     ${Score} {
-        border-radius: ${({ left }) =>
-        left ? '0px 16px 16px 0px' : '16px 0px 0px 16px'};
+        border-radius: ${({ left }) => left ? '0px 16px 16px 0px' : '16px 0px 0px 16px'};
+        transform: ${({ left }) => left ? 'translateX(-1px)' : 'translateX(1px)'}
     }
     
     ${({ theme: { devices }, left }) => css`          
