@@ -1,16 +1,17 @@
 export default {
-    background: '#edf1f5',
+    background: '#E5E5E5',
+    elementBackground: '#C5B4A1',
     header: '#97a2ad',
     button: '#f5a836',
     buttonClick: '#cf8a25',
     text: '#212121',
     shadow: '#454545',
-    redTeam: '#FFAEC9',
-    blueTeam: '#99D9EA',
+    redTeam: '#D13967',
+    blueTeam: '#04B692',
     grayTeam: '#D3D3D3',
     redTurnBackground: '#ffdee9',
     blueTurnBackground: '#d6eff6',
     cardBackground: '#cfa97d',
     guessedCardBackground: '#b5cf7d',
-    selectedCard: 'green'
+    selectedCard: 'green',
 }

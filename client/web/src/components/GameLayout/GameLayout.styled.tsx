@@ -15,5 +15,5 @@ export const LayoutContainer = styled.div<{ currentTurn: Color | undefined }>`
 `
 
 export const LayoutBody = styled.div`
-    margin: 1rem 0;
+    margin: 0;
 `
