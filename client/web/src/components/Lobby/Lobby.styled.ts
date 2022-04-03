@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 const progress = keyframes`
     0% {
@@ -60,16 +60,21 @@ export const JoinTeamBtn = styled.button`
     height: 42px;
     border-radius: 16px;
     background-color: ${({ color }) => color};
-    @media ${({ theme }) => theme.devices.mobile} {
-    }
-    @media ${({ theme }) => theme.devices.tablet} {
-    }
-    @media ${({ theme }) => theme.devices.desktop} {
-        &:hover:enabled {
-            box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
-            cursor: pointer;
+
+    ${({ theme: { devices } }) => css`
+        ${devices.mobile} {
         }
-    }
+        
+        ${devices.tablet} {
+        }
+        
+        ${devices.desktop} {
+            &:hover:enabled {
+                box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+            }
+        }
+    `}
 `
 
 export const JoinSpectator = styled(JoinTeamBtn)`
@@ -77,6 +82,7 @@ export const JoinSpectator = styled(JoinTeamBtn)`
     background-color: ${({ color }) => color};
     color: black;
     margin-top: 12px;
+    
     &::after {
         content: '';
         position: absolute;
@@ -120,6 +126,7 @@ export const RadioLabel = styled.label`
 
 export const RadioButton = styled.input`
     display: none;
+    
     &:checked + ${RadioLabel} {
         background-color: #c5b4a1;
         box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.5);
@@ -150,10 +157,11 @@ export const SwitchLabel = styled.label`
     margin-top: 2px;
     background-color: #948779;
     box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.5);
+    
     &::before {
+        content: '';
         transition-duration: 0.1s;
         transition-timing-function: cubic-bezier(0.91, 0.54, 0.39, 1.03);
-        content: '';
         position: absolute;
         top: 369px;
         left: 0;
@@ -171,6 +179,7 @@ export const SwitchLabel = styled.label`
 
 export const Switch = styled.input`
     display: none;
+    
     &:checked + ${SwitchLabel} {
         background-color: #c5b4a1;
         box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);

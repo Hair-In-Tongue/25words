@@ -4,8 +4,7 @@ const size = {
     desktop: '1024px',
 }
 
-export default {
-    mobile: `(min-width: ${size.mobile})`,
-    tablet: `(min-width: ${size.tablet})`,
-    desktop: `(min-width: ${size.desktop})`,
-}
+Object.keys(size).forEach((key: string) => size[key as keyof typeof size] = `@media (min-width: ${size[key as keyof typeof size]})`)
+
+export default size
+

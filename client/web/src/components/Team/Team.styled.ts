@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { ReactSVG } from 'react-svg'
 
 export const Details = styled.div`
@@ -11,16 +11,20 @@ export const Details = styled.div`
     background-color: ${({ color }) => color || 'white'};
     color: white;
     width: 15rem;
-    //box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.25);
     z-index: 1;
-    @media ${({ theme }) => theme.devices.mobile} {
-        width: 200px;
-        height: 256px;
-    }
-    @media ${({ theme }) => theme.devices.tablet} {
-    }
-    @media ${({ theme }) => theme.devices.desktop} {
-    }
+    
+    ${({ theme: { devices } }) => css`
+        ${devices.mobile} {
+            width: 200px;
+            height: 256px;
+        }
+        
+        ${devices.tablet} {
+        }
+        
+        ${devices.desktop} {
+        }
+    `}
 `
 
 export const Leader = styled.h2`
@@ -28,6 +32,7 @@ export const Leader = styled.h2`
     font-size: 20px;
     font-weight: 500;
     text-align: center;
+    
     &::after {
         content: '';
         display: block;
@@ -50,7 +55,6 @@ export const Score = styled.div`
     margin: 0px;
     background-color: ${({ color }) => color || 'white'};
     color: white;
-    //box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.25);
     z-index: 2;
 `
 
@@ -60,27 +64,36 @@ export const TeamCard = styled.div<{ left: boolean }>`
     position: fixed;
     width: 264px;
     height: 256px;
+    
     ${Details} {
         border-radius: ${({ left }) =>
-            left ? '0px 0px 16px 0px' : '0px 0px 0px 16px'};
+        left ? '0px 0px 16px 0px' : '0px 0px 0px 16px'};
     }
+    
     ${Leader} {
         &::after {
             left: ${({ left }) => (left ? '52px' : '116px')};
         }
     }
+    
     ${Score} {
         border-radius: ${({ left }) =>
-            left ? '0px 16px 16px 0px' : '16px 0px 0px 16px'};
+        left ? '0px 16px 16px 0px' : '16px 0px 0px 16px'};
     }
-    @media ${({ theme }) => theme.devices.mobile} {
-        ${({ left }) => (left ? 'left: -186' : 'right: -186')};
-    }
-    @media ${({ theme }) => theme.devices.tablet} {
-        ${({ left }) => (left ? 'left: 0' : 'right: 0')};
-    }
-    @media ${({ theme }) => theme.devices.desktop} {
-    }
+    
+    ${({ theme: { devices }, left }) => css`          
+        ${devices.mobile} {
+            ${(left ? 'left: -186' : 'right: -186')};
+        }
+        
+        ${devices.tablet} {
+            ${(left ? 'left: 0' : 'right: 0')};
+        }
+        
+        ${devices.desktop} {
+        }
+    `}
+    
 `
 
 export const Players = styled.div`
@@ -89,14 +102,18 @@ export const Players = styled.div`
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: -2px -4px 4px 0px #00000040 inset;
     border-radius: 16px;
-    @media ${({ theme }) => theme.devices.mobile} {
-        width: 144px;
-        height: 190px;
-    }
-    @media ${({ theme }) => theme.devices.tablet} {
-    }
-    @media ${({ theme }) => theme.devices.desktop} {
-    }
+    ${({ theme: { devices } }) => css`
+        ${devices.mobile} {
+            width: 144px;
+            height: 190px;
+        }
+        
+        ${devices.tablet} {
+        }
+        
+        ${devices.desktop} {
+        }
+    `}
 `
 
 export const Circle = styled.div`
@@ -121,6 +138,7 @@ export const PlayersList = styled.ul`
     list-style: none;
     padding: 10px 0px;
     text-align: center;
+    
     li {
         display: flex;
         justify-content: center;
@@ -129,6 +147,7 @@ export const PlayersList = styled.ul`
         font-size: 14px;
         line-height: 18px;
         padding: 0 5px;
+        
         &:not(:last-child) {
             margin-bottom: 2px;
         }
@@ -155,16 +174,21 @@ export const JoinTeamBtn = styled.button`
     height: 33px;
     border-radius: 16px;
     background-color: rgba(0, 0, 0, 0.3);
-    @media ${({ theme }) => theme.devices.mobile} {
-        width: 144px;
-        height: 32px;
-    }
-    @media ${({ theme }) => theme.devices.tablet} {
-    }
-    @media ${({ theme }) => theme.devices.desktop} {
-        &:hover:enabled {
-            box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
-            cursor: pointer;
+    ${({ theme: { devices } }) => css`
+        ${devices.mobile} {
+            width: 144px;
+            height: 32px;
         }
-    }
+        
+        ${devices.tablet} {
+        }
+        
+        ${devices.desktop} {
+            &:hover:enabled {
+                box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+            }
+        }
+    `}
+    
 `
