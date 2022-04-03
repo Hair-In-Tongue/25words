@@ -63,6 +63,9 @@ export const JoinTeamBtn = styled.button`
 
     ${({ theme: { devices } }) => css`
         ${devices.mobile} {
+            &:active {
+                box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
+            }
         }
         
         ${devices.tablet} {
@@ -102,35 +105,10 @@ export const Settings = styled.div`
     width: 100%;
 `
 
-export const Difficulty = styled.div`
+export const DifficultyContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 9px;
-`
-
-export const RadioLabel = styled.label`
-    transition-duration: 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 4px;
-    border-radius: 8px;
-    font-size: 18;
-    font-weight: bold;
-    border: 1px solid #453f38;
-    width: 80px;
-    height: 36px;
-    background-color: #e3d5c5;
-    box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
-`
-
-export const RadioButton = styled.input`
-    display: none;
-    
-    &:checked + ${RadioLabel} {
-        background-color: #c5b4a1;
-        box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.5);
-    }
 `
 
 export const TimeSettings = styled.div`
@@ -203,7 +181,7 @@ export const Time = styled.input`
     color: black;
 `
 
-export const StartButton = styled.button`
+export const StartButton = styled(JoinTeamBtn)`
     width: 100%;
     height: 36px;
     background-color: #0f1a60;

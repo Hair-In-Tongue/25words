@@ -6,9 +6,7 @@ import {
     JoinSpectator,
     FlexBetween,
     Settings,
-    Difficulty,
-    RadioButton,
-    RadioLabel,
+    DifficultyContainer,
     TimeSettings,
     SwitchLabel,
     Switch,
@@ -17,9 +15,10 @@ import {
     StartButton,
     Button,
 } from './Lobby.styled'
-
+import Level from '../Level/Level'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
+import { Difficulty } from '../../../../../api/types'
 
 const Lobby = () => {
     const { client }: IGameProps = useGameContext()
@@ -38,30 +37,11 @@ const Lobby = () => {
                 <JoinSpectator color={'#E3D5C5'}>SPECTATE</JoinSpectator>
             </Teams>
             <Settings>
-                <Difficulty>
-                    <RadioButton
-                        id="easy"
-                        type="radio"
-                        name="difficulty"
-                        value="easy"
-                    />
-                    <RadioLabel htmlFor="easy">Easy</RadioLabel>
-                    <RadioButton
-                        defaultChecked
-                        id="medium"
-                        type="radio"
-                        name="difficulty"
-                        value="medium"
-                    />
-                    <RadioLabel htmlFor="medium">Medium</RadioLabel>
-                    <RadioButton
-                        id="hard"
-                        type="radio"
-                        name="difficulty"
-                        value="hard"
-                    />
-                    <RadioLabel htmlFor="hard">Hard</RadioLabel>
-                </Difficulty>
+                <DifficultyContainer>
+                    <Level difficulty={Difficulty.EASY} />
+                    <Level difficulty={Difficulty.NORMAL} />
+                    <Level difficulty={Difficulty.HARD} />
+                </DifficultyContainer>
                 <TimeSettings>
                     <GuessingTime>
                         Guessing time
@@ -71,7 +51,7 @@ const Lobby = () => {
                     <Time type="text" defaultValue={'1:30'}></Time>
                 </TimeSettings>
             </Settings>
-            <StartButton>START ROUND</StartButton>
+            <StartButton onClick={() => startGame()}>START ROUND</StartButton>
             <FlexBetween>
                 <Button color={'#005956'}>Mix Teams</Button>
                 <Button color={'#95123A'}>Reset Score</Button>
