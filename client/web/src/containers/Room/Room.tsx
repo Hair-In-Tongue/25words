@@ -88,18 +88,20 @@ async function initRtag(
     })
 
     if (path === '/room') {
-        const connection = await client.connectNew(
+        const stateId = await client.create(token, {})
+        const connection = await client.connect(
             token,
+            stateId,
             ({ state }) => onStateChange(state),
             console.error
         )
-
+        console.log(stateId)
         setHathora(connection)
-        history.replace(`/room/${connection.stateId}`)
+        history.push(`/room/${connection.stateId}`)
     } else {
-        const stateId = path.split('/').pop()
+        const stateId = location.pathname.split('/').pop()!
         if (stateId) {
-            const connection = client.connectExisting(
+            const connection = client.connect(
                 token,
                 stateId,
                 ({ state }) => onStateChange(state),
