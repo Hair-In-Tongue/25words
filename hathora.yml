@@ -2,6 +2,7 @@
 
 types:
   Cards: Card[]
+  PrevRoundCards: Card[]
   Color:
     - RED
     - BLUE
@@ -31,6 +32,15 @@ types:
     - EASY
     - NORMAL
     - HARD
+  Language:
+    - EN
+    - PL
+  Deck:
+    code: string
+    name: string
+    difficulty: Difficulty
+    language: Language
+    words: string[]
   RoundInfo:
     cards: int
     difficulty: Difficulty
@@ -39,21 +49,34 @@ types:
     timeLeft: int
     bidTimeLeft: int
     board: Cards?
+    prevBoard: PrevRoundCards?
     currentTurn: Color
+    comment: string
   PlayerState:
     players: PlayerInfo[]
     gameStatus: GameStatus
     roundInfo: RoundInfo?
     teams: Team[]?
+    gamePassword: string
+    language: Language
+    customDecks: Deck[]
+    timerEnabled: boolean
 
 methods:
   joinGame:
     name: string
+    password: string
   changeName:
     name: string
+  setPassword:
+    password: string
   startGame:
   setDifficulty:
     name: Difficulty
+  addCustomDeck:
+    name: string
+  removeCustomDeck:
+    name: string
   resetScore:
   kickPlayer:
     player: UserId
@@ -70,8 +93,12 @@ methods:
   guessWord:
     word: int
     guess: string
-  timeEnd:
+  setTimer:
+    enabled: boolean
+    time: int
   sendHeartBeatResponse:
+  setGameLanguage:
+    language: Language
 
 auth:
   anonymous: {}
