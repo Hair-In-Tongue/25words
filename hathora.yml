@@ -8,10 +8,13 @@ types:
     - BLUE
     - GRAY
   Card:
-    word: string
+    word: Word
     guessed: boolean
     hints: string[]
     guesses: string[]
+  Word:
+    word: string
+    code: string
   Team:
     color: Color
     points: int
@@ -47,7 +50,6 @@ types:
     hints: int
     timeMax: int
     timeLeft: int
-    bidTimeLeft: int
     board: Cards?
     prevBoard: PrevRoundCards?
     currentTurn: Color

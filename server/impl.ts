@@ -5,6 +5,7 @@ import {
   PrevRoundCards,
   Color,
   Card,
+  Word,
   Team,
   PlayerInfo,
   GameStatus,
@@ -35,10 +36,7 @@ import {
   ISetGameLanguageRequest,
 } from "../api/types";
 
-import { wordList } from './wordList';
-import { wordListEasy } from './wordListEasy';
-import { wordListNormal } from './wordListNormal';
-import { wordListHard } from './wordListHard';
+import { plEasy, plMedium, plHard } from './wordList';
 
 type InternalState = {
   players: PlayerInfo[];
@@ -51,6 +49,7 @@ type InternalState = {
   gamePassword: string;
   language: Language;
   customDecks: Array<Deck>;
+  usedDecks: Array<Word>;
 };
 
 export class Impl implements Methods<InternalState> {
@@ -66,7 +65,6 @@ export class Impl implements Methods<InternalState> {
         hints: 0,
         timeMax: 90,
         timeLeft: 90,
-        bidTimeLeft: 0,
         currentTurn: Color.GRAY,
         board: undefined,
         prevBoard: undefined,
@@ -79,7 +77,8 @@ export class Impl implements Methods<InternalState> {
       timerEnabled: true,
       gamePassword: "",
       language: Language.PL,
-      customDecks: [],
+      customDecks: [plEasy, plMedium, plHard],
+      usedDecks: createDeck([plEasy, plMedium, plHard], Language.PL, Difficulty.EASY),
     };
   }
   joinGame(state: InternalState, userId: UserId, ctx: Context, request: IJoinGameRequest): Response {
@@ -88,7 +87,7 @@ export class Impl implements Methods<InternalState> {
       return Response.error(error?.message);
     }
 
-    if(request.password!=state.gamePassword){
+    if (request.password != state.gamePassword) {
       return Response.error("Wrong password");
     }
 
@@ -133,8 +132,7 @@ export class Impl implements Methods<InternalState> {
       hints: 0,
       timeMax: 90,
       timeLeft: state.roundInfo!.timeMax,
-      board: undefined,
-      bidTimeLeft: 1,
+      board: undefined
     };
     state.hintsGiven = 0;
 
@@ -160,6 +158,7 @@ export class Impl implements Methods<InternalState> {
     }
 
     state.roundInfo!.difficulty = request.name;
+    state.usedDecks = createDeck(state.customDecks, state.language, state.roundInfo!.difficulty);
 
     return Response.ok();
   }
@@ -181,6 +180,8 @@ export class Impl implements Methods<InternalState> {
 
     // state.customDecks.push(deck);
 
+    //state.usedDecks = createDeck(state.customDecks, state.language, state.roundInfo!.difficulty);
+
     // return Response.error("Not implemented");
   }
   removeCustomDeck(state: InternalState, userId: UserId, ctx: Context, request: IRemoveCustomDeckRequest): Response {
@@ -200,6 +201,8 @@ export class Impl implements Methods<InternalState> {
     //     state.customDecks.splice(index, 1);
     //   }
     // }
+
+    //state.usedDecks = createDeck(state.customDecks, state.language, state.roundInfo!.difficulty);
 
     // return Response.error("Not implemented");
   }
@@ -354,11 +357,11 @@ export class Impl implements Methods<InternalState> {
       return Response.error(error?.message);
     }
 
-    var length = state.cards[request.word].word.length / 3 > 3 ? 3 : state.cards[request.word].word.length / 3;
+    var length = state.cards[request.word].word.word.length / 3 > 3 ? 3 : state.cards[request.word].word.word.length / 3;
     if (state.cards[request.word].guessed == false) {
       if (
-        state.cards[request.word].word.toLowerCase() === request.guess.toLowerCase() ||
-        levenstein(state.cards[request.word].word.toLowerCase(), request.guess.toLowerCase()) < length
+        state.cards[request.word].word.word.toUpperCase() === request.guess.toUpperCase() ||
+        levenstein(state.cards[request.word].word.word.toUpperCase(), request.guess.toUpperCase()) < length
       ) {
         state.cards[request.word].guessed = true;
 
@@ -417,6 +420,8 @@ export class Impl implements Methods<InternalState> {
 
     state.language = request.language;
 
+    state.usedDecks = createDeck(state.customDecks, state.language, state.roundInfo!.difficulty);
+
     return Response.ok();
   }
   getUserState(state: InternalState, userId: UserId): PlayerState {
@@ -429,7 +434,7 @@ export class Impl implements Methods<InternalState> {
     //removeOfflineUsers(state);
 
     //HintsTimer
-    if (state.gameStatus === GameStatus.GUESSING && state.hintsGiven > 0) {
+    if (state.gameStatus === GameStatus.GUESSING && state.hintsGiven > 0 && state.timerEnabled) {
       state.roundInfo!.timeLeft--;
       if (state.roundInfo!.timeLeft <= 0) {
         let team = state.teams.find((p) => p.color != state.roundInfo!.currentTurn);
@@ -454,8 +459,8 @@ function createPlayer(id: UserId, name: string, admin: boolean): PlayerInfo {
   };
 }
 
-function chooseCards(words: string[], num: number): Card[] {
-  return [...Array(num).keys()].map((_) => ({ word: words.pop()!, guessed: false, hints: [], guesses: [] }));
+function chooseCards(deck: Array<Word>, num: number): Card[] {
+  return [...Array(num).keys()].map((_) => ({ word: deck.pop()!, guessed: false, hints: [], guesses: [] }));
 }
 
 function levenstein(a: string, b: string) {
@@ -510,40 +515,40 @@ function checkForAdmin(state: InternalState) {
 }
 
 function getCardsForRound(state: InternalState, ctx: Context, cards: Object, difficulty: Difficulty) {
-  let shuffledEasyWordList = ctx.chance.shuffle(wordListEasy);
-  let shuffledNormalWordList = ctx.chance.shuffle(wordListNormal);
-  let shuffledHardWordList = ctx.chance.shuffle(wordListHard);
+  
+  // let shuffledEasyWordList = ctx.chance.shuffle(plEasy.words);
+  // let shuffledNormalWordList = ctx.chance.shuffle(plMedium.words);
+  // let shuffledHardWordList = ctx.chance.shuffle(plHard.words);
+  // state.cards = [];
+
+  // switch (difficulty) {
+  //   case Difficulty.EASY:
+  //     state.cards.push(...chooseCards(shuffledEasyWordList, state.roundInfo!.cards));
+  //     state.cards = ctx.chance.shuffle(state.cards);
+  //     break;
+
+  //   case Difficulty.NORMAL:
+  //     let normalWordList = ctx.chance.shuffle(shuffledNormalWordList.concat(shuffledEasyWordList.slice(0, 100)));
+  //     state.cards.push(...chooseCards(normalWordList, state.roundInfo!.cards));
+  //     state.cards = ctx.chance.shuffle(state.cards);
+  //     break;
+
+  //   case Difficulty.HARD:
+  //     let hardWordList = ctx.chance.shuffle(
+  //       shuffledHardWordList.concat(
+  //         shuffledNormalWordList.slice(0, 100).concat(shuffledEasyWordList.slice(0, 50))
+  //       )
+  //     );
+  //     state.cards.push(...chooseCards(hardWordList, state.roundInfo!.cards));
+  //     state.cards = ctx.chance.shuffle(state.cards);
+  //     break;
+
+  //   default:
+  //     break;
+  // }
   state.cards = [];
-
-  switch (difficulty) {
-    case Difficulty.EASY:
-      state.cards.push(...chooseCards(shuffledEasyWordList, state.roundInfo!.cards));
-      state.cards = ctx.chance.shuffle(state.cards);
-      break;
-
-    case Difficulty.NORMAL:
-      let normalWordList = ctx.chance.shuffle(shuffledNormalWordList.concat(shuffledEasyWordList.slice(0, 100)));
-      state.cards.push(...chooseCards(normalWordList, state.roundInfo!.cards));
-      state.cards = ctx.chance.shuffle(state.cards);
-      break;
-
-    case Difficulty.HARD:
-      let hardWordList = ctx.chance.shuffle(
-        shuffledHardWordList.concat(
-          shuffledNormalWordList.slice(0, 100).concat(shuffledEasyWordList.slice(0, 50))
-        )
-      );
-      state.cards.push(...chooseCards(hardWordList, state.roundInfo!.cards));
-      state.cards = ctx.chance.shuffle(state.cards);
-      break;
-
-    default:
-      let shuffledList = ctx.chance.shuffle(wordList);
-      state.cards = [];
-      state.cards.push(...chooseCards(shuffledList, state.roundInfo!.cards));
-      state.cards = ctx.chance.shuffle(state.cards);
-      break;
-  }
+  state.cards.push(...chooseCards(state.usedDecks, state.roundInfo!.cards));
+  state.cards = ctx.chance.shuffle(state.cards);
   return state.cards;
 }
 
@@ -936,4 +941,29 @@ function isCurrentTurn(state: InternalState, userId: UserId) {
     value: true,
     message: ""
   };
+}
+
+function createDeck(decks: Array<Deck>, language: Language, difficulty: Difficulty) {
+
+  let usedDecks = decks.filter((d) => {
+    if (d.difficulty == difficulty && d.language == language) {
+      return true;
+    }
+    return false;
+  });
+
+  let usedCards: Array<Word> = [];
+
+  usedDecks.forEach(deck => {
+    deck.words.forEach(word => {
+      usedCards.push({
+        word: word.toUpperCase(),
+        code: deck.code
+      })
+    })
+  });
+// dude pls fix this vvvvvvvv ;3
+// usedCards = usedCards.map(item => item.word).filter((value,index,self)=>self.indexOf(value) === index);
+
+  return usedCards;
 }
