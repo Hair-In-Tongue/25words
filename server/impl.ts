@@ -135,7 +135,9 @@ export class Impl implements Methods<InternalState> {
       board: undefined
     };
     state.hintsGiven = 0;
-
+    if (state.usedDecks.length < state.roundInfo.cards) {
+      return Response.error("Not enough cards to start game");
+    }
     state.cards = getCardsForRound(state, ctx, state.roundInfo.cards, state.roundInfo.difficulty);
     state.roundInfo!.board = state.cards;
 
@@ -515,7 +517,7 @@ function checkForAdmin(state: InternalState) {
 }
 
 function getCardsForRound(state: InternalState, ctx: Context, cards: Object, difficulty: Difficulty) {
-  
+
   // let shuffledEasyWordList = ctx.chance.shuffle(plEasy.words);
   // let shuffledNormalWordList = ctx.chance.shuffle(plMedium.words);
   // let shuffledHardWordList = ctx.chance.shuffle(plHard.words);
@@ -962,8 +964,16 @@ function createDeck(decks: Array<Deck>, language: Language, difficulty: Difficul
       })
     })
   });
-// dude pls fix this vvvvvvvv ;3
-// usedCards = usedCards.map(item => item.word).filter((value,index,self)=>self.indexOf(value) === index);
+  // dude pls fix this vvvvvvvv ;3
+  // usedCards = usedCards.map(item => item.word).filter((value,index,self)=>self.indexOf(value) === index);
+  usedCards = usedCards.reduce((usedCards: Array<Word>, current: Word) => {
+    const x = usedCards.find(item => item.word === current.word);
+    if (!x) {
+      return usedCards.concat([current!]);
+    } else {
+      return usedCards;
+    }
+  }, []);
 
   return usedCards;
 }
