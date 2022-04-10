@@ -135,8 +135,8 @@ export class Impl implements Methods<InternalState> {
       board: undefined
     };
     state.hintsGiven = 0;
-    if (state.usedDecks.length < state.roundInfo.cards) {
-      return Response.error("Not enough cards to start game");
+    if (state.usedDecks.length < state.roundInfo.cards*5) {
+      return Response.error("Not enough cards to start game (Min. 30 cards)");
     }
     state.cards = getCardsForRound(state, ctx, state.roundInfo.cards, state.roundInfo.difficulty);
     state.roundInfo!.board = state.cards;
@@ -179,6 +179,8 @@ export class Impl implements Methods<InternalState> {
     //   language: Language.PL,
     //   words: ['zupa','kot'],
     // };
+
+//Check if deck already added
 
     // state.customDecks.push(deck);
 
