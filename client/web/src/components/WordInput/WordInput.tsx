@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { useAppSelector } from '../../store/hooks'
-import { Container } from './WordInput.styled'
+import { Container, Form, Icon, Input, SubmitButton } from './WordInput.styled'
+import { iconList } from '../../assets'
 
 const WordInput = () => {
     const { client, playerState, userData }: IGameProps = useGameContext()
@@ -42,20 +43,21 @@ const WordInput = () => {
         <>
             {playerState.roundInfo?.currentTurn === playerDetails?.team && (
                 <Container>
-                    {playerDetails?.isGivingClues ? (
-                        <div>Give clue</div>
-                    ) : (
-                        <div>Guess</div>
-                    )}
-                    <form onSubmit={onSubmitWord}>
-                        <input
+                    <Form onSubmit={onSubmitWord}>
+                        <Input
                             type="text"
                             value={word}
                             onChange={onChangeWord}
-                            placeholder="Your word"
+                            placeholder={
+                                playerDetails?.isGivingClues
+                                    ? 'Leaders hint'
+                                    : 'Players guess'
+                            }
                         />
-                        <button type="submit">Submit</button>
-                    </form>
+                        <SubmitButton type="submit">
+                            <Icon src={iconList.done} />
+                        </SubmitButton>
+                    </Form>
                 </Container>
             )}
         </>

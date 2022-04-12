@@ -1,56 +1,52 @@
 import React, { useState } from 'react'
 import {
-    Center,
     Container,
     Header,
     HeaderContainer,
     FlexCol,
     JoinButton,
-    Spacing,
-    Text,
     Input,
 } from './JoinGame.styled'
+import { BackgroundImage, Gradient } from '../GameLayout/GameLayout.styled'
+import { Color } from '../../../../../api/types'
 
 interface IJoinProps {
     handleJoin: (nickname: string) => void
     buttonName: string
 }
 
-const JoinGame = ({ handleJoin, buttonName }: IJoinProps) => {
+const JoinGame = ({ handleJoin }: IJoinProps) => {
     const [nickname, setNickname] = useState<string>('')
     const handleSetNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
         setNickname(e.target.value)
 
     return (
         <>
-            <Center>
+            <FlexCol>
                 <Container>
                     <HeaderContainer>
-                        <Header>Welcome to the game</Header>
+                        <Header>25</Header>
+                        <Header>WORDS</Header>
+                        <Header>Can you guess them?</Header>
                     </HeaderContainer>
                     <FlexCol>
-                        <Spacing>
-                            <Text>Podaj swój nick</Text>
-                        </Spacing>
-                        <Spacing>
-                            <Input
-                                type="text"
-                                maxLength={10}
-                                placeholder="Your nickname"
-                                onChange={handleSetNickname}
-                            />
-                        </Spacing>
-                        <Spacing>
-                            <JoinButton
-                                type="button"
-                                onClick={() => handleJoin(nickname)}
-                            >
-                                {buttonName}
-                            </JoinButton>
-                        </Spacing>
+                        <Input
+                            type="text"
+                            maxLength={10}
+                            placeholder="Your nickname"
+                            onChange={handleSetNickname}
+                        />
+                        <JoinButton
+                            type="button"
+                            onClick={() => handleJoin(nickname)}
+                        >
+                            JOIN ROOM
+                        </JoinButton>
                     </FlexCol>
+                    <Gradient currentTurn={Color.GRAY} />
                 </Container>
-            </Center>
+                <BackgroundImage />
+            </FlexCol>
         </>
     )
 }

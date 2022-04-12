@@ -1,36 +1,37 @@
 import React from 'react'
 import { Container, FirstRow } from './Board.styled'
 import Cards from '../Cards/Cards'
-import Bid from '../Bid/Bid'
-import { Color, GameStatus } from '../../../../../api/types'
+import { GameStatus } from '../../../../../api/types'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import WordInput from '../WordInput/WordInput'
+import InfoBoard from '../RoundInfo/InfoBoard'
+import Bid from '../Bid/Bid'
 
 const Board = () => {
-    const { playerState }: IGameProps = useGameContext()
-    const currentTeam = playerState.teams?.find(
-        (t) => t.color === playerState.roundInfo?.currentTurn
-    )
+    const { playerState, userData }: IGameProps = useGameContext()
+    const playerDetails = playerState.players.find((p) => {
+        if (p.id === userData.id) {
+            return p
+        }
+    })
+
     return (
         <Container>
             {playerState.gameStatus === GameStatus.AUCTION && (
                 <FirstRow>
-                    <Bid teamColor={Color.RED} />
-                    <Bid teamColor={Color.BLUE} />
+                    <InfoBoard />
+                    {playerDetails?.isGivingClues && <Bid />}
+                    <Cards />
                 </FirstRow>
             )}
             {playerState.gameStatus === GameStatus.GUESSING && (
-                <>
-                    <FirstRow>
-                        <div>Timer: {playerState.roundInfo?.timeLeft}</div>
-                        <div>Clues left: {currentTeam?.bid}</div>
-                    </FirstRow>
+                <FirstRow>
+                    <InfoBoard />
+                    <Cards />
                     <WordInput />
-                </>
+                </FirstRow>
             )}
-
-            <Cards />
         </Container>
     )
 }

@@ -12,16 +12,16 @@ export const Details = styled.div`
     color: white;
     width: 15rem;
     z-index: 1;
-    
+
     ${({ theme: { devices } }) => css`
         ${devices.mobile} {
             width: 200px;
             height: 256px;
         }
-        
+
         ${devices.tablet} {
         }
-        
+
         ${devices.desktop} {
         }
     `}
@@ -32,7 +32,7 @@ export const Leader = styled.h2`
     font-size: 20px;
     font-weight: 500;
     text-align: center;
-    
+
     &::after {
         content: '';
         display: block;
@@ -58,41 +58,51 @@ export const Score = styled.div`
     z-index: 2;
 `
 
-export const TeamCard = styled.div<{ left: boolean }>`
+export const TeamCard = styled.div<{ left: boolean; showTeam: boolean }>`
     display: flex;
     flex-direction: ${({ left }) => (left ? 'row' : 'row-reverse')};
     position: fixed;
     width: 264px;
     height: 256px;
-    
+    transition-duration: 0.2s;
+    z-index: 2;
+
     ${Details} {
-        border-radius: ${({ left }) => left ? '0px 0px 16px 0px' : '0px 0px 0px 16px'};
+        border-radius: ${({ left }) =>
+            left ? '0px 0px 16px 0px' : '0px 0px 0px 16px'};
     }
-    
+
     ${Leader} {
         &::after {
             left: ${({ left }) => (left ? '52px' : '116px')};
         }
     }
-    
+
     ${Score} {
-        border-radius: ${({ left }) => left ? '0px 16px 16px 0px' : '16px 0px 0px 16px'};
-        transform: ${({ left }) => left ? 'translateX(-1px)' : 'translateX(1px)'}
+        border-radius: ${({ left }) =>
+            left ? '0px 16px 16px 0px' : '16px 0px 0px 16px'};
+        transform: ${({ left }) =>
+            left ? 'translateX(-1px)' : 'translateX(1px)'};
     }
-    
-    ${({ theme: { devices }, left }) => css`          
+
+    ${({ theme: { devices }, left, showTeam }) => css`
         ${devices.mobile} {
-            ${(left ? 'left: -186' : 'right: -186')};
+            ${left
+                ? showTeam
+                    ? 'left:0'
+                    : 'left: -186'
+                : showTeam
+                ? 'right: 0'
+                : 'right: -186'};
         }
-        
+
         ${devices.tablet} {
-            ${(left ? 'left: 0' : 'right: 0')};
+            ${left ? 'left: 0' : 'right: 0'};
         }
-        
+
         ${devices.desktop} {
         }
     `}
-    
 `
 
 export const Players = styled.div`
@@ -106,10 +116,10 @@ export const Players = styled.div`
             width: 144px;
             height: 190px;
         }
-        
+
         ${devices.tablet} {
         }
-        
+
         ${devices.desktop} {
         }
     `}
@@ -137,7 +147,7 @@ export const PlayersList = styled.ul`
     list-style: none;
     padding: 10px 0px;
     text-align: center;
-    
+
     li {
         display: flex;
         justify-content: center;
@@ -146,7 +156,7 @@ export const PlayersList = styled.ul`
         font-size: 14px;
         line-height: 18px;
         padding: 0 5px;
-        
+
         &:not(:last-child) {
             margin-bottom: 2px;
         }
@@ -178,10 +188,10 @@ export const JoinTeamBtn = styled.button`
             width: 144px;
             height: 32px;
         }
-        
+
         ${devices.tablet} {
         }
-        
+
         ${devices.desktop} {
             &:hover:enabled {
                 box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
@@ -189,5 +199,4 @@ export const JoinTeamBtn = styled.button`
             }
         }
     `}
-    
 `

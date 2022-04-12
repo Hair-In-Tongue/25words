@@ -1,14 +1,12 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const RadioLabel = styled.label`
-    transition-duration: 0.2s;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 4px;
     border-radius: 8px;
     font-size: 18;
-    font-weight: bold;
     border: 1px solid #453f38;
     width: 80px;
     height: 36px;
@@ -19,7 +17,7 @@ export const RadioLabel = styled.label`
 
 export const RadioButton = styled.input`
     display: none;
-    
+
     &:checked + ${RadioLabel} {
         background-color: #c5b4a1;
         box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.5);

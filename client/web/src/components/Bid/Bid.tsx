@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     BidContainer,
-    BidValue,
     ArrowContainer,
-    ArrowUp,
-    ArrowDown,
-    ActionContainer,
-    ActionAccept,
-    ActionRefuse,
+    Triangle,
+    Arrow,
+    ActionButton,
+    ActionIcon,
 } from './Bid.styled'
-import { IBid } from '../../interfaces/BidInterface'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
-import { Color } from '../../../../../api/types'
+import { iconList } from '../../assets'
 
-const Bid = ({ teamColor }: IBid) => {
+const Bid = () => {
     const { client, playerState, userData }: IGameProps = useGameContext()
     const playerDetails = playerState.players.find((p) => {
         if (p.id === userData.id) {
@@ -22,21 +19,16 @@ const Bid = ({ teamColor }: IBid) => {
         }
     })
 
+    const teamColor = playerDetails?.team
     const team = playerState.teams?.find((t) => t.color === teamColor)
-    const left = teamColor === Color.RED
-    const disableButtons = playerState.roundInfo?.currentTurn === teamColor
+    const disableButtons = !(playerState.roundInfo?.currentTurn === teamColor)
 
-    const [bidValue, setBidValue] = useState<number | undefined>(team?.bid)
+    const [bidValue, setBidValue] = useState<number>(team?.bid || 25)
 
-    useEffect(() => {
-        setBidValue(team?.bid)
-    }, [team?.bid])
-
-    const sendBid = async (number: number) => {
-        const dupa = await client?.bid({
-            hints: number,
+    const sendBid = async () => {
+        await client?.bid({
+            hints: bidValue,
         })
-        console.log(dupa)
     }
 
     const upBid = () => {
@@ -50,6 +42,7 @@ const Bid = ({ teamColor }: IBid) => {
                     ? playerState.teams[0].bid
                     : playerState.teams[1].bid
             if (bidValue !== undefined && bidValue < maxBid) {
+                console.log(bidValue)
                 return setBidValue(bidValue + 1)
             }
         }
@@ -58,6 +51,7 @@ const Bid = ({ teamColor }: IBid) => {
 
     const downBid = () => {
         if (bidValue !== undefined && bidValue > 5) {
+            console.log(bidValue)
             return setBidValue(bidValue - 1)
         }
         return null
@@ -65,37 +59,31 @@ const Bid = ({ teamColor }: IBid) => {
 
     return (
         <>
-            <BidContainer left={!left}>
-                {playerDetails?.isGivingClues &&
-                    playerDetails.team === teamColor && (
-                        <>
-                            <ArrowContainer>
-                                <ArrowUp
-                                    onClick={upBid}
-                                    disabled={!disableButtons}
-                                />
-                                <ArrowDown
-                                    onClick={downBid}
-                                    disabled={!disableButtons}
-                                />
-                            </ArrowContainer>
-                            <ActionContainer>
-                                <ActionAccept
-                                    onClick={() =>
-                                        bidValue !== undefined
-                                            ? sendBid(bidValue)
-                                            : null
-                                    }
-                                    disabled={!disableButtons}
-                                />
-                                <ActionRefuse
-                                    onClick={() => sendBid(0)}
-                                    disabled={!disableButtons}
-                                />
-                            </ActionContainer>
-                        </>
-                    )}
-                <BidValue>{bidValue}</BidValue>
+            <BidContainer>
+                <ActionButton
+                    left={true}
+                    disabled={disableButtons}
+                    onClick={sendBid}
+                >
+                    <ActionIcon src={iconList.auction}></ActionIcon>
+                </ActionButton>
+                <ArrowContainer>
+                    <Arrow disabled={disableButtons} onClick={upBid}>
+                        <Triangle
+                            direction={'up'}
+                            src={iconList.triangle}
+                        ></Triangle>
+                    </Arrow>
+                    <Arrow disabled={disableButtons} onClick={downBid}>
+                        <Triangle
+                            direction={'down'}
+                            src={iconList.triangle}
+                        ></Triangle>
+                    </Arrow>
+                </ArrowContainer>
+                <ActionButton left={false} disabled={disableButtons}>
+                    <ActionIcon src={iconList.flag}></ActionIcon>
+                </ActionButton>
             </BidContainer>
         </>
     )

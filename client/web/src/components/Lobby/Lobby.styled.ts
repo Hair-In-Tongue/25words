@@ -54,7 +54,7 @@ export const JoinTeamBtn = styled.button`
     transition-duration: 0.3s;
     box-shadow: -2px -4px 4px 0px #00000040 inset;
     color: #f9f6f3;
-    font-weight: bold;
+    font-weight: 400;
     font-size: 24px;
     width: 112px;
     height: 42px;
@@ -67,10 +67,10 @@ export const JoinTeamBtn = styled.button`
                 box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
             }
         }
-        
+
         ${devices.tablet} {
         }
-        
+
         ${devices.desktop} {
             &:hover:enabled {
                 box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
@@ -85,7 +85,7 @@ export const JoinSpectator = styled(JoinTeamBtn)`
     background-color: ${({ color }) => color};
     color: black;
     margin-top: 12px;
-    
+
     &::after {
         content: '';
         position: absolute;
@@ -135,7 +135,7 @@ export const SwitchLabel = styled.label`
     margin-top: 2px;
     background-color: #948779;
     box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.5);
-    
+
     &::before {
         content: '';
         transition-duration: 0.1s;
@@ -157,7 +157,7 @@ export const SwitchLabel = styled.label`
 
 export const Switch = styled.input`
     display: none;
-    
+
     &:checked + ${SwitchLabel} {
         background-color: #c5b4a1;
         box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
@@ -168,7 +168,7 @@ export const Switch = styled.input`
 `
 
 export const Time = styled.input`
-    padding-top: 3px;
+    padding: 4px 0px 0px 0px;
     outline: none;
     border: 1px solid black;
     text-align: center;
@@ -190,7 +190,6 @@ export const StartButton = styled(JoinTeamBtn)`
     border: none;
     border-radius: 16px;
     font-size: 24px;
-    font-weight: 700;
     color: #f9f6f3;
     margin-top: 22px;
     margin-bottom: 5px;
@@ -206,8 +205,10 @@ export const ProgressBar = styled.div`
 `
 
 export const Button = styled(JoinTeamBtn)`
-    font-size: 24px;
+    padding: 0px;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
     height: 36px;
     background-color: ${({ color }) => color};
-    font-size: 18px;
 `

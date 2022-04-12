@@ -1,4 +1,6 @@
 import React from 'react'
+import { useAppDispatch } from '../../store/hooks'
+import { setVisibleTeam } from '../../store/reducers/playerSlice'
 import { Color, PlayerInfo } from '../../../../../api/types'
 import {
     TeamCard,
@@ -14,12 +16,19 @@ import { useGameContext } from '../../context/GameProvider'
 import { ITeamProps } from '../../interfaces/TeamInterface'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 
-const Team = ({ backgroundColor, teamColor }: ITeamProps) => {
+const Team = ({ backgroundColor, teamColor, showTeam }: ITeamProps) => {
     const { client, playerState, userData }: IGameProps = useGameContext()
-
+    const dispatch = useAppDispatch()
     const team = playerState.teams?.find((t) => t.color === teamColor)
     const teamPlayers = playerState.players.filter((p) => p.team === teamColor)
     const left = teamColor === Color.BLUE
+
+    const setTeam = async () => {
+        if (showTeam) {
+            return await dispatch(setVisibleTeam('none'))
+        }
+        await dispatch(setVisibleTeam(left ? 'left' : 'right'))
+    }
 
     const playerDetails = playerState.players.find((p) => {
         if (p.id === userData.id) {
@@ -47,7 +56,7 @@ const Team = ({ backgroundColor, teamColor }: ITeamProps) => {
     const teamLeader = findLeader(teamPlayers)
 
     return (
-        <TeamCard left={left}>
+        <TeamCard left={left} showTeam={showTeam}>
             <Details color={backgroundColor}>
                 <Players>
                     <Leader>
@@ -75,7 +84,7 @@ const Team = ({ backgroundColor, teamColor }: ITeamProps) => {
                 )}
             </Details>
             <Score color={backgroundColor}>
-                <Circle>{team?.points}</Circle>
+                <Circle onClick={setTeam}>{team?.points}</Circle>
             </Score>
         </TeamCard>
     )

@@ -10,19 +10,20 @@ const loadingAnimation = keyframes`
     }
 `
 
-interface ILoadingProps {
-    index: number
-}
-
 export const Loader = styled.div`
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 100px;
+    min-height: 100vh;
 `
 
-export const LoadingCard = styled.div`
+export const LoadingCard = styled.div<{ index: number }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,5 +34,5 @@ export const LoadingCard = styled.div`
     background-color: white;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     animation: ${loadingAnimation} 0.6s cubic-bezier(1, 0.5, 0.5, 0) infinite;
-    animation-delay: ${(props: ILoadingProps) => props.index / 10}s;
+    animation-delay: ${({ index }) => index / 10}s;
 `
