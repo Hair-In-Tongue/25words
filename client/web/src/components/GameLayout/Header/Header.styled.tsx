@@ -4,11 +4,9 @@ import { ReactSVG } from 'react-svg'
 export const LayoutHeader = styled.nav`
     display: flex;
     align-items: center;
-    //justify-content: space-between;
     padding: 16px 22px;
     margin-bottom: 7px;
     width: 100%;
-    //background-color: ${({ theme }) => theme.colors.header};
 `
 
 export const LayoutFlex = styled.div`

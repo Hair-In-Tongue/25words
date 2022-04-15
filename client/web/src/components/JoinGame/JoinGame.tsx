@@ -9,11 +9,7 @@ import {
 } from './JoinGame.styled'
 import { BackgroundImage, Gradient } from '../GameLayout/GameLayout.styled'
 import { Color } from '../../../../../api/types'
-
-interface IJoinProps {
-    handleJoin: (nickname: string) => void
-    buttonName: string
-}
+import { IJoinProps } from '../../interfaces/JoinGameInterface'
 
 const JoinGame = ({ handleJoin }: IJoinProps) => {
     const [nickname, setNickname] = useState<string>('')

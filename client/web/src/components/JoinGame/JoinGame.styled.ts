@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { HeaderButton } from '../GameLayout/Header/Header.styled'
 
 export const FlexCol = styled.div`
     display: flex;
