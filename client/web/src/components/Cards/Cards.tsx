@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     CardsContainer,
     Spacing,
     PlayingCardAuction,
     PlayingCard,
+    DeckId,
     Word,
     Clues,
     Line,
@@ -27,6 +28,10 @@ const Cards = () => {
             return p
         }
     })
+
+    useEffect(() => {
+        dispatch(setSelectedWord(0))
+    }, [])
 
     const cardsArray = playerState.roundInfo?.board
     const cardOnClick = (index: number) => dispatch(setSelectedWord(index))
@@ -72,19 +77,15 @@ const Cards = () => {
                                     key={index}
                                     guessed={card.guessed}
                                     onClick={() => cardOnClick(index)}
-                                    isSelected={
-                                        selectedWord === index &&
-                                        playerState?.gameStatus ===
-                                            GameStatus.GUESSING
-                                    }
                                 >
+                                    <DeckId>ax5t6y</DeckId>
                                     <Word>
                                         {playerDetails?.isGivingClues ||
                                         card.guessed
                                             ? card.word
-                                            : '***'}
+                                            : '_ _ _'}
                                     </Word>
-                                    <Line></Line>
+                                    <Line short={false} />
                                     <Clues>
                                         <div>HINTS</div>
                                         {card.hints.map(
@@ -93,7 +94,7 @@ const Cards = () => {
                                             )
                                         )}
                                     </Clues>
-                                    <Line />
+                                    <Line short={true} />
                                     <Guesses>
                                         <div>GUESSES</div>
                                         {card.guesses.map(

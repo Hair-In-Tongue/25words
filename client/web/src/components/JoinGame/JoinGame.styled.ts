@@ -1,14 +1,13 @@
 import styled from 'styled-components'
-import { HeaderButton } from '../GameLayout/Header/Header.styled'
 
 export const FlexCol = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
-    &:nth-child(2) {
-        justify-content: space-around;
-    }
+`
+export const Card = styled(FlexCol)`
+    justify-content: space-around;
 `
 
 export const Container = styled.div`

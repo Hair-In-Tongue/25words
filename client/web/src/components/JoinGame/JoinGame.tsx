@@ -4,6 +4,7 @@ import {
     Header,
     HeaderContainer,
     FlexCol,
+    Card,
     JoinButton,
     Input,
 } from './JoinGame.styled'
@@ -29,7 +30,7 @@ const JoinGame = ({ handleJoin }: IJoinProps) => {
                         <Header>WORDS</Header>
                         <Header>Can you guess them?</Header>
                     </HeaderContainer>
-                    <FlexCol>
+                    <Card>
                         <Input
                             type="text"
                             maxLength={10}
@@ -42,7 +43,7 @@ const JoinGame = ({ handleJoin }: IJoinProps) => {
                         >
                             JOIN ROOM
                         </JoinButton>
-                    </FlexCol>
+                    </Card>
                     <Gradient currentTurn={Color.GRAY} />
                 </Container>
                 <BackgroundImage />

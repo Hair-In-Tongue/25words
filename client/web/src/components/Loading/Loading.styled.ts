@@ -21,6 +21,7 @@ export const Loader = styled.div`
     align-items: center;
     width: 100%;
     min-height: 100vh;
+    z-index: 10;
 `
 
 export const LoadingCard = styled.div<{ index: number }>`

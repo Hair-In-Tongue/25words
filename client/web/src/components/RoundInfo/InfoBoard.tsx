@@ -2,15 +2,22 @@ import React from 'react'
 import { Color, GameStatus } from '../../../../../api/types'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
+import { useAppSelector } from '../../store/hooks'
 import { Container, Team, Header, Number } from './InfoBoard.styled'
 
 const InfoBoard = () => {
-    const { playerState }: IGameProps = useGameContext()
+    const { playerState, userData }: IGameProps = useGameContext()
     const findTeam = (teamColor: Color) => {
         return playerState?.teams?.find((team) => {
             if (team.color === teamColor) return team
         })
     }
+
+    const playerDetails = playerState.players.find((p) => {
+        if (p.id === userData.id) {
+            return p
+        }
+    })
 
     const currentTurn = findTeam(
         playerState?.roundInfo?.currentTurn || Color.RED
@@ -22,6 +29,8 @@ const InfoBoard = () => {
 
     const redTeam = findTeam(Color.RED)
     const blueTeam = findTeam(Color.BLUE)
+
+    const { bidValue } = useAppSelector((state) => state.playerBid)
 
     const leftColor =
         playerState.gameStatus === GameStatus.AUCTION
@@ -42,7 +51,12 @@ const InfoBoard = () => {
                 {playerState?.gameStatus === GameStatus.AUCTION ? (
                     <>
                         <Header>HINTS</Header>
-                        <Number>{blueTeam?.bid}</Number>
+                        <Number>
+                            {playerDetails?.isGivingClues &&
+                            playerDetails.team === Color.BLUE
+                                ? bidValue
+                                : blueTeam?.bid}
+                        </Number>
                     </>
                 ) : (
                     <>
@@ -55,7 +69,10 @@ const InfoBoard = () => {
                 <Header>HINTS</Header>
                 <Number>
                     {playerState?.gameStatus === GameStatus.AUCTION
-                        ? redTeam?.bid
+                        ? playerDetails?.isGivingClues &&
+                          playerDetails.team === Color.RED
+                            ? bidValue
+                            : redTeam?.bid
                         : currentTurn?.bid}
                 </Number>
             </Team>

@@ -47,7 +47,6 @@ export const Spacing = styled.div`
 
 export const PlayingCard = styled.div<{
     guessed: boolean
-    isSelected: boolean
 }>`
     width: 244px;
     height: 342px;
@@ -58,8 +57,6 @@ export const PlayingCard = styled.div<{
     margin-top: 4px;
     border-radius: 16px;
     border: 1px solid ${({ theme: { colors } }) => colors.cardOutline};
-    box-shadow: ${({ isSelected, theme }) =>
-        isSelected ? '5px 5px 10px -1px ' + theme.colors.selectedCard : 'none'};
     background-color: ${({ guessed, theme }) =>
         guessed
             ? theme.colors.guessedCardBackground
@@ -81,16 +78,27 @@ export const PlayingCardAuction = styled.div`
     border: 3px solid ${({ theme: { colors } }) => colors.cardOutline};
 `
 
-export const Line = styled.div`
-    width: 172px;
+export const Line = styled.div<{ short: boolean }>`
+    width: ${({ short }) => (short ? '130px' : '172px')};
     height: 4px;
+    border-radius: 2px;
     background-color: ${({ theme: { colors } }) => colors.cardOutline};
     margin-bottom: 4px;
 `
 
+export const DeckId = styled.div`
+    width: 230px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 18px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+`
+
 export const Word = styled.div`
-    margin-top: 18px;
-    margin-bottom: 18px;
+    margin-top: 9px;
+    margin-bottom: 9px;
     overflow-wrap: break-word;
     font-size: 24px;
     font-weight: 400;
@@ -99,6 +107,9 @@ export const Word = styled.div`
 `
 
 export const Clues = styled.ul`
+    overflow-y: auto;
+    width: 90%;
+    height: 126px;
     margin: 0;
     list-style: none;
     padding: 0;
@@ -110,6 +121,15 @@ export const Clues = styled.ul`
     li {
         color: black;
         font-size: 18px;
+    }
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        display: none;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.4);
     }
 `
 
