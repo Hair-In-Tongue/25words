@@ -1,29 +1,29 @@
 import styled from 'styled-components'
+import { ReactSVG } from 'react-svg'
 
 export const LayoutHeader = styled.nav`
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
     padding: 16px 22px;
     margin-bottom: 7px;
-    min-width: 100%;
-    //background-color: ${({ theme }) => theme.colors.header};
+    width: 100%;
 `
 
 export const LayoutFlex = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 auto;
     width: 100%;
 `
 
+export const HeaderIcon = styled(ReactSVG)`
+    fill: ${({ theme: { colors } }) => colors.whiteColor};
+`
+
 export const HeaderButton = styled.button`
-    padding-top: 4px;
+    padding: 0px 1px 1px 0px;
     width: 48px;
     height: 48px;
-    background-color: black;
     border-radius: 50%;
     color: white;
     font-size: 24px;

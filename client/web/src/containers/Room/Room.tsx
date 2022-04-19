@@ -5,6 +5,12 @@ import { PlayerState } from '../../../../../api/types'
 import { HathoraClient, HathoraConnection } from '../../../../.hathora/client'
 import Game from '../Game/Game'
 import { IUserData } from '../../interfaces/GlobalInterface'
+import {
+    BackgroundImage,
+    Gradient,
+} from '../../components/GameLayout/GameLayout.styled'
+import { Color } from '../../../../../api/types'
+import Loading from '../../components/Loading/Loading'
 const client = new HathoraClient()
 
 function Room() {
@@ -55,7 +61,13 @@ function Room() {
             </div>
         )
     } else {
-        return <div></div>
+        return (
+            <>
+                <Gradient currentTurn={Color.GRAY} />
+                <BackgroundImage />
+                <Loading />
+            </>
+        )
     }
 }
 

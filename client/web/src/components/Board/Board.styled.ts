@@ -9,5 +9,6 @@ export const Container = styled.div`
 
 export const FirstRow = styled.div`
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 `

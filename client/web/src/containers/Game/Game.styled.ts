@@ -1,14 +1,12 @@
 import styled from 'styled-components'
 
 export const GridLayout = styled.div`
-    display: grid;
-    height: auto;
-    
-    &:nth-child(1) {
-        justify-items: center;
-    }
+    display: flex;
+    flex-direction: column;
 `
 
 export const GridUnit = styled.div`
+    display: flex;
+    justify-content: center;
     padding: 0;
 `

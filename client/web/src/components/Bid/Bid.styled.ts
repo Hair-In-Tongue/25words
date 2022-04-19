@@ -1,119 +1,74 @@
 import styled from 'styled-components'
+import { ReactSVG } from 'react-svg'
 
-export const BidContainer = styled.div<{ left: boolean }>`
-    display: grid;
-    grid-template-columns: ${({ left }) =>
-        left ? `96px 32px;` : `32px 96px;`};
-    grid-template-rows: 48px 32px;
-    gap: 4px 0px;
-    height: auto;
-    grid-template-areas:
-        ${({ left }) =>
-        left ? `'i2 i1' 'i4 .';` : `'i1 i2' '. i4';`}
-        'i2 i1'
-        'i4 .';
+export const BidContainer = styled.div`
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 284px;
+    height: 129px;
 `
 
 export const ArrowContainer = styled.div`
-    grid-area: i1;
-    align-self: center;
-`
-
-export const ArrowUp = styled.button`
-    border: none;
-    background-color: unset;
-
-    &:after {
-        content: '🔼';
-        display: inline-block;
-        font-size: 16px;
-    }
-    &:hover:enabled {
-        cursor: pointer;
-    }
-`
-
-export const ArrowDown = styled.button`
-    border: none;
-    background-color: unset;
-
-    &:after {
-        content: '🔽';
-        display: inline-block;
-        font-size: 16px;
-    }
-    &:hover:enabled {
-        cursor: pointer;
-    }
-`
-
-export const BidValue = styled.div`
-    grid-area: i2;
-    background-color: lightblue;
-    color: black;
-    height: 48px;
-    width: 96px;
-    border-radius: 8px;
-    text-align: center;
-    line-height: 48px;
-    font-size: 1.2rem;
-`
-
-export const ActionContainer = styled.div`
-    grid-area: i4;
     display: flex;
-    width: 100%;
-    height: 100%;
+    flex-direction: column;
     justify-content: space-around;
 `
 
-export const ActionAccept = styled.button`
-    place-self: center;
-    height: 100%;
-    width: 100%;
-    padding: 4px;
-    border-radius: 8px 0 0 8px;
-    line-height: 24px;
-    text-align: left;
-    padding-left: 12px;
-    border: none;
-    background-color: none;
-    border-right: 1px solid gray;
-    background-color: lightblue;
-
-    &:after {
-        content: '✅';
-        display: inline-block;
-        font-size: 20px;
-    }
-    &:hover:enabled {
-        background-color: darkblue;
-        cursor: pointer;
+export const Triangle = styled(ReactSVG)<{ direction: string }>`
+    padding: 0;
+    ${({ direction }) =>
+        direction === 'down' ? 'transform: rotate(180deg)' : ''};
+    path {
+        ${({ theme: { colors } }) =>
+            `fill: ${colors.blueBackground};
+             stroke: ${colors.blueOutline}`};
+        stroke-width: 2px;
     }
 `
 
-export const ActionRefuse = styled.button`
-    background-color: lightblue;
-    place-self: center;
-    height: 100%;
-    width: 100%;
-    padding: 4px;
-    border-radius: 0 8px 8px 0;
-    line-height: 24px;
-    text-align: right;
-    padding-right: 12px;
+export const Arrow = styled.button`
+    padding: 8px 0;
     border: none;
-    background-color: none;
-    border-left: 1px solid gray;
-    background-color: lightblue;
-
-    &:after {
-        content: '🏳️';
-        display: inline-block;
-        font-size: 20px;
+    background: transparent;
+    &:disabled {
+        ${Triangle} {
+            path {
+                fill: lightgray;
+                stroke: rgba(0, 0, 0, 0.5);
+            }
+        }
     }
-    &:hover:enabled {
-        background-color: darkblue;
-        cursor: pointer;
+`
+
+export const ActionIcon = styled(ReactSVG)`
+    padding: 0;
+    path {
+        fill: ${({ theme: { colors } }) => colors.whiteColor};
+        width: auto;
+    }
+`
+
+export const ActionButton = styled.button<{ left: boolean }>`
+    outline: none;
+    border: none;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background-color: ${({ theme: { colors }, left }) =>
+        left ? colors.blueTeam : colors.redTeam};
+    border: ${({ theme: { colors }, left }) =>
+        left
+            ? `2px solid ${colors.blueTeamDark}`
+            : `2px solid ${colors.redTeamDark}`};
+    box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
+    &:disabled {
+        background-color: lightgray;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+    }
+
+    ${ActionIcon} {
+        ${({ left }) => (left ? 'transform: scaleX(-1)' : '')}
     }
 `

@@ -1,0 +1,30 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 51" width="58" height="51">
+                            <defs>
+                                <filter id="shadow">
+                                    <feDropShadow
+                                        dx="0.2"
+                                        dy="0.4"
+                                        stdDeviation="0.2"
+                                    />
+                                </filter>
+                                <filter id="shadow2">
+                                    <feDropShadow
+                                        dx="0"
+                                        dy="0"
+                                        stdDeviation="0.5"
+                                        floodColor="cyan"
+                                    />
+                                </filter>
+                                <filter id="shadow3">
+                                    <feDropShadow
+                                        dx="-0.8"
+                                        dy="-0.8"
+                                        stdDeviation="0"
+                                        floodColor="pink"
+                                        floodOpacity="0.5"
+                                    />
+                                </filter>
+                            </defs>
+	<title>triangle</title>
+	<path id="Layer" class="s0" d="m24.7 3.5c1.9-3.3 6.7-3.3 8.6 0l22.5 39c2 3.3-0.4 7.5-4.3 7.5h-45c-3.9 0-6.3-4.2-4.3-7.5z"/>
+</svg>

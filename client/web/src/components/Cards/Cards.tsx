@@ -1,5 +1,16 @@
 import React from 'react'
-import { CardsColumn, PlayingCard, Word, Clues, Line, Guesses } from './Cards.styled'
+import {
+    CardsContainer,
+    Spacing,
+    PlayingCardAuction,
+    PlayingCard,
+    Word,
+    Clues,
+    Line,
+    Guesses,
+    CardSelector,
+    SelectorElement,
+} from './Cards.styled'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { GameStatus } from '../../../../../api/types'
@@ -21,36 +32,82 @@ const Cards = () => {
     const cardOnClick = (index: number) => dispatch(setSelectedWord(index))
 
     return (
-        <CardsColumn>
-            {console.log(playerState)}
-            {cardsArray?.map((card, index) => (
-                <PlayingCard
-                    key={index}
-                    guessed={card.guessed}
-                    onClick={() => cardOnClick(index)}
-                    isSelected={selectedWord === index}
-                >
-                    <Word>
-                        {playerDetails?.isGivingClues || card.guessed
-                            ? card.word
-                            : '***'}
-                    </Word>
-                    <Line></Line>
-                    <Clues>
-                        <div>CLUES</div>
-                        {card.hints.map((hint: string, index: number) => (
-                            <li key={index}>{hint}</li>
+        <CardsContainer>
+            {console.log(playerDetails)}
+            {playerState?.gameStatus === GameStatus.AUCTION ? (
+                <>
+                    {!playerDetails?.isGivingClues && <Spacing />}
+                    {cardsArray?.map((card, index) => (
+                        <PlayingCardAuction key={index}>
+                            {playerDetails?.isGivingClues || card.guessed
+                                ? card.word
+                                : card.word.split(' ').length > 1
+                                ? '_ _ _  _ _ _'
+                                : '_ _ _'}
+                        </PlayingCardAuction>
+                    ))}
+                </>
+            ) : (
+                <>
+                    <CardSelector>
+                        {cardsArray?.map((card, index) => (
+                            <SelectorElement
+                                key={index}
+                                guessed={card.guessed}
+                                onClick={() => cardOnClick(index)}
+                                isSelected={
+                                    selectedWord === index &&
+                                    playerState?.gameStatus ===
+                                        GameStatus.GUESSING
+                                }
+                            >
+                                {card?.hints.length}
+                            </SelectorElement>
                         ))}
-                    </Clues>
-                    <Guesses>
-                        <div>GUESSES</div>
-                        {card.guesses.map((guess: string, index: number) => (
-                            <li key={index}>{guess}</li>
-                        ))}
-                    </Guesses>
-                </PlayingCard>
-            ))}
-        </CardsColumn>
+                    </CardSelector>
+                    {cardsArray?.map(
+                        (card, index) =>
+                            selectedWord === index && (
+                                <PlayingCard
+                                    key={index}
+                                    guessed={card.guessed}
+                                    onClick={() => cardOnClick(index)}
+                                    isSelected={
+                                        selectedWord === index &&
+                                        playerState?.gameStatus ===
+                                            GameStatus.GUESSING
+                                    }
+                                >
+                                    <Word>
+                                        {playerDetails?.isGivingClues ||
+                                        card.guessed
+                                            ? card.word
+                                            : '***'}
+                                    </Word>
+                                    <Line></Line>
+                                    <Clues>
+                                        <div>HINTS</div>
+                                        {card.hints.map(
+                                            (hint: string, index: number) => (
+                                                <li key={index}>{hint}</li>
+                                            )
+                                        )}
+                                    </Clues>
+                                    <Line />
+                                    <Guesses>
+                                        <div>GUESSES</div>
+                                        {card.guesses.map(
+                                            (guess: string, index: number) => (
+                                                <li key={index}>{guess}</li>
+                                            )
+                                        )}
+                                    </Guesses>
+                                </PlayingCard>
+                            )
+                    )}
+                </>
+            )}
+        </CardsContainer>
     )
 }
 

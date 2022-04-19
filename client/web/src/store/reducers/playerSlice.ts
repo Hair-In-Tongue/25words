@@ -1,20 +1,21 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface PlayerState {
     nickname: string
     isCreator: boolean
     selectedWord: number
+    visibleTeam: string
 }
 
 const initialState: PlayerState = {
     nickname: '',
     isCreator: false,
-    selectedWord: -1
-};
-
+    selectedWord: -1,
+    visibleTeam: 'none',
+}
 
 export const playerSlice = createSlice({
-    name: "player",
+    name: 'player',
     initialState,
     reducers: {
         setNickname(state, action: PayloadAction<string>) {
@@ -27,15 +28,14 @@ export const playerSlice = createSlice({
 
         setSelectedWord(state, action: PayloadAction<number>) {
             state.selectedWord = action.payload
-        }
-    }
-});
+        },
+        setVisibleTeam(state, action: PayloadAction<string>) {
+            state.visibleTeam = action.payload
+        },
+    },
+})
 
+export const { setNickname, setIsCreator, setSelectedWord, setVisibleTeam } =
+    playerSlice.actions
 
-export const {
-    setNickname,
-    setIsCreator,
-    setSelectedWord
-} = playerSlice.actions;
-
-export default playerSlice.reducer;
+export default playerSlice.reducer

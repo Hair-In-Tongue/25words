@@ -16,7 +16,7 @@ import { setLoading } from '../../store/reducers/loadingSlice'
 
 const Game = ({ userData, playerState, client }: IGameProps) => {
     const dispatch = useAppDispatch()
-    const { nickname } = useAppSelector((state) => state.player)
+    const { nickname, visibleTeam } = useAppSelector((state) => state.player)
     const { loading } = useAppSelector((state) => state.loading)
     const isJoined = playerState.players.find(
         (player) => player.id === userData.id
@@ -44,22 +44,27 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
             <GameLayout>
                 {isJoined ? (
                     <GridLayout>
+                        <Team
+                            name="Blue team"
+                            backgroundColor={theme.colors.blueTeam}
+                            teamColor={Color.BLUE}
+                            showTeam={visibleTeam === 'left'}
+                        />
+                        <Team
+                            name="Red team"
+                            backgroundColor={theme.colors.redTeam}
+                            teamColor={Color.RED}
+                            showTeam={visibleTeam === 'right'}
+                        />
                         <GridUnit>
-                            <Team
-                                name="Blue team"
-                                backgroundColor={theme.colors.blueTeam}
-                                teamColor={Color.BLUE}
-                            />
-                            <Team
-                                name="Red team"
-                                backgroundColor={theme.colors.redTeam}
-                                teamColor={Color.RED}
-                            />
                             {playerState.gameStatus ===
                                 GameStatus.NOT_STARTED ||
                             playerState.gameStatus ===
                                 GameStatus.ROUND_ENDED ? (
-                                <>{loading ? <Loading /> : <Lobby />}</>
+                                <>
+                                    <Lobby />
+                                    {loading && <Loading />}
+                                </>
                             ) : null}
                             {playerState.gameStatus === GameStatus.AUCTION ||
                             playerState.gameStatus === GameStatus.GUESSING ? (
