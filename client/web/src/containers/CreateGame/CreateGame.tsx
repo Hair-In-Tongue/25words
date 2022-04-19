@@ -4,6 +4,7 @@ import JoinGame from '../../components/JoinGame/JoinGame'
 import { CreateGameContainer } from './CreateGame.styled'
 import { useAppDispatch } from '../../store/hooks'
 import { setNickname, setIsCreator } from '../../store/reducers/playerSlice'
+import Header from '../../components/GameLayout/Header/Header'
 
 const CreateGame = () => {
     const history = useHistory()
@@ -17,6 +18,7 @@ const CreateGame = () => {
 
     return (
         <CreateGameContainer>
+            <Header />
             <JoinGame handleJoin={createGame} buttonName="Create room" />
         </CreateGameContainer>
     )

@@ -5,9 +5,9 @@ export const FlexCol = styled.div`
     flex-direction: column;
     align-items: center;
     height: 100%;
-    &:nth-child(2) {
-        justify-content: space-around;
-    }
+`
+export const Card = styled(FlexCol)`
+    justify-content: space-around;
 `
 
 export const Container = styled.div`

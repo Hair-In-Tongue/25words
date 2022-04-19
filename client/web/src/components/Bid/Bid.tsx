@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import {
     BidContainer,
     ArrowContainer,
@@ -10,20 +10,26 @@ import {
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { iconList } from '../../assets'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { setBidValue } from '../../store/reducers/bidSlice'
 
 const Bid = () => {
     const { client, playerState, userData }: IGameProps = useGameContext()
+    const dispatch = useAppDispatch()
     const playerDetails = playerState.players.find((p) => {
         if (p.id === userData.id) {
             return p
         }
     })
 
+    useEffect(() => {
+        dispatch(setBidValue(25))
+    }, [])
+
     const teamColor = playerDetails?.team
-    const team = playerState.teams?.find((t) => t.color === teamColor)
     const disableButtons = !(playerState.roundInfo?.currentTurn === teamColor)
 
-    const [bidValue, setBidValue] = useState<number>(team?.bid || 25)
+    const { bidValue } = useAppSelector((state) => state.playerBid)
 
     const sendBid = async () => {
         await client?.bid({
@@ -42,8 +48,7 @@ const Bid = () => {
                     ? playerState.teams[0].bid
                     : playerState.teams[1].bid
             if (bidValue !== undefined && bidValue < maxBid) {
-                console.log(bidValue)
-                return setBidValue(bidValue + 1)
+                dispatch(setBidValue(bidValue + 1))
             }
         }
         return null
@@ -51,8 +56,7 @@ const Bid = () => {
 
     const downBid = () => {
         if (bidValue !== undefined && bidValue > 5) {
-            console.log(bidValue)
-            return setBidValue(bidValue - 1)
+            dispatch(setBidValue(bidValue - 1))
         }
         return null
     }

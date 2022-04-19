@@ -18,9 +18,11 @@ const WordInput = () => {
 
     const giveClue = async () => {
         await client?.giveClue({ word: selectedWord, hint: word })
+        setWord('')
     }
     const guessWord = async () => {
         await client?.guessWord({ word: selectedWord, guess: word })
+        setWord('')
     }
 
     const onChangeWord = (e: React.ChangeEvent<HTMLInputElement>) =>
