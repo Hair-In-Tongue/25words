@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
+    "framer-motion": "^6.3.2",
     "history": "^5.0.1",
     "lodash-es": "^4.17.21",
     "polished": "^4.1.4",

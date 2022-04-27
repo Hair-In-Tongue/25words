@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
 export const CardSelector = styled.div`
     display: flex;
@@ -45,9 +46,10 @@ export const Spacing = styled.div`
     width: 100px;
 `
 
-export const PlayingCard = styled.div<{
+export const PlayingCard = styled(motion.div)<{
     guessed: boolean
 }>`
+    overflow: hidden;
     width: 244px;
     height: 342px;
     display: flex;
@@ -57,6 +59,7 @@ export const PlayingCard = styled.div<{
     margin-top: 4px;
     border-radius: 16px;
     border: 1px solid ${({ theme: { colors } }) => colors.cardOutline};
+    box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.45);
     background-color: ${({ guessed, theme }) =>
         guessed
             ? theme.colors.guessedCardBackground
@@ -137,4 +140,16 @@ export const Guesses = styled(Clues)`
     li {
         font-size: 16px;
     }
+`
+
+export const Container = styled.div`
+    height: 342px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+`
+
+export const Panel = styled(motion.div)`
+    position: absolute;
 `
