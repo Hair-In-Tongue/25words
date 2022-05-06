@@ -58,7 +58,7 @@ const Cards = () => {
             return {
                 zIndex: 5 - i,
                 x: direction < 0 ? 200 : -500,
-                opacity: direction < 0 ? 0 : 1,
+                opacity: 0,
             }
         },
     }
