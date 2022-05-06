@@ -1,4 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { motion } from 'framer-motion'
+import { ReactSVG } from 'react-svg'
 
 export const CardSelector = styled.div`
     display: flex;
@@ -45,7 +47,7 @@ export const Spacing = styled.div`
     width: 100px;
 `
 
-export const PlayingCard = styled.div<{
+export const PlayingCard = styled(motion.div)<{
     guessed: boolean
 }>`
     width: 244px;
@@ -57,6 +59,7 @@ export const PlayingCard = styled.div<{
     margin-top: 4px;
     border-radius: 16px;
     border: 1px solid ${({ theme: { colors } }) => colors.cardOutline};
+    box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.45);
     background-color: ${({ guessed, theme }) =>
         guessed
             ? theme.colors.guessedCardBackground
@@ -106,21 +109,33 @@ export const Word = styled.div`
     margin-right: auto;
 `
 
-export const Clues = styled.ul`
+export const List = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 122px;
+    div {
+        font-size: 16px;
+        color: #453f38;
+        margin-bottom: 4px;
+    }
+`
+
+export const Clues = styled(motion.ul)`
     overflow-y: auto;
     width: 90%;
-    height: 126px;
+    height: 100%;
     margin: 0;
     list-style: none;
     padding: 0;
     text-align: center;
-    div {
-        font-size: 16px;
-        color: #453f38;
-    }
     li {
         color: black;
         font-size: 18px;
+        letter-spacing: 1.1;
+        line-height: 1.15;
+        overflow: hidden;
     }
     &::-webkit-scrollbar {
         width: 4px;
@@ -136,5 +151,62 @@ export const Clues = styled.ul`
 export const Guesses = styled(Clues)`
     li {
         font-size: 16px;
+    }
+`
+
+export const Container = styled.div`
+    height: 342px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+`
+
+export const Panel = styled(motion.div)`
+    position: absolute;
+`
+
+export const ArrowContainer = styled.div`
+    pointer-events: none;
+    position: absolute;
+    top: 340px;
+    margin-left: auto;
+    width: 380px;
+    z-index: 7;
+    ${({ theme: { devices } }) => css`
+        ${devices.mobile} {
+            display: none;
+        }
+
+        ${devices.tablet} {
+            display: flex;
+            justify-content: space-between;
+        }
+    `}
+`
+
+export const Triangle = styled(ReactSVG)<{ direction: string }>`
+    padding: 0;
+    z-index: 8;
+    path {
+        ${({ theme: { colors } }) =>
+            `fill: ${colors.blueBackground};
+             stroke: ${colors.blueOutline}`};
+        stroke-width: 3px;
+    }
+`
+
+export const Arrow = styled.button<{ direction: string }>`
+    pointer-events: auto;
+    padding: 8px 0;
+    border: none;
+    background: transparent;
+    transform: scale(0.75);
+    z-index: 8;
+    ${Triangle} {
+        ${({ direction }) =>
+            direction === 'left'
+                ? 'transform: rotate(-90deg)'
+                : 'transform: rotate(90deg)'};
     }
 `

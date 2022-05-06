@@ -65,7 +65,7 @@ export const TeamCard = styled.div<{ left: boolean; showTeam: boolean }>`
     width: 264px;
     height: 256px;
     transition-duration: 0.2s;
-    z-index: 2;
+    z-index: 7;
 
     ${Details} {
         border-radius: ${({ left }) =>

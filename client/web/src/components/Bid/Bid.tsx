@@ -31,9 +31,9 @@ const Bid = () => {
 
     const { bidValue } = useAppSelector((state) => state.playerBid)
 
-    const sendBid = async () => {
+    const sendBid = async (value: number) => {
         await client?.bid({
-            hints: bidValue,
+            hints: value,
         })
     }
 
@@ -67,7 +67,7 @@ const Bid = () => {
                 <ActionButton
                     left={true}
                     disabled={disableButtons}
-                    onClick={sendBid}
+                    onClick={() => sendBid(bidValue)}
                 >
                     <ActionIcon src={iconList.auction}></ActionIcon>
                 </ActionButton>
@@ -85,7 +85,11 @@ const Bid = () => {
                         ></Triangle>
                     </Arrow>
                 </ArrowContainer>
-                <ActionButton left={false} disabled={disableButtons}>
+                <ActionButton
+                    left={false}
+                    disabled={disableButtons}
+                    onClick={() => sendBid(0)}
+                >
                     <ActionIcon src={iconList.flag}></ActionIcon>
                 </ActionButton>
             </BidContainer>

@@ -35,6 +35,7 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
         dispatch(setLoading(true))
         await client?.joinGame({
             name: n,
+            password: '',
         })
         dispatch(setLoading(false))
     }
