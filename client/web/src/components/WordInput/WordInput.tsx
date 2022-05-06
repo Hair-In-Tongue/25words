@@ -25,8 +25,12 @@ const WordInput = () => {
         setWord('')
     }
 
-    const onChangeWord = (e: React.ChangeEvent<HTMLInputElement>) =>
+    const onChangeWord = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.includes(' ')) {
+            e.target.value = e.target.value.replace(/\s/g, '')
+        }
         setWord(e.target.value)
+    }
 
     const onSubmitWord = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

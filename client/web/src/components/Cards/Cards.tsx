@@ -7,6 +7,7 @@ import {
     PlayingCard,
     DeckId,
     Word,
+    List,
     Clues,
     Line,
     Guesses,
@@ -14,6 +15,9 @@ import {
     SelectorElement,
     Container,
     Panel,
+    ArrowContainer,
+    Arrow,
+    Triangle,
 } from './Cards.styled'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
@@ -21,12 +25,15 @@ import { GameStatus } from '../../../../../api/types'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { setSelectedWord } from '../../store/reducers/playerSlice'
 import { IVariants } from '../../interfaces/VariantsInterface'
+import { iconList } from '../../assets'
+import { motion } from 'framer-motion'
 
 const Cards = () => {
     const { playerState, userData }: IGameProps = useGameContext()
     const dispatch = useAppDispatch()
     const { selectedWord } = useAppSelector((state) => state.player)
     const [[page, direction], setPage] = useState([0, 0])
+    const cardsArray = playerState.roundInfo?.board
 
     useEffect(() => {
         dispatch(setSelectedWord(0))
@@ -76,15 +83,9 @@ const Cards = () => {
         dispatch(setSelectedWord(newPage))
     }
 
-    const cardIndex = (page: number) => {
-        if (page >= 0) {
-            return Math.abs(page % 5)
-        } else {
-            return Math.abs((5 + (page % 5)) % 5)
-        }
-    }
+    const cardIndex = (page: number) =>
+        page >= 0 ? Math.abs(page % 5) : Math.abs((5 + (page % 5)) % 5)
 
-    const cardsArray = playerState.roundInfo?.board
     const cardOnClick = (index: number) => {
         setPage((prev) => {
             const nextDirection = Math.sign(index - prev[0])
@@ -128,7 +129,20 @@ const Cards = () => {
                             </SelectorElement>
                         ))}
                     </CardSelector>
-
+                    <ArrowContainer>
+                        <Arrow direction={'left'}>
+                            <Triangle
+                                src={iconList.triangle}
+                                onClick={() => paginate(-1)}
+                            />
+                        </Arrow>
+                        <Arrow direction={'right'}>
+                            <Triangle
+                                src={iconList.triangle}
+                                onClick={() => paginate(1)}
+                            />
+                        </Arrow>
+                    </ArrowContainer>
                     <Container>
                         <AnimatePresence
                             initial={false}
@@ -192,33 +206,47 @@ const Cards = () => {
                                                 : '_ _ _'}
                                         </Word>
                                         <Line short={false} />
-                                        <Clues>
+                                        <List>
                                             <div>HINTS</div>
-                                            {cardsArray?.[
-                                                cardIndex(page + index)
-                                            ].hints.map(
-                                                (
-                                                    hint: string,
-                                                    index: number
-                                                ) => (
-                                                    <li key={index}>{hint}</li>
-                                                )
-                                            )}
-                                        </Clues>
+                                            <Clues>
+                                                {cardsArray?.[
+                                                    cardIndex(page + index)
+                                                ].hints
+                                                    .slice(-5)
+                                                    .map(
+                                                        (
+                                                            hint: string,
+                                                            index: number
+                                                        ) => (
+                                                            <motion.li
+                                                                key={index}
+                                                            >
+                                                                {hint}
+                                                            </motion.li>
+                                                        )
+                                                    )}
+                                            </Clues>
+                                        </List>
                                         <Line short={true} />
-                                        <Guesses>
-                                            <div>GUESSES</div>
-                                            {cardsArray?.[
-                                                cardIndex(page + index)
-                                            ].guesses.map(
-                                                (
-                                                    guess: string,
-                                                    index: number
-                                                ) => (
-                                                    <li key={index}>{guess}</li>
-                                                )
-                                            )}
-                                        </Guesses>
+                                        <List>
+                                            <Guesses>
+                                                <div>GUESSES</div>
+                                                {cardsArray?.[
+                                                    cardIndex(page + index)
+                                                ].guesses
+                                                    .slice(-5)
+                                                    .map(
+                                                        (
+                                                            guess: string,
+                                                            index: number
+                                                        ) => (
+                                                            <li key={index}>
+                                                                {guess}
+                                                            </li>
+                                                        )
+                                                    )}
+                                            </Guesses>
+                                        </List>
                                     </PlayingCard>
                                 </Panel>
                             ))}
