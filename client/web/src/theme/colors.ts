@@ -22,4 +22,7 @@ export default {
     guessedCardBackground: '#b5cf7d',
     selectedCard: '#FBE3A3',
     cardOutline: '#453F38',
+    menuButton: '#132178',
+    menuButtonText: '#E6A758',
+    modalText: '#000037',
 }
