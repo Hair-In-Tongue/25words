@@ -73,10 +73,8 @@ methods:
   setPassword:
     password: string
   startGame:
+  setDifficulty:
     name: Difficulty
-    enabled: boolean
-    time: int
-    language: Language
   addCustomDeck:
     name: string
   removeCustomDeck:
@@ -97,7 +95,12 @@ methods:
   guessWord:
     word: int
     guess: string
+  setTimer:
+    enabled: boolean
+    time: int
   sendHeartBeatResponse:
+  setGameLanguage:
+    language: Language
 
 auth:
   anonymous: {}
