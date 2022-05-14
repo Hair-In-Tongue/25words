@@ -33,7 +33,6 @@ export const HeaderButton = styled.button`
 `
 
 export const Timer = styled.div`
-    padding-top: 4px;
     display: flex;
     justify-content: center;
     align-items: center;

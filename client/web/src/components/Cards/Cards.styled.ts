@@ -21,7 +21,6 @@ export const SelectorElement = styled.button<{
     justify-content: center;
     margin: 0;
     width: 52px;
-    height: 32px;
     font-size: 24px;
     outline: none;
     border: none;

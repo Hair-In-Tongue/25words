@@ -11,8 +11,10 @@ import {
 import { BackgroundImage, Gradient } from '../GameLayout/GameLayout.styled'
 import { Color } from '../../../../../api/types'
 import { IJoinProps } from '../../interfaces/JoinGameInterface'
+import { useTranslation } from 'react-i18next'
 
 const JoinGame = ({ handleJoin }: IJoinProps) => {
+    const { t } = useTranslation()
     const [nickname, setNickname] = useState<string>('')
     const handleSetNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
         setNickname(e.target.value)
@@ -22,22 +24,22 @@ const JoinGame = ({ handleJoin }: IJoinProps) => {
             <FlexCol>
                 <Container>
                     <HeaderContainer>
-                        <Header>25</Header>
-                        <Header>WORDS</Header>
-                        <Header>Can you guess them?</Header>
+                        <Header>{t('game.title.number')}</Header>
+                        <Header>{t('game.title.text')}</Header>
+                        <Header>{t('game.title.canYouGuesThem')}</Header>
                     </HeaderContainer>
                     <Card>
                         <Input
                             type="text"
                             maxLength={10}
-                            placeholder="Your nickname"
+                            placeholder={t('game.nicknamePlaceholder')}
                             onChange={handleSetNickname}
                         />
                         <JoinButton
                             type="button"
                             onClick={() => handleJoin(nickname)}
                         >
-                            JOIN ROOM
+                            {t('buttons.joinGame')}
                         </JoinButton>
                     </Card>
                     <Gradient currentTurn={Color.GRAY} />

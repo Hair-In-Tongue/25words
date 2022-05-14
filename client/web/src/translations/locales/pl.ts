@@ -18,5 +18,38 @@ export default {
     },
     buttons: {
         close: 'Wyjdź',
+        joinGame: 'Dołącz do gry',
+        joinTeam: 'Dołącz',
+        leadTeam: 'Prowadź',
+        spectate: 'Obserwuj',
+        createGame: 'Stwórz pokój',
+        startRound: 'Rozpocznij rundę',
+    },
+    statusCodes: {
+        s404: 'Gra z tym kodem nie istnieje',
+    },
+    team: {
+        blueTeam: 'Drużyna niebieska',
+        redTeam: 'Drużyna czerwona',
+        leader: 'Lider',
+    },
+    wordInput: {
+        leaderHint: 'Podpowiedź',
+        playerGuess: 'Odpowiedź',
+    },
+    game: {
+        title: {
+            number: '25',
+            text: 'Słów',
+            canYouGuesThem: 'Czy potrafisz je odgadnąć?',
+        },
+        hints: 'Podpowiedzi',
+        cards: 'Karty',
+        guesses: 'Domysły',
+        guessingTime: 'Czas na zgadywanie',
+        mixTeams: 'Wymieszaj zespoły',
+        resetScore: 'Zresetuj wynik',
+        loading: 'Ładowanie',
+        nicknamePlaceholder: 'Twója nazwa w grze',
     },
 }

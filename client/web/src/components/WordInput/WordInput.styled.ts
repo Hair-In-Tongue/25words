@@ -21,8 +21,9 @@ export const Icon = styled(ReactSVG)`
 export const Input = styled.input`
     width: 260px;
     height: 42px;
+    line-height: 42px;
     margin: 0;
-    padding: 4px 9px 0px 9px;
+    padding: 0 9px;
     outline: none;
     font-size: 24px;
     font-weight: 400;

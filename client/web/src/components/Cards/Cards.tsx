@@ -27,9 +27,11 @@ import { setSelectedWord } from '../../store/reducers/playerSlice'
 import { IVariants } from '../../interfaces/VariantsInterface'
 import { iconList } from '../../assets'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 const Cards = () => {
     const { playerState, userData }: IGameProps = useGameContext()
+    const { t } = useTranslation()
     const dispatch = useAppDispatch()
     const { selectedWord } = useAppSelector((state) => state.player)
     const [[page, direction], setPage] = useState([0, 0])
@@ -207,7 +209,7 @@ const Cards = () => {
                                         </Word>
                                         <Line short={false} />
                                         <List>
-                                            <div>HINTS</div>
+                                            <div>{t('game.hints')}</div>
                                             <Clues>
                                                 {cardsArray?.[
                                                     cardIndex(page + index)
@@ -230,7 +232,7 @@ const Cards = () => {
                                         <Line short={true} />
                                         <List>
                                             <Guesses>
-                                                <div>GUESSES</div>
+                                                <div>{t('game.guesses')}</div>
                                                 {cardsArray?.[
                                                     cardIndex(page + index)
                                                 ].guesses

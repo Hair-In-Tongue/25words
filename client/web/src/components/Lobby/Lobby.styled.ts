@@ -25,7 +25,6 @@ export const Container = styled.div`
     margin-top: 75px;
     padding: 10px;
     width: 268px;
-    height: 342px;
     background-color: #f9f6f3;
     border: 2px solid #453f38;
     box-sizing: border-box;
@@ -36,7 +35,6 @@ export const Teams = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 121px;
 `
 
 export const FlexBetween = styled.div`
@@ -47,8 +45,6 @@ export const FlexBetween = styled.div`
 `
 
 export const JoinTeamBtn = styled.button`
-    padding-top: 4px;
-    margin-bottom: 2px;
     outline: none;
     border: none;
     transition-duration: 0.3s;
@@ -57,7 +53,6 @@ export const JoinTeamBtn = styled.button`
     font-weight: 400;
     font-size: 24px;
     width: 112px;
-    height: 42px;
     border-radius: 16px;
     background-color: ${({ color }) => color};
 
@@ -85,18 +80,14 @@ export const JoinSpectator = styled(JoinTeamBtn)`
     background-color: ${({ color }) => color};
     color: black;
     margin-top: 12px;
+`
 
-    &::after {
-        content: '';
-        position: absolute;
-        margin: 0 auto;
-        top: 283px;
-        left: 0;
-        right: 0;
-        width: 186px;
-        height: 2px;
-        background-color: #523037;
-    }
+export const Divider = styled.div`
+    width: 186px;
+    height: 2px;
+    background-color: #523037;
+    margin-top: 10px;
+    margin-bottom: 10px;
 `
 
 export const Settings = styled.div`
@@ -108,7 +99,6 @@ export const Settings = styled.div`
 export const DifficultyContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-top: 9px;
 `
 
 export const TimeSettings = styled.div`
@@ -127,46 +117,6 @@ export const GuessingTime = styled.div`
     font-weight: bold;
 `
 
-export const SwitchLabel = styled.label`
-    transition-duration: 0.1s;
-    width: 44px;
-    height: 24px;
-    border-radius: 24px;
-    margin-top: 2px;
-    background-color: #948779;
-    box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.5);
-
-    &::before {
-        content: '';
-        transition-duration: 0.1s;
-        transition-timing-function: cubic-bezier(0.91, 0.54, 0.39, 1.03);
-        position: absolute;
-        top: 369px;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        transform: translate(-52px, 0px);
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background-color: #fdf3d8;
-        box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
-        border: 1px solid #423d36;
-    }
-`
-
-export const Switch = styled.input`
-    display: none;
-
-    &:checked + ${SwitchLabel} {
-        background-color: #c5b4a1;
-        box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
-        &::before {
-            transform: translate(-32px, 0px);
-        }
-    }
-`
-
 export const Time = styled.input`
     padding: 4px 0px 0px 0px;
     outline: none;
@@ -183,7 +133,7 @@ export const Time = styled.input`
 
 export const StartButton = styled(JoinTeamBtn)`
     width: 100%;
-    height: 36px;
+    line-height: 36px;
     background-color: #0f1a60;
     box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
     outline: none;
@@ -193,7 +143,6 @@ export const StartButton = styled(JoinTeamBtn)`
     color: #f9f6f3;
     margin-top: 22px;
     margin-bottom: 5px;
-    padding-top: 4px;
 `
 
 export const ProgressBar = styled.div`
@@ -205,10 +154,8 @@ export const ProgressBar = styled.div`
 `
 
 export const Button = styled(JoinTeamBtn)`
-    padding: 0px;
     font-size: 18px;
     font-weight: 400;
     font-style: normal;
-    height: 36px;
     background-color: ${({ color }) => color};
 `
