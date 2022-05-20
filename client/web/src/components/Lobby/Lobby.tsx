@@ -82,7 +82,7 @@ const Lobby = () => {
                     <GuessingTime>
                         {t('game.guessingTime')}
                         <Toggle
-                            on={toggleTime}
+                            on={toggleTime ? 1 : 0}
                             onClick={() => setToggleTime(!toggleTime)}
                         />
                     </GuessingTime>

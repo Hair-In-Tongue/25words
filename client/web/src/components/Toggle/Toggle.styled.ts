@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ToggleButton = styled.button<{ on: boolean }>`
+export const ToggleButton = styled.button<{ on: number }>`
     width: 44px;
     height: 24px;
     position: relative;

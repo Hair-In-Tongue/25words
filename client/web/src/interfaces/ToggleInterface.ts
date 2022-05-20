@@ -1,4 +1,4 @@
 export interface IToggleProps {
-    on: boolean
+    on: number
     onClick: () => void
 }
