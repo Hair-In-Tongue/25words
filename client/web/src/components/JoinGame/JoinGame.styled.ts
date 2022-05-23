@@ -4,7 +4,6 @@ export const FlexCol = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
 `
 export const Card = styled(FlexCol)`
     justify-content: space-around;
@@ -15,46 +14,46 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    margin-top: 8px;
-    padding: 3px;
+    margin-top: 10px;
+    padding: 10px;
     border: 2px solid #453f38;
     background-color: white;
     border-radius: 16px;
     width: 268px;
-    height: 342px;
 `
 
 export const Header = styled.div`
     text-align: center;
-    margin: 0;
     color: #0f1a60;
     font-weight: 700;
     &:nth-child(1) {
         font-size: 112px;
-        height: 102px;
+        line-height: 112px;
     }
     &:nth-child(2) {
         font-size: 62px;
+        line-height: 62px;
     }
     &:nth-child(3) {
-        line-height: 38px;
+        margin-top: 12px;
+        line-height: 25px;
         font-size: 20px;
         color: #453f38;
     }
 `
 
 export const HeaderContainer = styled.div`
-    margin-bottom: 0.5rem;
+    margin-bottom: 24px;
 `
 export const JoinButton = styled.button`
     background-color: #0f1a60;
     color: #f9f6f3;
     width: 244px;
-    height: 42px;
+    line-height: 40px;
+    margin-top: 8px;
     font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    padding-top: 6px;
+    font-weight: 600;
+    letter-spacing: 0.025em;
     outline: none;
     border: none;
     border-radius: 16px;
@@ -70,10 +69,11 @@ export const Text = styled.div`
 
 export const Input = styled.input`
     width: 244px;
-    height: 42px;
-    padding-top: 6px;
-    padding-left: 14px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
     border-radius: 16px;
+    padding: 5px 5px 8px;
     border: 2px solid #000037;
     outline: none;
     font-weight: 400;

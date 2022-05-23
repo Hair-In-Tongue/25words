@@ -13,9 +13,11 @@ import Lobby from '../../components/Lobby/Lobby'
 import Loading from '../../components/Loading/Loading'
 import Board from '../../components/Board/Board'
 import { setLoading } from '../../store/reducers/loadingSlice'
+import { useTranslation } from 'react-i18next'
 
 const Game = ({ userData, playerState, client }: IGameProps) => {
     const dispatch = useAppDispatch()
+    const { t } = useTranslation()
     const { nickname, visibleTeam } = useAppSelector((state) => state.player)
     const { loading } = useAppSelector((state) => state.loading)
     const isJoined = playerState.players.find(
@@ -46,13 +48,13 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                 {isJoined ? (
                     <GridLayout>
                         <Team
-                            name="Blue team"
+                            name={t('team.blueTeam')}
                             backgroundColor={theme.colors.blueTeam}
                             teamColor={Color.BLUE}
                             showTeam={visibleTeam === 'left'}
                         />
                         <Team
-                            name="Red team"
+                            name={t('team.redTeam')}
                             backgroundColor={theme.colors.redTeam}
                             teamColor={Color.RED}
                             showTeam={visibleTeam === 'right'}
@@ -79,7 +81,7 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                     <>
                         <JoinGame
                             handleJoin={newPlayer}
-                            buttonName="Join game"
+                            buttonName={t('buttons.joinGame')}
                         />
                     </>
                 )}

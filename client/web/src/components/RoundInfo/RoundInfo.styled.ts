@@ -1,18 +1,21 @@
 import styled from 'styled-components'
-import { InfoBoardProps } from '../../interfaces/InfoBoardInterface'
+import { ReactSVG } from 'react-svg'
+import { IRoundInfoProps } from '../../interfaces/RoundInfoInterface'
 
 export const Container = styled.div`
-    display: flex;
     padding: 0;
-    width: 140px;
-    height: 64px;
+    width: 150px;
 `
 
-export const Team = styled.div<InfoBoardProps>`
+export const HintsContainer = styled.div`
+    display: flex;
+`
+
+export const HintsLeft = styled.div<IRoundInfoProps>`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 4px;
+    padding: 5px;
     align-items: center;
     color: ${({ theme }) => theme.colors.whiteColor};
     height: 100%;
@@ -26,9 +29,17 @@ export const Team = styled.div<InfoBoardProps>`
 `
 
 export const Header = styled.div`
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
 `
 
 export const Number = styled.div`
     font-size: 30px;
+`
+export const StyledSvg = styled(ReactSVG)`
+    width: 30px;
+    height: 30px;
+    fill: white;
 `

@@ -5,6 +5,9 @@ import staff from './icons/staff.svg'
 import information from './icons/information.svg'
 import hamburger from './icons/hamburger.svg'
 import done from './icons/done.svg'
+import logout from './icons/logout.svg'
+import hint from './icons/hint.svg'
+import cards from './icons/cards.svg'
 
 export const iconList = {
     triangle,
@@ -14,4 +17,7 @@ export const iconList = {
     information,
     hamburger,
     done,
+    logout,
+    hint,
+    cards,
 }

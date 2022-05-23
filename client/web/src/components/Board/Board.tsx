@@ -5,7 +5,7 @@ import { GameStatus } from '../../../../../api/types'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import WordInput from '../WordInput/WordInput'
-import InfoBoard from '../RoundInfo/InfoBoard'
+import RoundInfo from '../RoundInfo/RoundInfo'
 import Bid from '../Bid/Bid'
 
 const Board = () => {
@@ -20,14 +20,14 @@ const Board = () => {
         <Container>
             {playerState.gameStatus === GameStatus.AUCTION && (
                 <FirstRow>
-                    <InfoBoard />
+                    <RoundInfo />
                     {playerDetails?.isGivingClues && <Bid />}
                     <Cards />
                 </FirstRow>
             )}
             {playerState.gameStatus === GameStatus.GUESSING && (
                 <FirstRow>
-                    <InfoBoard />
+                    <RoundInfo />
                     <Cards />
                     <WordInput />
                 </FirstRow>

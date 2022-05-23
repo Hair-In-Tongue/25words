@@ -2,7 +2,7 @@ import { createGlobalStyle, css } from 'styled-components'
 
 export default createGlobalStyle`${css`
     * {
-        font-family: 'Josefin Sans', sans-serif;
+        font-family: 'Open Sans', sans-serif;
         box-sizing: border-box;
         font-size: 1rem;
     }

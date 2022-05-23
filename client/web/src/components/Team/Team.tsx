@@ -15,19 +15,22 @@ import {
 import { useGameContext } from '../../context/GameProvider'
 import { ITeamProps } from '../../interfaces/TeamInterface'
 import { IGameProps } from '../../interfaces/GlobalInterface'
+import { useTranslation } from 'react-i18next'
 
 const Team = ({ backgroundColor, teamColor, showTeam }: ITeamProps) => {
     const { client, playerState, userData }: IGameProps = useGameContext()
     const dispatch = useAppDispatch()
+    const { t } = useTranslation()
+
     const team = playerState.teams?.find((t) => t.color === teamColor)
     const teamPlayers = playerState.players.filter((p) => p.team === teamColor)
     const left = teamColor === Color.BLUE
 
     const setTeam = async () => {
         if (showTeam) {
-            return await dispatch(setVisibleTeam('none'))
+            return dispatch(setVisibleTeam('none'))
         }
-        await dispatch(setVisibleTeam(left ? 'left' : 'right'))
+        dispatch(setVisibleTeam(left ? 'left' : 'right'))
     }
 
     const playerDetails = playerState.players.find((p) => {
@@ -60,7 +63,7 @@ const Team = ({ backgroundColor, teamColor, showTeam }: ITeamProps) => {
             <Details color={backgroundColor}>
                 <Players>
                     <Leader>
-                        {teamLeader ? teamLeader.name : 'Leader Name'}
+                        {teamLeader ? teamLeader.name : t('team.leader')}
                     </Leader>
                     <PlayersList>
                         {teamPlayers.map(
@@ -77,10 +80,12 @@ const Team = ({ backgroundColor, teamColor, showTeam }: ITeamProps) => {
                 playerDetails?.team === Color.GRAY ||
                 playerDetails?.isGivingClues ? (
                     <JoinTeamBtn color={backgroundColor} onClick={joinTeam}>
-                        JOIN
+                        {t('buttons.joinTeam')}
                     </JoinTeamBtn>
                 ) : (
-                    <JoinTeamBtn onClick={joinAsLeader}>LEAD</JoinTeamBtn>
+                    <JoinTeamBtn onClick={joinAsLeader}>
+                        {t('buttons.leadTeam')}
+                    </JoinTeamBtn>
                 )}
             </Details>
             <Score color={backgroundColor}>
