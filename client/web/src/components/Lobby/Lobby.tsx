@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import {
     Container,
     Teams,
-    JoinTeamBtn,
-    JoinSpectator,
     FlexBetween,
     Settings,
     DifficultyContainer,
@@ -19,25 +17,16 @@ import Toggle from '../Toggle/Toggle'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { Color, Difficulty } from '../../../../../api/types'
-import { setLoading } from '../../store/reducers/loadingSlice'
-import { useAppDispatch } from '../../store/hooks'
 import { useTranslation } from 'react-i18next'
+import JoinTeamButton from '../JoinTeamButton/JoinTeamButton'
 
 const Lobby = () => {
     const { client }: IGameProps = useGameContext()
     const { t } = useTranslation()
-    const dispatch = useAppDispatch()
     const [toggleTime, setToggleTime] = useState(false)
 
     const startGame = async () => {
         await client?.startGame({})
-    }
-
-    const joinTeam = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        dispatch(setLoading(true))
-        const teamColor: Color = e.currentTarget.value as unknown as Color
-        await client?.joinTeam({ team: teamColor })
-        dispatch(setLoading(false))
     }
 
     const shuffleTeams = async () => {
@@ -48,28 +37,10 @@ const Lobby = () => {
         <Container>
             <Teams>
                 <FlexBetween>
-                    <JoinTeamBtn
-                        color={'#005956'}
-                        value={Color.BLUE}
-                        onClick={joinTeam}
-                    >
-                        {t('buttons.joinTeam')}
-                    </JoinTeamBtn>
-                    <JoinTeamBtn
-                        color={'#95123A'}
-                        value={Color.RED}
-                        onClick={joinTeam}
-                    >
-                        {t('buttons.joinTeam')}
-                    </JoinTeamBtn>
+                    <JoinTeamButton color={'#005956'} teamColor={Color.BLUE} />
+                    <JoinTeamButton color={'#95123A'} teamColor={Color.RED} />
                 </FlexBetween>
-                <JoinSpectator
-                    color={'#E3D5C5'}
-                    value={Color.GRAY}
-                    onClick={joinTeam}
-                >
-                    {t('buttons.spectate')}
-                </JoinSpectator>
+                <JoinTeamButton color={'#E3D5C5'} teamColor={Color.GRAY} />
             </Teams>
             <Divider />
             <Settings>
