@@ -16,6 +16,15 @@ export default {
             'Team earns a point for guessing all the words in the time limit.',
         addPackages: 'ADD YOUR CUSTOM DECKS ON THE SITE',
     },
+    settings: {
+        setNickname: 'Set nickname',
+        enterSetCode: 'Enter the set/deck code',
+        deckCode: 'Deck-code',
+    },
+    languages: {
+        english: 'English',
+        polish: 'Polish',
+    },
     buttons: {
         close: 'Close',
         joinGame: 'Join Game',
@@ -27,6 +36,7 @@ export default {
         hard: 'Hard',
         createGame: 'Create Game',
         startRound: 'Start Round',
+        checkPreviousRound: 'Check previous round',
     },
     statusCodes: {
         s404: 'Game with given code does not exist',

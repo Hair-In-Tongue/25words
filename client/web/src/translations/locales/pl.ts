@@ -16,6 +16,15 @@ export default {
         fifthRule: 'Za zgadnięcie wszystkich haseł otrzymuje się punkt',
         addPackages: 'DODAJ SWOJE PACZKI ZE SŁOWAMI NA STRONIE',
     },
+    settings: {
+        setNickname: 'Ustaw nazwe',
+        enterSetCode: 'Wpisz kod seta/decku',
+        deckCode: 'Kod decku',
+    },
+    languages: {
+        english: 'Angielski',
+        polish: 'Polski',
+    },
     buttons: {
         close: 'Wyjdź',
         joinGame: 'Dołącz do gry',
@@ -27,6 +36,7 @@ export default {
         hard: 'Trudny',
         createGame: 'Stwórz pokój',
         startRound: 'Rozpocznij rundę',
+        checkPreviousRound: 'Sprawdź poprzednią rundę',
     },
     statusCodes: {
         s404: 'Gra z tym kodem nie istnieje',
