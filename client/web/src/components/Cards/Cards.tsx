@@ -123,15 +123,23 @@ const Cards = () => {
                                 }}
                                 isSelected={
                                     selectedWord === index &&
-                                    playerState?.gameStatus ===
-                                        GameStatus.GUESSING
+                                    (playerState?.gameStatus ===
+                                        GameStatus.GUESSING ||
+                                        playerState?.gameStatus ===
+                                            GameStatus.ROUND_ENDED)
                                 }
                             >
                                 {card?.hints.length}
                             </SelectorElement>
                         ))}
                     </CardSelector>
-                    <ArrowContainer>
+                    <ArrowContainer
+                        top={
+                            playerState?.gameStatus === GameStatus.GUESSING
+                                ? 365
+                                : 280
+                        }
+                    >
                         <Arrow direction={'left'}>
                             <Triangle
                                 src={iconList.triangle}
