@@ -13,12 +13,15 @@ import { iconList } from '../../../assets'
 import Modal from '../../Modal/Modal'
 import InstructionModal from '../../Modal/InstructionModal/InstructionModal'
 import SettingsModal from '../../Modal/SettingsModal/SettingsModal'
+import PlayersListModal from '../../Modal/PlayersList/PlayersListModal'
 import theme from '../../../theme'
 
 const Header = () => {
     const { playerState, userData }: IGameProps = useGameContext()
     const [informationOpen, setInformationOpen] = useState(false)
     const [settingsOpen, setSettingsOpen] = useState(false)
+    const [playersListOpen, setPlayersListOpen] = useState(false)
+
     const isJoined = playerState.players.find(
         (player) => player.id === userData.id
     )
@@ -29,7 +32,7 @@ const Header = () => {
         <>
             <LayoutHeader>
                 <LayoutFlex>
-                    <HeaderButton>
+                    <HeaderButton onClick={() => setPlayersListOpen(true)}>
                         <HeaderIcon src={iconList.staff} />
                     </HeaderButton>
                     {playerState.gameStatus === GameStatus.GUESSING &&
@@ -57,6 +60,13 @@ const Header = () => {
                 isOpen={settingsOpen}
                 onRequestClose={() => setSettingsOpen(false)}
                 customContent={<SettingsModal />}
+            />
+            <Modal
+                color={'white'}
+                margin={'20px 30px'}
+                isOpen={playersListOpen}
+                onRequestClose={() => setPlayersListOpen(false)}
+                customContent={<PlayersListModal />}
             />
         </>
     )

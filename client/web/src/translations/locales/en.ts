@@ -21,6 +21,12 @@ export default {
         enterSetCode: 'Enter the set/deck code',
         deckCode: 'Deck-code',
     },
+    playersList: {
+        players: 'Players',
+        red: 'Red',
+        blue: 'Blue',
+        spectators: 'Spectators',
+    },
     languages: {
         english: 'English',
         polish: 'Polish',

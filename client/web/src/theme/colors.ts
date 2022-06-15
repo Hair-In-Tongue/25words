@@ -9,9 +9,11 @@ export default {
     shadow: '#454545',
     redTeam: '#D13967',
     redTeamDark: '#95123A',
+    redTeamLight: '#e79cb3',
     blueTeam: '#04B692',
     blueTeamDark: '#005956',
     grayTeam: '#D3D3D3',
+    grayTeamDark: '#696969',
     blueBackground: '#3587D2',
     blueOutline: '#0F1A60',
     redTurnBackground:

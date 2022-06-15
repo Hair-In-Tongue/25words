@@ -10,6 +10,7 @@ import hint from './icons/hint.svg'
 import cards from './icons/cards.svg'
 import removeIcon from './icons/remove-icon.svg'
 import addIcon from './icons/add-icon.svg'
+import kickIcon from './icons/kick.svg'
 
 export const iconList = {
     triangle,
@@ -24,4 +25,5 @@ export const iconList = {
     cards,
     removeIcon,
     addIcon,
+    kickIcon,
 }

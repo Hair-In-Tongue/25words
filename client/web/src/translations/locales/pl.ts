@@ -21,6 +21,12 @@ export default {
         enterSetCode: 'Wpisz kod seta/decku',
         deckCode: 'Kod decku',
     },
+    playersList: {
+        players: 'Lista Graczy',
+        red: 'Czerwoni',
+        blue: 'Niebiescy',
+        spectators: 'Obserwatorzy',
+    },
     languages: {
         english: 'Angielski',
         polish: 'Polski',
