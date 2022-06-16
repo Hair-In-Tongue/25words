@@ -11,6 +11,8 @@ import {
 } from '../../components/GameLayout/GameLayout.styled'
 import { Color } from '../../../../../api/types'
 import Loading from '../../components/Loading/Loading'
+import { useTranslation } from 'react-i18next'
+
 const client = new HathoraClient()
 
 function Room() {
@@ -20,6 +22,7 @@ function Room() {
     const [hathora, setHathora] = useState<HathoraConnection | undefined>(
         undefined
     )
+    const { t } = useTranslation()
     const [is404, setIs404] = useState<boolean>(false)
     const path = useLocation().pathname
     const history = useHistory()
@@ -55,9 +58,7 @@ function Room() {
     } else if (is404) {
         return (
             <div className="background">
-                <span className="fourOhFour">
-                    Game with this Game Code does not exist
-                </span>
+                <span className="fourOhFour">{t('statusCodes.s404')}</span>
             </div>
         )
     } else {
@@ -103,7 +104,9 @@ async function initRtag(
         const stateId = await client.create(token, {})
         history.push(`/room/${stateId}`)
     } else {
-        const stateId = location.pathname.split('/').pop()!
+        const stateId = location.pathname.split('/').pop()
+            ? location.pathname.split('/').pop()
+            : null
         if (stateId) {
             const connection = client.connect(
                 token,

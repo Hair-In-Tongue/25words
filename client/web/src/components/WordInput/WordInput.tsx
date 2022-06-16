@@ -4,10 +4,12 @@ import { IGameProps } from '../../interfaces/GlobalInterface'
 import { useAppSelector } from '../../store/hooks'
 import { Container, Form, Icon, Input, SubmitButton } from './WordInput.styled'
 import { iconList } from '../../assets'
+import { useTranslation } from 'react-i18next'
 
 const WordInput = () => {
     const { client, playerState, userData }: IGameProps = useGameContext()
     const { selectedWord } = useAppSelector((state) => state.player)
+    const { t } = useTranslation()
 
     const playerDetails = playerState.players.find((p) => {
         if (p.id === userData.id) {
@@ -34,8 +36,6 @@ const WordInput = () => {
 
     const onSubmitWord = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(selectedWord)
-        console.log(word)
         if (!word) return
         if (selectedWord < 0) return
         if (playerDetails?.isGivingClues) {
@@ -56,8 +56,8 @@ const WordInput = () => {
                             onChange={onChangeWord}
                             placeholder={
                                 playerDetails?.isGivingClues
-                                    ? 'Leaders hint'
-                                    : 'Players guess'
+                                    ? t('wordInput.leaderHint')
+                                    : t('wordInput.playerGuess')
                             }
                         />
                         <SubmitButton type="submit">

@@ -1,8 +1,10 @@
 import React from 'react'
 import { Loader, LoadingCard } from './Loading.styled'
+import { useTranslation } from 'react-i18next'
 
 const Loading = () => {
-    const animateWord = 'LOADING'
+    const { t } = useTranslation()
+    const animateWord = t('game.loading').toUpperCase()
 
     return (
         <>

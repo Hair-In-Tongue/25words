@@ -4,7 +4,6 @@ export const RadioLabel = styled.label`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 4px;
     border-radius: 8px;
     font-size: 18;
     border: 1px solid #453f38;

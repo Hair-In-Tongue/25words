@@ -16,7 +16,53 @@ export default {
         fifthRule: 'Za zgadnięcie wszystkich haseł otrzymuje się punkt',
         addPackages: 'DODAJ SWOJE PACZKI ZE SŁOWAMI NA STRONIE',
     },
+    settings: {
+        setNickname: 'Ustaw nazwe',
+        enterSetCode: 'Wpisz kod seta/decku',
+        deckCode: 'Kod decku',
+    },
+    languages: {
+        english: 'Angielski',
+        polish: 'Polski',
+    },
     buttons: {
         close: 'Wyjdź',
+        joinGame: 'Dołącz do gry',
+        joinTeam: 'Dołącz',
+        leadTeam: 'Prowadź',
+        spectate: 'Obserwuj',
+        easy: 'Łatwy',
+        normal: 'Średni',
+        hard: 'Trudny',
+        createGame: 'Stwórz pokój',
+        startRound: 'Rozpocznij rundę',
+        checkPreviousRound: 'Sprawdź poprzednią rundę',
+    },
+    statusCodes: {
+        s404: 'Gra z tym kodem nie istnieje',
+    },
+    team: {
+        blueTeam: 'Drużyna niebieska',
+        redTeam: 'Drużyna czerwona',
+        leader: 'Lider',
+    },
+    wordInput: {
+        leaderHint: 'Podpowiedź',
+        playerGuess: 'Odpowiedź',
+    },
+    game: {
+        title: {
+            number: '25',
+            text: 'Słów',
+            canYouGuesThem: 'Czy potrafisz je odgadnąć?',
+        },
+        hints: 'Podpowiedzi',
+        cards: 'Karty',
+        guesses: 'Domysły',
+        guessingTime: 'Czas na zgadywanie',
+        mixTeams: 'Wymieszaj zespoły',
+        resetScore: 'Zresetuj wynik',
+        loading: 'Ładowanie',
+        nicknamePlaceholder: 'Twója nazwa w grze',
     },
 }

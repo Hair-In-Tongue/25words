@@ -126,7 +126,6 @@ export const Players = styled.div`
 `
 
 export const Circle = styled.div`
-    padding-top: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,7 +133,7 @@ export const Circle = styled.div`
     font-size: 28px;
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 24px;
+    border-radius: 50%;
     width: 48px;
     height: 48px;
 `
@@ -170,26 +169,23 @@ export const CrownIcon = styled(ReactSVG)`
 `
 
 export const JoinTeamBtn = styled.button`
-    padding-top: 4px;
-    margin-bottom: 2px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
     outline: none;
     border: none;
     transition-duration: 0.3s;
     box-shadow: -2px -4px 4px 0px #00000040 inset;
     color: white;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 20px;
-    width: 144px;
-    height: 33px;
+    width: 145px;
     border-radius: 16px;
     background-color: rgba(0, 0, 0, 0.3);
     ${({ theme: { devices } }) => css`
         ${devices.mobile} {
             width: 144px;
             height: 32px;
-        }
-
-        ${devices.tablet} {
         }
 
         ${devices.desktop} {

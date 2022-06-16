@@ -17,13 +17,12 @@ i18n.use(Backend)
     .use(initReactI18next)
     .init({
         resources,
-        lng: 'pl',
+        lng: localStorage.getItem('language') || 'pl',
         fallbackLng: 'pl',
 
         interpolation: {
             escapeValue: false,
         },
     })
-console.log(i18n)
 
 export default i18n
