@@ -15,6 +15,7 @@ import background from './images/background.png'
 import english from './icons/flags/english.png'
 import polish from './icons/flags/polish.png'
 
+
 export const iconList = {
     triangle,
     flag,
@@ -33,5 +34,5 @@ export const iconList = {
 export const imageList = {
     background,
     english,
-    polish
+    polish,
 }
