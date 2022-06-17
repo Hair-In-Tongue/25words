@@ -26,7 +26,9 @@ export const SelectorElement = styled.button<{
     border: none;
     background-color: ${({ theme: { colors }, guessed, isSelected }) =>
         guessed
-            ? colors.guessedCardBackground
+            ? isSelected
+                ? 'rgba(211, 237, 165, 1)'
+                : colors.guessedCardBackground
             : isSelected
             ? colors.selectedCard
             : colors.cardBackground};
@@ -165,10 +167,10 @@ export const Panel = styled(motion.div)`
     position: absolute;
 `
 
-export const ArrowContainer = styled.div`
+export const ArrowContainer = styled.div<{ top: number }>`
     pointer-events: none;
     position: absolute;
-    top: 340px;
+    top: ${({ top }) => top}px;
     margin-left: auto;
     width: 380px;
     z-index: 7;

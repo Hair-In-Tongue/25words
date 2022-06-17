@@ -13,7 +13,7 @@ const NicknameInput = () => {
 
     const [newNickname, setNewNickname] = useState<string>('')
 
-    const onChangeWord = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.includes(' ')) {
             e.target.value = e.target.value.replace(/\s/g, '')
         }
@@ -32,7 +32,7 @@ const NicknameInput = () => {
                 <Input
                     type="text"
                     value={newNickname}
-                    onChange={onChangeWord}
+                    onChange={onChangeNickname}
                     placeholder={t('settings.setNickname')}
                 />
                 <SubmitButton type="button" onClick={changeNickname}>
