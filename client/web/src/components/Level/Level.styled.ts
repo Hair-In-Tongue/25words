@@ -12,6 +12,11 @@ export const RadioLabel = styled.label`
     background-color: #e3d5c5;
     box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
     cursor: 'pointer';
+    transition: 0.5s;
+
+    &:hover {
+        background-color: #c5b4a1;
+    }
 `
 
 export const RadioButton = styled.input`

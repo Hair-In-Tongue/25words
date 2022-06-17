@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { ReactSVG } from 'react-svg'
 import Select from 'react-select'
+import { imageList } from '../../../assets'
 
 export const Icon = styled(ReactSVG)`
     path {
@@ -283,7 +284,7 @@ export const IconContainer = styled.div<{ language: string }>`
     background-color: red;
     overflow: hidden;
     background: ${({ language }) =>
-        `url('/src/assets/icons/flags/${language}.png')`};
+        `url( ${imageList[language as keyof typeof imageList]})`};
     background-size: cover;
     background-position: center;
 `

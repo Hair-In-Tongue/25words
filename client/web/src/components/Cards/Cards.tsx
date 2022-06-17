@@ -140,17 +140,11 @@ const Cards = () => {
                                 : 280
                         }
                     >
-                        <Arrow direction={'left'}>
-                            <Triangle
-                                src={iconList.triangle}
-                                onClick={() => paginate(-1)}
-                            />
+                        <Arrow direction={'left'} onClick={() => paginate(-1)}>
+                            <Triangle src={iconList.triangle} />
                         </Arrow>
-                        <Arrow direction={'right'}>
-                            <Triangle
-                                src={iconList.triangle}
-                                onClick={() => paginate(1)}
-                            />
+                        <Arrow direction={'right'} onClick={() => paginate(1)}>
+                            <Triangle src={iconList.triangle} />
                         </Arrow>
                     </ArrowContainer>
                     <Container>

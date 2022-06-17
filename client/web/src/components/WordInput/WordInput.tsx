@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 const WordInput = () => {
     const { client, playerState, userData }: IGameProps = useGameContext()
     const { selectedWord } = useAppSelector((state) => state.player)
+    const [isDisabled, setIsDisabled] = useState(false)
     const { t } = useTranslation()
 
     const playerDetails = playerState.players.find((p) => {
@@ -19,12 +20,16 @@ const WordInput = () => {
     const [word, setWord] = useState<string>('')
 
     const giveClue = async () => {
+        setIsDisabled(true)
         await client?.giveClue({ word: selectedWord, hint: word })
         setWord('')
+        setIsDisabled(false)
     }
     const guessWord = async () => {
+        setIsDisabled(true)
         await client?.guessWord({ word: selectedWord, guess: word })
         setWord('')
+        setIsDisabled(false)
     }
 
     const onChangeWord = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +56,7 @@ const WordInput = () => {
                 <Container>
                     <Form onSubmit={onSubmitWord}>
                         <Input
+                            ref={(input) => input && input.focus()}
                             type="text"
                             value={word}
                             onChange={onChangeWord}
@@ -59,8 +65,13 @@ const WordInput = () => {
                                     ? t('wordInput.leaderHint')
                                     : t('wordInput.playerGuess')
                             }
+                            disabled={isDisabled}
                         />
-                        <SubmitButton type="submit">
+                        <SubmitButton
+                            type="submit"
+                            isDisabled={isDisabled}
+                            disabled={isDisabled}
+                        >
                             <Icon src={iconList.done} />
                         </SubmitButton>
                     </Form>

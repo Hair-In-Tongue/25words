@@ -63,9 +63,6 @@ export const JoinTeamBtn = styled.button`
             }
         }
 
-        ${devices.tablet} {
-        }
-
         ${devices.desktop} {
             &:hover:enabled {
                 box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
@@ -158,4 +155,5 @@ export const Button = styled(JoinTeamBtn)`
     font-weight: 400;
     font-style: normal;
     background-color: ${({ color }) => color};
+    padding: 4px 6px;
 `

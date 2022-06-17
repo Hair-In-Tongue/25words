@@ -36,6 +36,7 @@ const Modal = ({
                     zIndex: 40,
                 },
             }}
+            onRequestClose={onRequestClose}
             {...res}
         >
             <Container margin={margin || '0'}>
