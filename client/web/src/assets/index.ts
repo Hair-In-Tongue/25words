@@ -11,6 +11,10 @@ import cards from './icons/cards.svg'
 import removeIcon from './icons/remove-icon.svg'
 import addIcon from './icons/add-icon.svg'
 
+import background from './images/background.png'
+import english from './icons/flags/english.png'
+import polish from './icons/flags/polish.png'
+
 export const iconList = {
     triangle,
     flag,
@@ -24,4 +28,10 @@ export const iconList = {
     cards,
     removeIcon,
     addIcon,
+}
+
+export const imageList = {
+    background,
+    english,
+    polish
 }

@@ -108,7 +108,7 @@ async function initRtag(
             ? location.pathname.split('/').pop()
             : null
         if (stateId) {
-            const connection = client.connect(
+            const connection = await client.connect(
                 token,
                 stateId,
                 ({ state }) => onStateChange(state),
