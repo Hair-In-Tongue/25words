@@ -99,7 +99,7 @@ export class Impl implements Methods<InternalState> {
     }
 
     changeName(state: InternalState, userId: UserId, ctx: Context, request: IChangeNameRequest): Response {
-        let error = checkPermissionForAction(state, userId, ctx, request, 'changeGame');
+        let error = checkPermissionForAction(state, userId, ctx, request, 'changeName');
         if (error.value == false) {
             return Response.error(error?.message);
         }

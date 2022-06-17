@@ -7,7 +7,13 @@ import Button from '../Button/Button'
 
 ReactModal.setAppElement('#modals')
 
-const Modal = ({ customContent, onRequestClose, ...res }: IModalProps) => {
+const Modal = ({
+    color,
+    margin,
+    customContent,
+    onRequestClose,
+    ...res
+}: IModalProps) => {
     const { t } = useTranslation()
     return (
         <ReactModal
@@ -23,6 +29,7 @@ const Modal = ({ customContent, onRequestClose, ...res }: IModalProps) => {
                     boxShadow: '4px 8px 14px 8px rgba(0, 0, 0, 0.45)',
                     border: '2px solid #BF5F26',
                     borderRadius: '16px',
+                    background: color,
                 },
                 overlay: {
                     backgroundColor: 'rgba(255, 255, 255, 0.6)',
@@ -31,7 +38,7 @@ const Modal = ({ customContent, onRequestClose, ...res }: IModalProps) => {
             }}
             {...res}
         >
-            <Container>
+            <Container margin={margin || '0'}>
                 <>
                     {customContent}
                     <Button

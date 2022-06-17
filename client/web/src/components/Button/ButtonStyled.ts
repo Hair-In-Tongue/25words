@@ -14,6 +14,7 @@ export const StyledButton = styled.button`
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 20px;
 `
 
 export const Close = styled(ReactSVG)`

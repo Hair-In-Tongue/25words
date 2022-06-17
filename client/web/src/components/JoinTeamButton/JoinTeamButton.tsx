@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { IJoinTeamButton } from '../../interfaces/JoinTeamButtonInterface'
 import { JoinTeamBtn, JoinSpectator } from './JoinTeamButton.styled'
 
-const JoinTeamButton = ({ teamColor, color }: IJoinTeamButton) => {
+const JoinTeamButton = ({ teamColor, color, btnWidth }: IJoinTeamButton) => {
     const { client, userData, playerState }: IGameProps = useGameContext()
     const { t } = useTranslation()
     const dispatch = useAppDispatch()
@@ -33,17 +33,29 @@ const JoinTeamButton = ({ teamColor, color }: IJoinTeamButton) => {
     }
 
     return teamColor === Color.GRAY ? (
-        <JoinSpectator color={color} onClick={joinTeam}>
+        <JoinSpectator
+            color={color}
+            btnWidth={btnWidth || '100%'}
+            onClick={joinTeam}
+        >
             {t('buttons.spectate')}
         </JoinSpectator>
     ) : playerDetails?.team !== team?.color ||
       playerDetails?.team === Color.GRAY ||
       playerDetails?.isGivingClues ? (
-        <JoinTeamBtn color={color} onClick={joinTeam}>
+        <JoinTeamBtn
+            color={color}
+            btnWidth={btnWidth || '112px'}
+            onClick={joinTeam}
+        >
             {t('buttons.joinTeam')}
         </JoinTeamBtn>
     ) : (
-        <JoinTeamBtn color={color} onClick={joinAsLeader}>
+        <JoinTeamBtn
+            color={color}
+            btnWidth={btnWidth || '112px'}
+            onClick={joinAsLeader}
+        >
             {t('buttons.leadTeam')}
         </JoinTeamBtn>
     )

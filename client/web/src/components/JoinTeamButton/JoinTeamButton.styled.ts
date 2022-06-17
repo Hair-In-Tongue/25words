@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-export const JoinTeamBtn = styled.button`
+export const JoinTeamBtn = styled.button<{ btnWidth: string }>`
     outline: none;
     border: none;
     transition-duration: 0.3s;
@@ -8,7 +8,7 @@ export const JoinTeamBtn = styled.button`
     color: #f9f6f3;
     font-weight: 400;
     font-size: 24px;
-    width: 112px;
+    width: ${({ btnWidth }) => btnWidth};
     border-radius: 16px;
     background-color: ${({ color }) => color};
 
@@ -33,6 +33,7 @@ export const JoinTeamBtn = styled.button`
 
 export const JoinSpectator = styled(JoinTeamBtn)`
     width: 100%;
+    max-width: 296px;
     color: black;
     margin-top: 12px;
 `
