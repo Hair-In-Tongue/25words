@@ -57,6 +57,12 @@ export const JoinButton = styled.button`
     outline: none;
     border: none;
     border-radius: 16px;
+    transition: 0.3s;
+
+    &:hover:enabled {
+        box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+    }
 `
 export const Spacing = styled.div`
     margin-bottom: 10px;

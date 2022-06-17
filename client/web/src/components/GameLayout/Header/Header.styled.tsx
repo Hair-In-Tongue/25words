@@ -30,6 +30,15 @@ export const HeaderButton = styled.button`
     background-color: #3587d2;
     border: 2px solid #132178;
     box-shadow: -2px -4px 4px 0px #00000040 inset;
+    transition: 0.5s; 
+
+    &:hover {
+        background-color: #2b79c1;
+    }
+
+    &:active {
+        background-color: #266cac;
+    }
 `
 
 export const Timer = styled.div`

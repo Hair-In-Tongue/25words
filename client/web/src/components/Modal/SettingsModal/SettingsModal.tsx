@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import i18n from '../../../translations/i18n'
 import { components } from 'react-select'
@@ -77,6 +77,11 @@ const SettingsModal = () => {
         i18n.changeLanguage(language)
     }
 
+    const onSelectChange = useCallback(
+        (selected) => setLanguage(selected.value),
+        [setLanguage]
+    )
+
     return (
         <Settings>
             <Teams>
@@ -140,7 +145,7 @@ const SettingsModal = () => {
                     Option: CustomSelectOption,
                     SingleValue: CustomSingleValue,
                 }}
-                onChange={(option: any) => setLanguage(option.value)}
+                onChange={onSelectChange}
             />
         </Settings>
     )

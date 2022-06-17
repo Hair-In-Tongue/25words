@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { ReactSVG } from 'react-svg'
 
 export const Container = styled.div`
@@ -34,7 +34,7 @@ export const Input = styled.input`
     }
 `
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button<{ isDisabled: boolean }>`
     width: 54px;
     height: 42px;
     margin: 0;
@@ -43,4 +43,20 @@ export const SubmitButton = styled.button`
     outline: none;
     border: none;
     background-color: ${({ theme: { colors } }) => colors.cardOutline};
+
+    &:hover {
+        background-color: ${({ theme: { colors } }) =>
+            colors.cardOutlineLighten10};
+    }
+    &:active {
+        background-color: ${({ theme: { colors } }) =>
+            colors.cardOutlineDarken10};
+    }
+
+    ${({ isDisabled }) =>
+        isDisabled
+            ? css`
+                  pointer-events: none;
+              `
+            : null}
 `

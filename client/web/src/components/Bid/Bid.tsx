@@ -73,16 +73,10 @@ const Bid = () => {
                 </ActionButton>
                 <ArrowContainer>
                     <Arrow disabled={disableButtons} onClick={upBid}>
-                        <Triangle
-                            direction={'up'}
-                            src={iconList.triangle}
-                        ></Triangle>
+                        <Triangle direction={'up'} src={iconList.triangle} />
                     </Arrow>
                     <Arrow disabled={disableButtons} onClick={downBid}>
-                        <Triangle
-                            direction={'down'}
-                            src={iconList.triangle}
-                        ></Triangle>
+                        <Triangle direction={'down'} src={iconList.triangle} />
                     </Arrow>
                 </ArrowContainer>
                 <ActionButton

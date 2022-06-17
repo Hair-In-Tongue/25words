@@ -32,8 +32,17 @@ export const SelectorElement = styled.button<{
             : isSelected
             ? colors.selectedCard
             : colors.cardBackground};
+    transition: 0.5s;
+    
     &:not(:first-child) {
         border-left: 2px solid ${({ theme: { colors } }) => colors.cardOutline};
+    }
+
+    &:hover {
+        background-color: ${({ theme: { colors }, guessed }) =>
+            guessed
+                ? colors.guessedCardBackgroundDarken10
+                : colors.cardBackgroundDarken10};
     }
 `
 
@@ -135,7 +144,7 @@ export const Clues = styled(motion.ul)`
         color: black;
         font-size: 18px;
         letter-spacing: 1.1;
-        line-height: 1.15;
+        line-height: 1.2;
         overflow: hidden;
     }
     &::-webkit-scrollbar {
@@ -194,6 +203,20 @@ export const Triangle = styled(ReactSVG)<{ direction: string }>`
             `fill: ${colors.blueBackground};
              stroke: ${colors.blueOutline}`};
         stroke-width: 3px;
+        transition: 0.5s;
+    }
+
+    &:hover {
+        path {
+            fill: #2b79c1;
+        }
+    }
+
+    &:active {
+        path {
+            fill: #266cac;
+            stroke: #192ca5;
+        }
     }
 `
 
