@@ -36,7 +36,7 @@ import {
     ISetGameLanguageRequest,
 } from '../api/types';
 
-import { plEasy, plMedium, plHard } from './wordList';
+import { plEasy, plMedium, plHard, enEasy, enMedium, enHard } from './wordList';
 
 type InternalState = {
     players: PlayerInfo[];
@@ -77,8 +77,8 @@ export class Impl implements Methods<InternalState> {
             timerEnabled: true,
             gamePassword: '',
             language: Language.PL,
-            customDecks: [plEasy, plMedium, plHard],
-            usedDecks: createDeck([plEasy, plMedium, plHard], Language.PL, Difficulty.EASY),
+            customDecks: [plEasy, plMedium, plHard, enEasy, enMedium, enHard],
+            usedDecks: createDeck([plEasy, plMedium, plHard, enEasy, enMedium, enHard], Language.PL, Difficulty.EASY),
         };
     }
     joinGame(state: InternalState, userId: UserId, ctx: Context, request: IJoinGameRequest): Response {
