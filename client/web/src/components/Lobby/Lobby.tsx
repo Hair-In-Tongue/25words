@@ -1,40 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Container,
     Teams,
-    JoinTeamBtn,
-    JoinSpectator,
     FlexBetween,
     Settings,
     DifficultyContainer,
     TimeSettings,
-    SwitchLabel,
-    Switch,
     GuessingTime,
     Time,
     StartButton,
     Button,
+    Divider,
 } from './Lobby.styled'
 import Level from '../Level/Level'
+import Toggle from '../Toggle/Toggle'
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { Color, Difficulty } from '../../../../../api/types'
-import { setLoading } from '../../store/reducers/loadingSlice'
-import { useAppDispatch } from '../../store/hooks'
+import { useTranslation } from 'react-i18next'
+import JoinTeamButton from '../JoinTeamButton/JoinTeamButton'
 
 const Lobby = () => {
     const { client }: IGameProps = useGameContext()
-    const dispatch = useAppDispatch()
+    const { t } = useTranslation()
+    const [toggleTime, setToggleTime] = useState(false)
 
     const startGame = async () => {
         await client?.startGame({})
-    }
-
-    const joinTeam = async (e) => {
-        dispatch(setLoading(true))
-        const teamColor: Color = e.target.value
-        await client?.joinTeam({ team: teamColor })
-        dispatch(setLoading(false))
     }
 
     const shuffleTeams = async () => {
@@ -45,29 +37,12 @@ const Lobby = () => {
         <Container>
             <Teams>
                 <FlexBetween>
-                    <JoinTeamBtn
-                        color={'#005956'}
-                        value={Color.BLUE}
-                        onClick={joinTeam}
-                    >
-                        JOIN
-                    </JoinTeamBtn>
-                    <JoinTeamBtn
-                        color={'#95123A'}
-                        value={Color.RED}
-                        onClick={joinTeam}
-                    >
-                        JOIN
-                    </JoinTeamBtn>
+                    <JoinTeamButton color={'#005956'} teamColor={Color.BLUE} />
+                    <JoinTeamButton color={'#95123A'} teamColor={Color.RED} />
                 </FlexBetween>
-                <JoinSpectator
-                    color={'#E3D5C5'}
-                    value={Color.GRAY}
-                    onClick={joinTeam}
-                >
-                    SPECTATE
-                </JoinSpectator>
+                <JoinTeamButton color={'#E3D5C5'} teamColor={Color.GRAY} />
             </Teams>
+            <Divider />
             <Settings>
                 <DifficultyContainer>
                     <Level difficulty={Difficulty.EASY} />
@@ -76,19 +51,23 @@ const Lobby = () => {
                 </DifficultyContainer>
                 <TimeSettings>
                     <GuessingTime>
-                        Guessing time
-                        <Switch id="guessing-time" type="checkbox"></Switch>
-                        <SwitchLabel htmlFor="guessing-time" />
+                        {t('game.guessingTime')}
+                        <Toggle
+                            on={toggleTime ? 1 : 0}
+                            onClick={() => setToggleTime(!toggleTime)}
+                        />
                     </GuessingTime>
                     <Time type="text" defaultValue={'1:30'}></Time>
                 </TimeSettings>
             </Settings>
-            <StartButton onClick={() => startGame()}>START ROUND</StartButton>
+            <StartButton onClick={() => startGame()}>
+                {t('buttons.startRound')}
+            </StartButton>
             <FlexBetween>
                 <Button color={'#005956'} onClick={shuffleTeams}>
-                    Mix Teams
+                    {t('game.mixTeams')}
                 </Button>
-                <Button color={'#95123A'}>Reset Score</Button>
+                <Button color={'#95123A'}>{t('game.resetScore')}</Button>
             </FlexBetween>
         </Container>
     )

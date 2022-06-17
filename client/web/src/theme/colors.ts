@@ -25,4 +25,5 @@ export default {
     menuButton: '#132178',
     menuButtonText: '#E6A758',
     modalText: '#000037',
+    grayBackground: '#E5E5E5',
 }

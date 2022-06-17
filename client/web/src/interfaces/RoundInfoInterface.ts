@@ -1,4 +1,4 @@
-export interface InfoBoardProps {
+export interface IRoundInfoProps {
     left: boolean
     color: string
 }

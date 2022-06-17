@@ -6,10 +6,12 @@ import { useGameContext } from '../../context/GameProvider'
 import { ILevel } from '../../interfaces/LevelInterface'
 import { setLoading } from '../../store/reducers/loadingSlice'
 import { useAppDispatch } from '../../store/hooks'
+import { useTranslation } from 'react-i18next'
 
 const Level = ({ difficulty }: ILevel) => {
     const dispatch = useAppDispatch()
     const { client, playerState }: IGameProps = useGameContext()
+    const { t } = useTranslation()
     const name = Difficulty[difficulty].toLowerCase()
 
     const changeDifficulty = async () => {
@@ -31,7 +33,7 @@ const Level = ({ difficulty }: ILevel) => {
                 checked={playerState.roundInfo?.difficulty === difficulty}
             />
             <RadioLabel htmlFor={`diff-${difficulty}`}>
-                {name.charAt(0).toUpperCase() + name.slice(1)}
+                {t(`buttons.${name}`)}
             </RadioLabel>
         </>
     )
