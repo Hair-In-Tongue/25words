@@ -63,6 +63,6 @@ export default {
         mixTeams: 'Wymieszaj zespoły',
         resetScore: 'Zresetuj wynik',
         loading: 'Ładowanie',
-        nicknamePlaceholder: 'Twója nazwa w grze',
+        nicknamePlaceholder: 'Twoja nazwa w grze',
     },
 }

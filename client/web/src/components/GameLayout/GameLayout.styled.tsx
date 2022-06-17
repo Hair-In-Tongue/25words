@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Color } from '../../../../../api/types'
+import { imageList } from '../../assets'
 
 export const LayoutContainer = styled.div`
     min-height: 100vh;
@@ -36,6 +37,6 @@ export const Gradient = styled(Absolute)<{ currentTurn: Color | undefined }>`
 export const BackgroundImage = styled(Absolute)`
     z-index: -1;
     mix-blend-mode: overlay;
-    background: url('/src/assets/images/background.png');
+    background: url(${imageList.background});
     background-size: cover;
 `

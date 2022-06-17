@@ -1,5 +1,5 @@
 {
-  "name": "tussie-mussie-client",
+  "name": "25-words-client",
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
@@ -33,6 +33,11 @@
     "@typescript-eslint/parser": "^5.14.0",
     "eslint": "^8.11.0",
     "eslint-plugin-react": "^7.29.4",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "vite": "^2.9.12"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build"
   }
 }
