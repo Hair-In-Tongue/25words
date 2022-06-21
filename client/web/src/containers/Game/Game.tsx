@@ -14,6 +14,7 @@ import Loading from '../../components/Loading/Loading'
 import Board from '../../components/Board/Board'
 import { setLoading } from '../../store/reducers/loadingSlice'
 import { useTranslation } from 'react-i18next'
+import ChangeAppLanguage from '../../context/ChangeAppLanguage'
 
 const Game = ({ userData, playerState, client }: IGameProps) => {
     const dispatch = useAppDispatch()
@@ -25,6 +26,7 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
     )
 
     useEffect(() => {
+        ChangeAppLanguage(client, localStorage.getItem('language'))
         if (playerState.players.length === 0 && nickname) joinGame(nickname)
     }, [])
 

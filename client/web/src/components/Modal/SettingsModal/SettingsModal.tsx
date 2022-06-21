@@ -22,8 +22,9 @@ import {
     StyledSelect,
     IconContainer,
 } from './SettingsModal.styled'
+import ChangeAppLanguage from '../../../context/ChangeAppLanguage'
 import { useGameContext } from '../../../context/GameProvider'
-import { Color } from '../../../../../../api/types'
+import { Color, Language } from '../../../../../../api/types'
 import { IGameProps } from '../../../interfaces/GlobalInterface'
 import JoinTeamButton from '../../JoinTeamButton/JoinTeamButton'
 import NicknameInput from '../../NicknameInput/NicknameInput'
@@ -31,7 +32,7 @@ import { iconList } from '../../../assets'
 
 const SettingsModal = () => {
     const { t } = useTranslation()
-    const { playerState, userData }: IGameProps = useGameContext()
+    const { client, playerState, userData }: IGameProps = useGameContext()
     const { Option } = components
 
     const playerDetails = playerState.players.find((p) => {
@@ -39,6 +40,7 @@ const SettingsModal = () => {
             return p
         }
     })
+
     const disableButtons = true
     const options = [
         {
@@ -75,6 +77,7 @@ const SettingsModal = () => {
     const setLanguage = (language: string) => {
         localStorage.setItem('language', language)
         i18n.changeLanguage(language)
+        ChangeAppLanguage(client, language)
     }
 
     const onSelectChange = useCallback(
