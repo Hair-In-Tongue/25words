@@ -78,7 +78,7 @@ export class Impl implements Methods<InternalState> {
             gamePassword: '',
             language: Language.PL,
             customDecks: [plEasy, plMedium, plHard, enEasy, enMedium, enHard],
-            usedDecks: createDeck([plEasy, plMedium, plHard, enEasy, enMedium, enHard], Language.PL, Difficulty.EASY),
+            usedDecks: createDeck([plEasy, plMedium, plHard, enEasy, enMedium, enHard], Language.EN, Difficulty.EASY),
         };
     }
     joinGame(state: InternalState, userId: UserId, ctx: Context, request: IJoinGameRequest): Response {
