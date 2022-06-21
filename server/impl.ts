@@ -655,7 +655,8 @@ function checkPermissionForAction(state: InternalState, userId: UserId, ctx: Con
             }
 
             error = isGameStatus(state, GameStatus.NOT_STARTED);
-            if (error['value'] == false) {
+            let error2 = isGameStatus(state, GameStatus.ROUND_ENDED);
+            if (error['value'] == false && error2['value'] == false) {
                 return error;
             }
 
@@ -785,7 +786,8 @@ function checkPermissionForAction(state: InternalState, userId: UserId, ctx: Con
             }
 
             error = isGameStatus(state, GameStatus.NOT_STARTED);
-            if (error['value'] == false) {
+            let error2 = isGameStatus(state, GameStatus.ROUND_ENDED);
+            if (error['value'] == false && error2['value'] == false) {
                 return error;
             }
 
