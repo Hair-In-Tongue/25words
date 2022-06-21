@@ -803,10 +803,10 @@ function checkPermissionForAction(state: InternalState, userId: UserId, ctx: Con
                 return error;
             }
 
-            error = isGameStatus(state, GameStatus.NOT_STARTED);
-            if (error['value'] == false) {
-                return error;
-            }
+            // error = isGameStatus(state, GameStatus.NOT_STARTED);
+            // if (error['value'] == false) {
+            //     return error;
+            // }
 
             break;
         }
