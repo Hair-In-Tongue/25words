@@ -17,8 +17,8 @@ i18n.use(Backend)
     .use(initReactI18next)
     .init({
         resources,
-        lng: localStorage.getItem('language') || 'pl',
-        fallbackLng: 'pl',
+        lng: localStorage.getItem('language') || 'en',
+        fallbackLng: 'en',
 
         interpolation: {
             escapeValue: false,
