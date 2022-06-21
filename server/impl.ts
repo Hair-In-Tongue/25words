@@ -76,7 +76,7 @@ export class Impl implements Methods<InternalState> {
             hintsGiven: 0,
             timerEnabled: true,
             gamePassword: '',
-            language: Language.PL,
+            language: Language.EN,
             customDecks: [plEasy, plMedium, plHard, enEasy, enMedium, enHard],
             usedDecks: createDeck([plEasy, plMedium, plHard, enEasy, enMedium, enHard], Language.EN, Difficulty.EASY),
         };
@@ -549,7 +549,7 @@ function getCardsForRound(state: InternalState, ctx: Context, cards: Object, dif
     //     break;
     // }
     state.cards = [];
-    state.cards.push(...chooseCards(state.usedDecks, state.roundInfo!.cards));
+    state.cards.push(...chooseCards(ctx.chance.shuffle(state.usedDecks), state.roundInfo!.cards));
     state.cards = ctx.chance.shuffle(state.cards);
     return state.cards;
 }
