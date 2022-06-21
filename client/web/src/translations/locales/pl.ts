@@ -28,7 +28,7 @@ export default {
         spectators: 'Obserwatorzy',
     },
     languages: {
-        english: 'Angielski',
+        english: 'English',
         polish: 'Polski',
     },
     buttons: {
