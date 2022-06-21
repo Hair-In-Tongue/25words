@@ -24,18 +24,21 @@ const PlayersListModal = () => {
                     <PlayersList
                         backgroundColor={theme.colors.redTeam}
                         teamName={t('playersList.red')}
+                        color={Color.RED}
                     />
                 )}
                 {isBluePlayer && (
                     <PlayersList
                         backgroundColor={theme.colors.blueTeam}
                         teamName={t('playersList.blue')}
+                        color={Color.BLUE}
                     />
                 )}
                 {isSpectatorPlayer && (
                     <PlayersList
                         backgroundColor={theme.colors.grayTeamDark}
                         teamName={t('playersList.spectators')}
+                        color={Color.GRAY}
                     />
                 )}
             </Container>

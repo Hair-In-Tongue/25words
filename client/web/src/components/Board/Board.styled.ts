@@ -27,4 +27,9 @@ export const Button = styled.button`
     box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 22px;
     margin-bottom: 5px;
+
+    &:hover:enabled {
+        box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+    }
 `

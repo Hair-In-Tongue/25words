@@ -24,7 +24,7 @@ import {
 } from './SettingsModal.styled'
 import ChangeAppLanguage from '../../../context/ChangeAppLanguage'
 import { useGameContext } from '../../../context/GameProvider'
-import { Color, Language } from '../../../../../../api/types'
+import { Color, GameStatus } from '../../../../../../api/types'
 import { IGameProps } from '../../../interfaces/GlobalInterface'
 import JoinTeamButton from '../../JoinTeamButton/JoinTeamButton'
 import NicknameInput from '../../NicknameInput/NicknameInput'
@@ -54,6 +54,10 @@ const SettingsModal = () => {
             iconName: 'polish',
         },
     ]
+
+    const resetTable = async () => {
+        await client?.resetTable({})
+    }
 
     const languageIndex = options.findIndex((language) => {
         const storedLanguage = localStorage.getItem('language') || 'pl'
@@ -104,9 +108,12 @@ const SettingsModal = () => {
             </Teams>
             <NicknameInput />
             <Line />
-            <Button disabled={disableButtons}>
-                {t('buttons.checkPreviousRound')}
-            </Button>
+            {playerState.gameStatus !== GameStatus.NOT_STARTED &&
+                playerDetails?.isAdmin && (
+                    <Button onClick={() => resetTable()}>
+                        {t('buttons.resetGame')}
+                    </Button>
+                )}
             {playerDetails?.isAdmin && (
                 <DecksContainer>
                     <Form>

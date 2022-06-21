@@ -63,16 +63,14 @@ const Game = ({ userData, playerState, client }: IGameProps) => {
                         />
                         <GridUnit>
                             {playerState.gameStatus ===
-                            GameStatus.NOT_STARTED ? (
+                                GameStatus.NOT_STARTED && (
                                 <>
                                     <Lobby />
                                     {loading && <Loading />}
                                 </>
-                            ) : null}
+                            )}
                             {playerState.gameStatus !==
-                            GameStatus.NOT_STARTED ? (
-                                <Board />
-                            ) : null}
+                                GameStatus.NOT_STARTED && <Board />}
                         </GridUnit>
                     </GridLayout>
                 ) : loading ? (

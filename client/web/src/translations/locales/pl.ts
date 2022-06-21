@@ -29,7 +29,7 @@ export default {
     },
     languages: {
         english: 'English',
-        polish: 'Polski',
+        polish: 'Polish',
     },
     buttons: {
         close: 'Wyjdź',
@@ -43,6 +43,7 @@ export default {
         createGame: 'Stwórz pokój',
         startRound: 'Rozpocznij rundę',
         checkPreviousRound: 'Sprawdź poprzednią rundę',
+        resetGame: 'Zrestartuj grę',
     },
     statusCodes: {
         s404: 'Gra z tym kodem nie istnieje',

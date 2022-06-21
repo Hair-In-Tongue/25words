@@ -29,7 +29,7 @@ export default {
     },
     languages: {
         english: 'English',
-        polish: 'Polski',
+        polish: 'Polish',
     },
     buttons: {
         close: 'Close',
@@ -43,6 +43,7 @@ export default {
         createGame: 'Create Game',
         startRound: 'Start Round',
         checkPreviousRound: 'Check previous round',
+        resetGame: 'Restart the game',
     },
     statusCodes: {
         s404: 'Game with given code does not exist',

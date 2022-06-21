@@ -11,13 +11,15 @@ import {
 import { useGameContext } from '../../context/GameProvider'
 import { IGameProps } from '../../interfaces/GlobalInterface'
 import { iconList } from '../../assets'
+import { Color } from '../../../../../api/types'
 
-interface TestowyI {
+interface IPlayerList {
     backgroundColor: string
     teamName: string
+    color: Color
 }
 
-const PlayersList = ({ backgroundColor, teamName }: TestowyI) => {
+const PlayersList = ({ backgroundColor, teamName, color }: IPlayerList) => {
     const { playerState, client, userData }: IGameProps = useGameContext()
 
     const playerDetails = playerState.players.find((p) => {
@@ -36,20 +38,25 @@ const PlayersList = ({ backgroundColor, teamName }: TestowyI) => {
         <>
             <TeamName>{teamName}</TeamName>
             <List>
-                {players.map((player) => (
-                    <ListItem color={backgroundColor} key={player?.id}>
-                        <PlayerInfo>
-                            <TeamColor />
-                            {player?.name}
-                        </PlayerInfo>
+                {players.map(
+                    (player) =>
+                        player.team === color && (
+                            <ListItem color={backgroundColor} key={player?.id}>
+                                <PlayerInfo>
+                                    <TeamColor />
+                                    {player?.name}
+                                </PlayerInfo>
 
-                        {playerDetails?.isAdmin && (
-                            <KickButton onClick={() => KickPlayer(player?.id)}>
-                                <Icon src={iconList.kickIcon} />
-                            </KickButton>
-                        )}
-                    </ListItem>
-                ))}
+                                {playerDetails?.isAdmin && (
+                                    <KickButton
+                                        onClick={() => KickPlayer(player?.id)}
+                                    >
+                                        <Icon src={iconList.kickIcon} />
+                                    </KickButton>
+                                )}
+                            </ListItem>
+                        )
+                )}
             </List>
         </>
     )
