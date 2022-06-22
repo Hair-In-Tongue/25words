@@ -34,6 +34,7 @@ import {
     ISetTimerRequest,
     ISendHeartBeatResponseRequest,
     ISetGameLanguageRequest,
+    IResetTableRequest,
 } from '../api/types';
 
 import { plEasy, plMedium, plHard, enEasy, enMedium, enHard } from './wordList';
@@ -427,7 +428,7 @@ export class Impl implements Methods<InternalState> {
 
         return Response.ok();
     }
-    resetTable(state: InternalState, userId: UserId, ctx: Context, request: ISetGameLanguageRequest): Response {
+    resetTable(state: InternalState, userId: UserId, ctx: Context, request: IResetTableRequest): Response {
         let error = checkPermissionForAction(state, userId, ctx, request, 'startGame');
         if (error.value == false) {
             return Response.error(error?.message);
