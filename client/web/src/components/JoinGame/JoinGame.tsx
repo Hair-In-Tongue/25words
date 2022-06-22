@@ -29,18 +29,31 @@ const JoinGame = ({ handleJoin }: IJoinProps) => {
                         <Header>{t('game.title.canYouGuesThem')}</Header>
                     </HeaderContainer>
                     <Card>
-                        <Input
-                            type="text"
-                            maxLength={10}
-                            placeholder={t('game.nicknamePlaceholder')}
-                            onChange={handleSetNickname}
-                        />
-                        <JoinButton
-                            type="button"
-                            onClick={() => handleJoin(nickname)}
+                        <form
+                            onSubmit={(e) => {
+                                if (nickname) {
+                                    handleJoin(nickname)
+                                }
+                                e.preventDefault()
+                            }}
                         >
-                            {t('buttons.joinGame')}
-                        </JoinButton>
+                            <Input
+                                type="text"
+                                maxLength={10}
+                                placeholder={t('game.nicknamePlaceholder')}
+                                onChange={handleSetNickname}
+                            />
+                            <JoinButton
+                                type="submit"
+                                onClick={() => {
+                                    if (nickname) {
+                                        handleJoin(nickname)
+                                    }
+                                }}
+                            >
+                                {t('buttons.joinGame')}
+                            </JoinButton>
+                        </form>
                     </Card>
                     <Gradient currentTurn={Color.GRAY} />
                 </Container>

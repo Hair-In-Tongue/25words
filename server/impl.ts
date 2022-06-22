@@ -427,6 +427,17 @@ export class Impl implements Methods<InternalState> {
 
         return Response.ok();
     }
+    resetTable(state: InternalState, userId: UserId, ctx: Context, request: ISetGameLanguageRequest): Response {
+        let error = checkPermissionForAction(state, userId, ctx, request, 'startGame');
+        if (error.value == false) {
+            return Response.error(error?.message);
+        }
+
+        state.gameStatus = GameStatus.NOT_STARTED;
+        state.roundInfo!.currentTurn = Color.GRAY;
+
+        return Response.ok();
+    }
     getUserState(state: InternalState, userId: UserId): PlayerState {
         return state;
     }

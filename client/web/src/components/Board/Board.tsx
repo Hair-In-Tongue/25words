@@ -16,29 +16,33 @@ const Board = () => {
         }
     })
 
-    const startRound = async () => {
-        await client?.startGame({})
+    const resetTable = async () => {
+        await client?.resetTable({})
     }
 
     return (
         <Container>
-            {playerState.gameStatus === GameStatus.AUCTION ? (
+            {playerState.gameStatus === GameStatus.AUCTION && (
                 <FirstRow>
                     <RoundInfo />
                     {playerDetails?.isGivingClues && <Bid />}
                     <Cards />
                 </FirstRow>
-            ) : playerState.gameStatus === GameStatus.GUESSING ? (
+            )}
+
+            {playerState.gameStatus === GameStatus.GUESSING && (
                 <FirstRow>
                     <RoundInfo />
                     <Cards />
                     <WordInput />
                 </FirstRow>
-            ) : (
+            )}
+
+            {playerState.gameStatus === GameStatus.ROUND_ENDED && (
                 <FirstRow>
                     <Cards />
                     {playerDetails?.isAdmin && (
-                        <Button onClick={startRound}>Next round</Button>
+                        <Button onClick={resetTable}>Next round</Button>
                     )}
                 </FirstRow>
             )}

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { ReactSVG } from 'react-svg'
 import Select from 'react-select'
 import { imageList } from '../../../assets'
@@ -64,7 +64,7 @@ export const Line = styled.div`
 `
 
 export const Button = styled.button`
-    margin: 10px 0px;
+    margin-top: 20px;
     width: 230px;
     height: 37px;
     border-radius: 18.5px;
@@ -73,9 +73,16 @@ export const Button = styled.button`
     color: black;
     box-shadow: inset -4px -4px 4px rgba(0, 0, 55, 0.3);
     outline: none;
+    transition: 0.3s;
+
     &:disabled {
         background-color: lightgray;
         border-color: rgb(200, 200, 200);
+    }
+    
+    &:hover:enabled {
+        box-shadow: inset 0px 2px 60px rgba(255, 255, 255, 0.5);
+        cursor: pointer;
     }
 `
 
@@ -83,7 +90,7 @@ export const DecksContainer = styled(FlexColumn)`
     align-items: center;
     width: 313px;
     height: 197px;
-    margin-bottom: 5px;
+    margin-top: 20px;
 `
 
 export const Form = styled.form`
@@ -199,10 +206,11 @@ export const LanguageSelector = styled.div`
 export const StyledSelect = styled(Select)`
     width: 200px;
     height: 40px;
+    margin-top: 20px;
+
     .Select__control {
         transition-duration: 0.3s;
         box-sizing: border-box;
-        margin-top: 5px;
         width: 196px;
         height: 36px;
         background: #ffffff;

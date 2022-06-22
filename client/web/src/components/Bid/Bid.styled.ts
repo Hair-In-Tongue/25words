@@ -79,11 +79,6 @@ export const ActionButton = styled.button<{ left: boolean }>`
     box-shadow: inset -2px -4px 4px rgba(0, 0, 0, 0.25);
     transition: 0.5s;
 
-    &:disabled {
-        background-color: lightgray;
-        border: 2px solid rgba(0, 0, 0, 0.5);
-    }
-
     ${ActionIcon} {
         ${({ left }) => (left ? 'transform: scaleX(-1)' : '')}
     }
@@ -96,5 +91,10 @@ export const ActionButton = styled.button<{ left: boolean }>`
     &:active {
         background-color: ${({ theme: { colors }, left }) =>
             left ? colors.blueTeamDarken20 : colors.redTeamDarken20};
+    }
+
+    &:disabled {
+        background-color: lightgray;
+        border: 2px solid rgba(0, 0, 0, 0.5);
     }
 `

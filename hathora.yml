@@ -101,6 +101,7 @@ methods:
   sendHeartBeatResponse:
   setGameLanguage:
     language: Language
+  resetTable:
 
 auth:
   anonymous: {}

@@ -21,9 +21,11 @@ const NicknameInput = () => {
     }
 
     const changeNickname = async () => {
-        dispatch(setNickname(newNickname))
-        await client?.changeName({ name: newNickname })
-        setNewNickname('')
+        if (newNickname) {
+            dispatch(setNickname(newNickname))
+            await client?.changeName({ name: newNickname })
+            setNewNickname('')
+        }
     }
 
     return (
